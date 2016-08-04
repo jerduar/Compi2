@@ -1,0 +1,24 @@
+{
+"coleccion": {
+"cd": [
+{
+	"title": "Empire Burlesque",
+	"artist": "Bob Daniel",
+	"country": "USA",
+	"company": "Columbia",
+	"price": "10.90",
+	"year": "1985",
+	"bestSeller": "falso"
+},
+{
+"title": "Luna nueva",
+"artist": "Alguien en el mundo",
+"country": "Alguna parte del mundo",
+"company": "Imaginacion",
+"price": "12",
+"year": "1800",
+"bestSeller": "verdadero"
+}
+]
+}, "asdf":{"asdf":"ASDFAS"}
+}

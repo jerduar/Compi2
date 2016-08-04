@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Ventana_Principal</class>
+ <widget class="QMainWindow" name="Ventana_Principal">
+  <property name="windowModality">
+   <enum>Qt::NonModal</enum>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1061</width>
+    <height>586</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>1061</width>
+    <height>586</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>1061</width>
+    <height>586</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Editor J2H</string>
+  </property>
+  <property name="unifiedTitleAndToolBarOnMac">
+   <bool>false</bool>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <widget class="QTabWidget" name="tabWidget">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>861</width>
+      <height>531</height>
+     </rect>
+    </property>
+    <property name="currentIndex">
+     <number>-1</number>
+    </property>
+    <property name="tabsClosable">
+     <bool>false</bool>
+    </property>
+    <property name="movable">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEdit">
+    <property name="geometry">
+     <rect>
+      <x>890</x>
+      <y>130</y>
+      <width>161</width>
+      <height>31</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEdit_2">
+    <property name="geometry">
+     <rect>
+      <x>890</x>
+      <y>170</y>
+      <width>161</width>
+      <height>31</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="bt_buscar">
+    <property name="geometry">
+     <rect>
+      <x>890</x>
+      <y>210</y>
+      <width>161</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>BUSCAR</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="bt_reemplazar">
+    <property name="geometry">
+     <rect>
+      <x>890</x>
+      <y>250</y>
+      <width>161</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>REEMPLAZAR</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="bt_reemplazarAll">
+    <property name="geometry">
+     <rect>
+      <x>890</x>
+      <y>290</y>
+      <width>161</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>REEMPLAZAR TODO</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1061</width>
+     <height>19</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuArchivo">
+    <property name="title">
+     <string>Archivo</string>
+    </property>
+    <addaction name="actionNuevo_Archivo_JSON"/>
+    <addaction name="actionNuevo_Archivo_JSLT"/>
+    <addaction name="actionGuardar_Como"/>
+    <addaction name="actionGuardar"/>
+    <addaction name="actionAbrir"/>
+   </widget>
+   <widget class="QMenu" name="menuGenerar">
+    <property name="title">
+     <string>Generar</string>
+    </property>
+    <addaction name="actionGenerar_HTML"/>
+   </widget>
+   <widget class="QMenu" name="menuErrores">
+    <property name="title">
+     <string>Errores</string>
+    </property>
+    <addaction name="actionVer_Reportes"/>
+   </widget>
+   <addaction name="menuArchivo"/>
+   <addaction name="menuGenerar"/>
+   <addaction name="menuErrores"/>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <action name="actionNuevo_Archivo_JSON">
+   <property name="text">
+    <string>Nuevo Archivo JSON</string>
+   </property>
+  </action>
+  <action name="actionNuevo_Archivo_JSLT">
+   <property name="text">
+    <string>Nuevo Archivo JSLT</string>
+   </property>
+  </action>
+  <action name="actionGuardar_Como">
+   <property name="text">
+    <string>Guardar Como</string>
+   </property>
+  </action>
+  <action name="actionGuardar">
+   <property name="text">
+    <string>Guardar</string>
+   </property>
+  </action>
+  <action name="actionAbrir">
+   <property name="text">
+    <string>Abrir</string>
+   </property>
+  </action>
+  <action name="actionVer_Reportes">
+   <property name="text">
+    <string>Ver Reportes</string>
+   </property>
+  </action>
+  <action name="actionGenerar_HTML">
+   <property name="text">
+    <string>Generar HTML</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections/>
+</ui>
