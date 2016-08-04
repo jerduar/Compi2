@@ -1,6 +1,7 @@
 #include "ventana_principal.h"
 #include "ui_ventana_principal.h"
 #include <pestana.h>
+#include <QMessageBox>
 
 Ventana_Principal::Ventana_Principal(QWidget *parent) :
     QMainWindow(parent),
@@ -76,7 +77,7 @@ void Ventana_Principal::OpenFile()
 
 void Ventana_Principal::on_pushButton_clicked()
 {
-    QTextStream(stdout) << "hola estoy aca" << endl;
+
 }
 
 void Ventana_Principal::on_actionGenerar_HTML_triggered()
@@ -111,4 +112,35 @@ void Ventana_Principal::on_actionGuardar_triggered()
         buffer << texto;
         file.close();
     }
+}
+
+void Ventana_Principal::on_bt_buscar_2_clicked()
+{
+    ui->tabWidget->addTab(new Pestana(),"Nueva");
+}
+
+void Ventana_Principal::on_tabWidget_tabCloseRequested(int index)
+{
+
+}
+
+void Ventana_Principal::on_actionGuardar_Como_triggered()
+{
+    Pestana *actual = (Pestana*)ui->tabWidget->currentWidget();
+
+    if(actual != NULL){
+        QString path = QFileDialog::getSaveFileName(this,tr("ABRIR ARCHIVOS"), "/home/jerduar", tr("ARCHIVOS (*.json *.jslt)"));
+        QFile archivo(path);
+        archivo.open(QIODevice::WriteOnly);
+
+        QTextStream buffer(&archivo);
+        QString texto = actual->enviar_texto();
+
+        buffer << texto;
+        archivo.close();
+
+    }else{
+        QMessageBox::information(this,"Guarda","No hay ninguna pestaña seleccionada");
+    }
+
 }

@@ -41,6 +41,12 @@ private slots:
 
 
 
+    void on_bt_buscar_2_clicked();
+
+    void on_tabWidget_tabCloseRequested(int index);
+
+    void on_actionGuardar_Como_triggered();
+
 private:
     Ui::Ventana_Principal *ui;
     void OpenFile();

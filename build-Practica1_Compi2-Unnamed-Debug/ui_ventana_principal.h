@@ -42,6 +42,7 @@ public:
     QPushButton *bt_buscar;
     QPushButton *bt_reemplazar;
     QPushButton *bt_reemplazarAll;
+    QPushButton *bt_buscar_2;
     QMenuBar *menuBar;
     QMenu *menuArchivo;
     QMenu *menuGenerar;
@@ -93,6 +94,9 @@ public:
         bt_reemplazarAll = new QPushButton(centralWidget);
         bt_reemplazarAll->setObjectName(QStringLiteral("bt_reemplazarAll"));
         bt_reemplazarAll->setGeometry(QRect(890, 290, 161, 31));
+        bt_buscar_2 = new QPushButton(centralWidget);
+        bt_buscar_2->setObjectName(QStringLiteral("bt_buscar_2"));
+        bt_buscar_2->setGeometry(QRect(890, 90, 161, 31));
         Ventana_Principal->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(Ventana_Principal);
         menuBar->setObjectName(QStringLiteral("menuBar"));
@@ -140,6 +144,7 @@ public:
         bt_buscar->setText(QApplication::translate("Ventana_Principal", "BUSCAR", 0));
         bt_reemplazar->setText(QApplication::translate("Ventana_Principal", "REEMPLAZAR", 0));
         bt_reemplazarAll->setText(QApplication::translate("Ventana_Principal", "REEMPLAZAR TODO", 0));
+        bt_buscar_2->setText(QApplication::translate("Ventana_Principal", "NUEVA PESTA\303\221A", 0));
         menuArchivo->setTitle(QApplication::translate("Ventana_Principal", "Archivo", 0));
         menuGenerar->setTitle(QApplication::translate("Ventana_Principal", "Generar", 0));
         menuErrores->setTitle(QApplication::translate("Ventana_Principal", "Errores", 0));
