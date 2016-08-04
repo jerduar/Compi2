@@ -47,6 +47,8 @@ private slots:
 
     void on_actionGuardar_Como_triggered();
 
+    void on_bt_buscar_clicked();
+
 private:
     Ui::Ventana_Principal *ui;
     void OpenFile();

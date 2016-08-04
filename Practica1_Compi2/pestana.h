@@ -23,6 +23,8 @@ public:
     QString getPath() const;
     void setPath(const QString &value);
 
+    void fintText(QString texto_buscado);
+
 private:
     Ui::Pestana *ui;
     //VARIABLES

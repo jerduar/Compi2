@@ -129,18 +129,32 @@ void Ventana_Principal::on_actionGuardar_Como_triggered()
     Pestana *actual = (Pestana*)ui->tabWidget->currentWidget();
 
     if(actual != NULL){
-        QString path = QFileDialog::getSaveFileName(this,tr("ABRIR ARCHIVOS"), "/home/jerduar", tr("ARCHIVOS (*.json *.jslt)"));
-        QFile archivo(path);
-        archivo.open(QIODevice::WriteOnly);
+        QString path = QFileDialog::getSaveFileName(this,tr("ABRIR ARCHIVOS"), "/home/jerduar", tr("JSON (*.json);;JSLT(*.jslt)"));
 
-        QTextStream buffer(&archivo);
-        QString texto = actual->enviar_texto();
+        if(path != ""){
+            QFile archivo(path);
+            archivo.open(QIODevice::WriteOnly);
 
-        buffer << texto;
-        archivo.close();
+            QTextStream buffer(&archivo);
+            QString texto = actual->enviar_texto();
+            actual->setPath(path);
+
+            buffer << texto;
+            archivo.close();
+        }
+
 
     }else{
         QMessageBox::information(this,"Guarda","No hay ninguna pestaña seleccionada");
     }
 
+}
+
+void Ventana_Principal::on_bt_buscar_clicked()
+{
+    Pestana *actual = (Pestana*)ui->tabWidget->currentWidget();
+
+    if(actual != NULL){
+        actual->fintText("hola");
+    }
 }

@@ -35,3 +35,9 @@ void Pestana::setPath(const QString &value)
 {
     path = value;
 }
+
+void Pestana::fintText(QString texto_buscado)
+{
+    ui->textEdit->moveCursor(QTextCursor::Start);
+    ui->textEdit->find(texto_buscado);
+}
