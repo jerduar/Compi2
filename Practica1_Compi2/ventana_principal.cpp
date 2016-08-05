@@ -75,6 +75,31 @@ void Ventana_Principal::OpenFile()
 
 }
 
+void Ventana_Principal::GuardarComo()
+{
+    Pestana *actual = (Pestana*)ui->tabWidget->currentWidget();
+
+    if(actual != NULL){
+        QString path = QFileDialog::getSaveFileName(this,tr("ABRIR ARCHIVOS"), "/home/jerduar", tr("JSON (*.json);;JSLT(*.jslt)"));
+
+        if(path != ""){
+            QFile archivo(path);
+            archivo.open(QIODevice::WriteOnly);
+
+            QTextStream buffer(&archivo);
+            QString texto = actual->enviar_texto();
+            actual->setPath(path);
+
+            buffer << texto;
+            archivo.close();
+        }
+
+
+    }else{
+        QMessageBox::information(this,"Guarda","No hay ninguna pestaña seleccionada");
+    }
+}
+
 void Ventana_Principal::on_pushButton_clicked()
 {
 
@@ -102,16 +127,22 @@ void Ventana_Principal::on_actionGenerar_HTML_triggered()
 void Ventana_Principal::on_actionGuardar_triggered()
 {
     Pestana *pestana = (Pestana*)ui->tabWidget->currentWidget();
-    if(pestana->getPath() != ""){
 
-        QFile file(pestana->getPath());
-        file.open(QIODevice::WriteOnly | QIODevice::Truncate);
-        QString texto = pestana->enviar_texto();
-        QTextStream buffer(&file);
+    if(pestana != NULL){
+        if(pestana->getPath() != ""){
 
-        buffer << texto;
-        file.close();
+            QFile file(pestana->getPath());
+            file.open(QIODevice::WriteOnly | QIODevice::Truncate);
+            QString texto = pestana->enviar_texto();
+            QTextStream buffer(&file);
+
+            buffer << texto;
+            file.close();
+        }else{
+            GuardarComo();
+        }
     }
+
 }
 
 void Ventana_Principal::on_bt_buscar_2_clicked()
@@ -126,27 +157,7 @@ void Ventana_Principal::on_tabWidget_tabCloseRequested(int index)
 
 void Ventana_Principal::on_actionGuardar_Como_triggered()
 {
-    Pestana *actual = (Pestana*)ui->tabWidget->currentWidget();
-
-    if(actual != NULL){
-        QString path = QFileDialog::getSaveFileName(this,tr("ABRIR ARCHIVOS"), "/home/jerduar", tr("JSON (*.json);;JSLT(*.jslt)"));
-
-        if(path != ""){
-            QFile archivo(path);
-            archivo.open(QIODevice::WriteOnly);
-
-            QTextStream buffer(&archivo);
-            QString texto = actual->enviar_texto();
-            actual->setPath(path);
-
-            buffer << texto;
-            archivo.close();
-        }
-
-
-    }else{
-        QMessageBox::information(this,"Guarda","No hay ninguna pestaña seleccionada");
-    }
+    this->GuardarComo();
 
 }
 

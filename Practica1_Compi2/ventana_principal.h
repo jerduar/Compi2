@@ -49,9 +49,11 @@ private slots:
 
     void on_bt_buscar_clicked();
 
+
 private:
     Ui::Ventana_Principal *ui;
     void OpenFile();
+    void GuardarComo();
 };
 
 #endif // VENTANA_PRINCIPAL_H

@@ -4,12 +4,12 @@
 #include <iostream>
 #include <QString>
 int columna=0;
+int fila = 0;
 %}
-letra \"[^\"]+\"
-
+letra ["][^"]+["]
 digito [0-9]
 palabra {letra}
-decimal {digito}+["."{digito}+]?
+decimal {digito}+"."{digito}+
 entero {digito}+
 identificador [a-z][a-z0-9]*
 %%
@@ -24,7 +24,9 @@ identificador [a-z][a-z0-9]*
 "\""            { columna=columna+strlen(yylval.TEXT); strcpy(yylval.TEXT, yytext); return comilla; }
 {entero}        { columna=columna+strlen(yylval.TEXT); strcpy(yylval.TEXT, yytext); return entero; }
 {letra}        { columna=columna+strlen(yylval.TEXT); strcpy(yylval.TEXT, yytext); return cadena; }
+{decimal}        { columna=columna+strlen(yylval.TEXT); strcpy(yylval.TEXT, yytext); return decimal; }
 {identificador} { columna=columna+strlen(yylval.TEXT); strcpy(yylval.TEXT, yytext); return identificador; }
-[[:blank:]]     { /* SE IGNORAN LOS ESPACIOS EN BLANCO */ }
+[[:blank:]]     {if(yytext == "\n"){columna = 0; fila++;} }
+
 .               {}
 %%

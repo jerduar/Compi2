@@ -65,38 +65,42 @@ struct Operador * VAL;
 %type<VAL>  O
 %type<VAL>  LA
 %type<VAL>  A
-%type<VAL>  D
-%type<VAL>  COL
-%type<VAL>  LO
-%type<VAL> VALOR
+%type<VAL> AO
+%type<VAL>  L
+%type<VAL>  LV
+%type<VAL> LO
+%type<TEXT> VALOR
 %%
 
-S : J{};
+S : J{QTextStream(stdout) << "produccion S" << endl;};
 
-J : llavea D llavec {};
+J : llavea LO llavec{QTextStream(stdout) << "produccion J" << endl;};
 
-D : D coma O {}
-    | O {}
-    | COL {}
-    | A{};
+LO : LO coma O{}
+    | O{};
+
+VALOR : comilla decimal comilla{QTextStream(stdout) << "decimal" << endl;}
+    | cadena{QTextStream(stdout) << "cadena" << endl;}
+    | comilla entero comilla {QTextStream(stdout) << "entero" << endl;}
+    | comilla verdadero comilla {QTextStream(stdout) << "verdadero" << endl;}
+    | comilla falso comilla{QTextStream(stdout) << "falso" << endl;};
+
+O : cadena dospuntos llavea LA llavec {QTextStream(stdout) << "Produccion LA" << endl;}
+    | cadena dospuntos cora AO corc{QTextStream(stdout) << "Produccion AO" << endl;}
+    | cadena dospuntos cora LV corc{QTextStream(stdout) << "Producion LV" << endl;};
+
+LA : LA coma A{QTextStream(stdout) << "Leyendo Lista de atributos" << endl;}
+    | A{QTextStream(stdout) << "Leyendo un atributo" << endl;};
+
+LV : LV coma VALOR{QTextStream(stdout) << "leyendo un lista de valores" << endl;}
+    | VALOR{QTextStream(stdout) << "leyendo un valor" << endl;};
+
+A : cadena dospuntos VALOR{QTextStream(stdout) << $3 << endl;}
+    | O {QTextStream(stdout) << "Estoy leyendo un objeto" << endl;};
 
 
-O : cadena dospuntos llavea LA llavec {}
+AO : AO coma L{QTextStream(stdout) << "leyendo un arrego de objetos" << endl;}
+    | L{QTextStream(stdout) << "produccion L" << endl;};
 
-COL : cadena dospuntos cora LO corc {};
-
-LA : LA coma A {}
-    | A {}
-    | O{}
-    | COL{};
-
-A : cadena dospuntos VALOR {};
-
-
-LO : LO coma llavea LA llavec {}
-    | llavea LA llavec{};
-
-VALOR : O{}
-    | COL{}
-    | cadena{};
+L : llavea LA llavec{QTextStream(stdout) << "produccion LA" << endl;};
 %%
