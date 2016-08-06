@@ -16,13 +16,15 @@ SOURCES += main.cpp\
         ventana_principal.cpp \
         pestana.cpp\
         scanner.cpp\
-        parser.cpp
+        parser.cpp \
+    nodo.cpp
 
 
 HEADERS  += ventana_principal.h \
     pestana.h\
     scanner.h\
-    parser.h
+    parser.h \
+    nodo.h
 
 
 FORMS    += ventana_principal.ui \

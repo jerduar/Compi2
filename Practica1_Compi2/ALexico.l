@@ -2,9 +2,10 @@
 %{
 #include "parser.h"
 #include <iostream>
+#include <QTextStream>
 #include <QString>
 int columna=0;
-int fila = 0;
+int fila = 1;
 %}
 letra ["][^"]+["]
 digito [0-9]
@@ -26,7 +27,8 @@ identificador [a-z][a-z0-9]*
 {letra}        { columna=columna+strlen(yylval.TEXT); strcpy(yylval.TEXT, yytext); return cadena; }
 {decimal}        { columna=columna+strlen(yylval.TEXT); strcpy(yylval.TEXT, yytext); return decimal; }
 {identificador} { columna=columna+strlen(yylval.TEXT); strcpy(yylval.TEXT, yytext); return identificador; }
-[[:blank:]]     {if(yytext == "\n"){columna = 0; fila++;} }
-
+"\n"    {columna = 0;fila++;}
+"\t"    {columna++;}
+"\r"    {columna++;}
 .               {}
 %%

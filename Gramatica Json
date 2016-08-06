@@ -1,0 +1,60 @@
+//SINTACTICO DE PRUEBA
+
+S : J
+
+J : { O }
+
+O : identificador dospuntos { LA }
+	| identificador dospuntos  [ AO ]
+	| identificador dospuntos [ LV ]
+
+LA : LA coma A
+	| A
+
+A : identificador dospuntos VALOR
+	| O
+
+VALOR : decimal
+	| cadena
+	| entero
+	| verdadero
+	| falso
+
+AO : AO coma L
+	| L
+
+L : { LA }
+
+LV : LV coma VALOR{}
+    | VALOR{};
+
+//SINTACTICO ANTERIOR
+
+S : J{};
+
+J : llavea O llavec{};
+
+D : D coma O {}
+    | O {}
+    | COL {}
+    | A{};
+
+
+O : cadena dospuntos llavea LA llavec {}
+
+COL : cadena dospuntos cora LO corc {};
+
+LA : LA coma A {}
+    | A {}
+    | O{}
+    | COL{};
+
+A : cadena dospuntos VALOR {};
+
+
+LO : LO coma llavea LA llavec {}
+    | llavea LA llavec{};
+
+VALOR : O{}
+    | COL{}
+    | cadena{};

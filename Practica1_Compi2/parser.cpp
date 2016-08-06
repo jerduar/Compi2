@@ -77,7 +77,7 @@
 
 #include <QTextEdit> //libreria QTextEdit de QT para poder mostrar el resultado en pantalla
 
-extern int yylineno; //linea actual donde se encuentra el parser (analisis lexico) lo maneja BISON
+extern int fila; //linea actual donde se encuentra el parser (analisis lexico) lo maneja BISON
 extern int columna; //columna actual donde se encuentra el parser (analisis lexico) lo maneja BISON
 extern char *yytext; //lexema actual donde esta el parser (analisis lexico) lo maneja BISON
 
