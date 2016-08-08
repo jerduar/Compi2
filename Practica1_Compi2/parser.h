@@ -66,13 +66,14 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 42 "ASintactico.y" /* yacc.c:1909  */
+#line 46 "ASintactico.y" /* yacc.c:1909  */
 
 //se especifican los tipo de valores para los no terminales y lo terminales
 char TEXT [256];
 struct Operador * VAL;
+struct Nodo *NODE;
 
-#line 76 "parser.h" /* yacc.c:1909  */
+#line 77 "parser.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

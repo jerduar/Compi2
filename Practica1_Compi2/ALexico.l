@@ -7,25 +7,25 @@
 int columna=0;
 int fila = 1;
 %}
-letra ["][^"]+["]
 digito [0-9]
-palabra {letra}
-decimal {digito}+"."{digito}+
-entero {digito}+
+decimal [{digito}+"."{digito}+]
+dec ["]{decimal}["]
+entero \"{digito}+\"
 identificador [a-z][a-z0-9]*
+letra ["][^\"]*["]
 %%
 "}"             { columna=columna+strlen(yylval.TEXT); strcpy(yylval.TEXT, yytext); return llavec; }
 "{"             { columna=columna+strlen(yylval.TEXT); strcpy(yylval.TEXT, yytext); return llavea; }
 ":"             { columna=columna+strlen(yylval.TEXT); strcpy(yylval.TEXT, yytext); return dospuntos; }
-"falso"         { columna=columna+strlen(yylval.TEXT); strcpy(yylval.TEXT, yytext); return falso; }
-"verdadero"     { columna=columna+strlen(yylval.TEXT); strcpy(yylval.TEXT, yytext); return verdadero; }
+\""falso"\"         { columna=columna+strlen(yylval.TEXT); strcpy(yylval.TEXT, yytext); return falso; }
+\""verdadero"\"     { columna=columna+strlen(yylval.TEXT); strcpy(yylval.TEXT, yytext); return verdadero; }
 "["             { columna=columna+strlen(yylval.TEXT); strcpy(yylval.TEXT, yytext); return cora; }
 "]"             { columna=columna+strlen(yylval.TEXT); strcpy(yylval.TEXT, yytext); return corc; }
 ","             { columna=columna+strlen(yylval.TEXT); strcpy(yylval.TEXT, yytext); return coma; }
-"\""            { columna=columna+strlen(yylval.TEXT); strcpy(yylval.TEXT, yytext); return comilla; }
+["]            { columna=columna+strlen(yylval.TEXT); strcpy(yylval.TEXT, yytext); return comilla; }
 {entero}        { columna=columna+strlen(yylval.TEXT); strcpy(yylval.TEXT, yytext); return entero; }
+{dec}        { columna=columna+strlen(yylval.TEXT); strcpy(yylval.TEXT, yytext); return decimal; }
 {letra}        { columna=columna+strlen(yylval.TEXT); strcpy(yylval.TEXT, yytext); return cadena; }
-{decimal}        { columna=columna+strlen(yylval.TEXT); strcpy(yylval.TEXT, yytext); return decimal; }
 {identificador} { columna=columna+strlen(yylval.TEXT); strcpy(yylval.TEXT, yytext); return identificador; }
 "\n"    {columna = 0;fila++;}
 "\t"    {columna++;}

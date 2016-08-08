@@ -1,0 +1,66 @@
+S : INICIO
+
+INICIO : <jsl:transformacion ruta="cadena" version="cadena"> LISTA_SENTENCIAS </jsl:final>
+
+LISTA_SENTENCIAS : LISTASENTENCIAS SENTENCIA
+	| SENTENCIA
+
+SENTENCIA : ASIGNACION
+	| DECLARACION
+	| PLANTILLA
+	| APLICAR_PLANTILLA
+	| VALOR_DE
+	| PARA_CADA
+	| SI
+	| EN_CASO
+
+ASIGNACION : <jsl:variable TIPO = identificador>
+
+TIPO : entero
+	| double
+	| booleano
+	| caracter
+	| cadena
+
+DECLARACION : <jsl: variable = identificador valor = valor_var>
+
+PLANTILLA : <jsl:plantilla nombreObj = nombre_ojeto> LISTA_SENTENCIAS </jsl:plantilla>
+
+APLICAR_PLANTILLA : <jsl:plantilla-aplicar seleccionar= nombre_objeto>
+
+VALOR_DE : <jsl: valor-de seleccionar = nombre_objeto>
+
+PARA_CADA : <jsl:para-cada seleccionar = nombre_ojeto> LISTA_SENTENCIAS </jsl:para-cada>
+
+SI : <jsl:if condicion = LISTA_CONDICION> LISTA_SENTENCIAS </jsl:if>
+
+LISTA_CONDICION : LISTA_CONDICION EXP_REL
+	| EXP_REL
+
+EXP_REL : EXP_REL == EXP_REL
+	| EXP_REL != EXP_REL
+	| EXP_REL &lt EXP_REL
+	| EXP_REL &lte EXP_REL
+	| EXP_REL &gt EXP_REL
+	| EXP_REL &gte EXP_REL
+	| !¡EXP_REL
+	| EXP_ARIT
+	| id
+	| num
+
+EXP_ARIT :	EXP_ARIT por EXP_ARIT
+	| EXP_ARIT mas EXP_ARIT
+	| EXP_ARIT div EXP_ARIT
+	| EXP_ARIT menos EXP_ARIT
+	| num
+	| id
+	| (EXP_ARIT)
+
+EXP_LOGICA : EXP_LOGICA || EXP_LOGICA
+	| EXP_LOGICA && EXP_LOGICA
+	| EXP_LOGICA !&& EXP_LOGICA
+	| EXP_LOGICA !|| EXP_LOGICA
+	| EXP_LOGICA &| EXP_LOGICA
+	| EXP_LOGICA ! EXP_LOGICA
+	| EXP_REL
+

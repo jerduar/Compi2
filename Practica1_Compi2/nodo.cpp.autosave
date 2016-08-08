@@ -1,8 +1,0 @@
-#include "nodo.h"
-
-Nodo::Nodo()
-{
-    this->Atributos = new QList<QString>;
-    this->Hijos = new QList<Nodo>;
-    this->esPadre = false;
-}
