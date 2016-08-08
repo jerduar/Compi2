@@ -330,7 +330,7 @@ extern int jjlex (void);
 #undef YY_DECL
 #endif
 
-#line 34 "Lexico_JSLT.l"
+#line 38 "Lexico_JSLT.l"
 
 
 #line 337 "scanner2.h"

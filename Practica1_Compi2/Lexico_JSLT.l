@@ -11,6 +11,8 @@ digito [0-9]
 decimal [{digito}+"."{digito}+]
 dec ["]{decimal}["]
 entero \"{digito}+\"
+comentario_linea "##"[^\n]
+comentario_multilinea "#*"[^"*#"]*"*#"
 identificador [a-z][a-z0-9]*
 letra ["][^\"]*["]
 %%
@@ -27,6 +29,8 @@ letra ["][^\"]*["]
 {dec}        { columna=columna+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return decimal; }
 {letra}        { columna=columna+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return cadena; }
 {identificador} { columna=columna+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return identificador; }
+{comentario_linea} { columna=columna+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); }
+{comentario_multilinea} { columna=columna+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); }
 "\n"    {columna = 0;fila++;}
 "\t"    {columna++;}
 "\r"    {columna++;}

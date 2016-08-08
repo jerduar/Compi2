@@ -17,18 +17,24 @@ SOURCES += main.cpp\
         pestana.cpp\
         scanner.cpp\
         parser.cpp \
-    nodo.cpp
+        nodo.cpp\
+        parser2.cpp\
+        scanner2.cpp
 
 
 HEADERS  += ventana_principal.h \
     pestana.h\
     scanner.h\
     parser.h \
-    nodo.h
+    nodo.h\
+    parser2.h\
+    scanner2.h
 
 
 FORMS    += ventana_principal.ui \
     pestana.ui
 
 OTHER_FILES += ALexico.l\
-               ASintactico.y
+               ASintactico.y\
+               Lexico_JSLT.l\
+               Sintactico_JSLT.y
