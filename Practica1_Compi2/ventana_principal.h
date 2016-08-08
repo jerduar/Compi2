@@ -50,6 +50,10 @@ private slots:
     void on_bt_buscar_clicked();
 
 
+    void on_bt_reemplazarAll_clicked();
+
+    void on_bt_reemplazar_clicked();
+
 private:
     Ui::Ventana_Principal *ui;
     void OpenFile();

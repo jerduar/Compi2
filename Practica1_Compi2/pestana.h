@@ -25,6 +25,12 @@ public:
 
     void fintText(QString texto_buscado);
 
+    void repleaceAll(QString texto_buscado, QString reemplazo);
+
+    void repleace(QString reemplazo, QString texto_buscado);
+
+    QTextEdit *textedit();
+
 private:
     Ui::Pestana *ui;
     //VARIABLES

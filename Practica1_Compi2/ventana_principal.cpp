@@ -166,6 +166,24 @@ void Ventana_Principal::on_bt_buscar_clicked()
     Pestana *actual = (Pestana*)ui->tabWidget->currentWidget();
 
     if(actual != NULL){
-        actual->fintText("hola");
+        actual->fintText(ui->lineEdit->text());
+    }
+}
+
+void Ventana_Principal::on_bt_reemplazarAll_clicked()
+{
+    Pestana *actual = (Pestana*)ui->tabWidget->currentWidget();
+
+    if(actual != NULL){
+        actual->repleaceAll(ui->lineEdit->text(),ui->lineEdit_2->text());
+    }
+}
+
+void Ventana_Principal::on_bt_reemplazar_clicked()
+{
+    Pestana *actual = (Pestana*)ui->tabWidget->currentWidget();
+
+    if(actual != NULL){
+        actual->repleace(ui->lineEdit_2->text(),ui->lineEdit->text());
     }
 }

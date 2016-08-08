@@ -22,7 +22,9 @@ TIPO : entero
 	| caracter
 	| cadena
 
-DECLARACION : <jsl: variable = identificador valor = valor_var>
+DECLARACION : <jsl: variable = identificador valor = VALOR>
+
+VALOR : 
 
 PLANTILLA : <jsl:plantilla nombreObj = nombre_ojeto> LISTA_SENTENCIAS </jsl:plantilla>
 
@@ -45,8 +47,6 @@ EXP_REL : EXP_REL == EXP_REL
 	| EXP_REL &gte EXP_REL
 	| !¡EXP_REL
 	| EXP_ARIT
-	| id
-	| num
 
 EXP_ARIT :	EXP_ARIT por EXP_ARIT
 	| EXP_ARIT mas EXP_ARIT
@@ -63,4 +63,3 @@ EXP_LOGICA : EXP_LOGICA || EXP_LOGICA
 	| EXP_LOGICA &| EXP_LOGICA
 	| EXP_LOGICA ! EXP_LOGICA
 	| EXP_REL
-
