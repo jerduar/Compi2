@@ -8,11 +8,17 @@
 #include <QTextStream>
 #include <QFileDialog>
 #include <parser.h>
+#include <parser2.h>
 #include <QTextEdit>
 #include <QFile>
 
 extern int yyrestart( FILE* archivo);//METODO QUE PASA EL ARCHIVO A FLEX
 extern int yyparse(); //METODO QUE INICIA EL ANALISIS SINTACTICO
+
+extern int jjrestart( FILE* archivo);//METODO QUE PASA EL ARCHIVO A FLEX
+extern int jjparse(); //METODO QUE INICIA EL ANALISIS SINTACTICO
+extern void setFila();
+extern void setColumna();
 
 
 namespace Ui {
@@ -53,6 +59,8 @@ private slots:
     void on_bt_reemplazarAll_clicked();
 
     void on_bt_reemplazar_clicked();
+
+    void on_bt_buscar_3_clicked();
 
 private:
     Ui::Ventana_Principal *ui;

@@ -1,4 +1,4 @@
-S : INICIO
+S : INICIO 
 
 INICIO : <jsl:transformacion ruta="cadena" version="cadena"> LISTA_SENTENCIAS </jsl:final>
 
@@ -24,9 +24,15 @@ TIPO : entero
 
 DECLARACION : <jsl: variable = identificador valor = VALOR>
 
-VALOR : 
+VALOR : val_cadena
+	| val_decimal
+	| val_entero
+	| val_true
+	| val_false
+	| identificador
+	| EXP_ARIT
 
-PLANTILLA : <jsl:plantilla nombreObj = nombre_ojeto> LISTA_SENTENCIAS </jsl:plantilla>
+PLANTILLA : <jsl:plantilla nombreObj = nombre_objeto> LISTA_SENTENCIAS </jsl:plantilla>
 
 APLICAR_PLANTILLA : <jsl:plantilla-aplicar seleccionar= nombre_objeto>
 
@@ -34,10 +40,9 @@ VALOR_DE : <jsl: valor-de seleccionar = nombre_objeto>
 
 PARA_CADA : <jsl:para-cada seleccionar = nombre_ojeto> LISTA_SENTENCIAS </jsl:para-cada>
 
-SI : <jsl:if condicion = LISTA_CONDICION> LISTA_SENTENCIAS </jsl:if>
+SI : <jsl:if condicion = EXP_LOGICA> LISTA_SENTENCIAS </jsl:if>
 
-LISTA_CONDICION : LISTA_CONDICION EXP_REL
-	| EXP_REL
+
 
 EXP_REL : EXP_REL == EXP_REL
 	| EXP_REL != EXP_REL
@@ -52,6 +57,7 @@ EXP_ARIT :	EXP_ARIT por EXP_ARIT
 	| EXP_ARIT mas EXP_ARIT
 	| EXP_ARIT div EXP_ARIT
 	| EXP_ARIT menos EXP_ARIT
+	| EXP_ARIT modulo EXP_ARIT
 	| num
 	| id
 	| (EXP_ARIT)
@@ -62,4 +68,7 @@ EXP_LOGICA : EXP_LOGICA || EXP_LOGICA
 	| EXP_LOGICA !|| EXP_LOGICA
 	| EXP_LOGICA &| EXP_LOGICA
 	| EXP_LOGICA ! EXP_LOGICA
+	| (EXP_LOGICA)
 	| EXP_REL
+
+EN_CASO : 

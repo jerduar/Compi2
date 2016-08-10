@@ -23,7 +23,7 @@ extern char *yytext; //lexema actual donde esta el parser (analisis lexico) lo m
 int yyerror(const char* mens){
 //metodo que se llama al haber un error sintactico
 //SE IMPRIME EN CONSOLA EL ERROR
-std::cout <<mens<<" error: "<<yytext << " linea: " << yylineno << " columna: " << columna << std::endl;
+std::cout <<mens<<" error: "<<yytext << " linea: " << fila << " columna: " << columna << std::endl;
 return 0;
 }
 
@@ -31,6 +31,14 @@ QTextEdit* salida; //puntero al QTextEdit de salida
 void setSalida(QTextEdit* sal) {
 //metodo que asigna el valor al QTextEdit de salida
 salida=sal;
+}
+
+void setFila(){
+    fila = 1;
+}
+
+void setColumna(){
+    columna = 0;
 }
 
 struct Operador{

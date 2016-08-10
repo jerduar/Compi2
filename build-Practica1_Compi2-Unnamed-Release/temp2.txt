@@ -1,0 +1,14 @@
+<jsl:transformacion ruta="/ola" version="Compi2">
+	<jsl: variable entero=juan23>
+	<jsl: variable=juan23 valor = 'c'>
+
+	## esto es un comentario
+
+	<jsl:plantilla nombreObj=Persona>
+		<jsl: variable=juan23 valor = 'c'>
+	</jsl:plantilla>
+
+	<jsl:if condicion=(cama == sillon || (34*5 != cama*comida))>
+		<jsl: variable entero=juan23>
+	</jsl:if>
+</jsl:final>

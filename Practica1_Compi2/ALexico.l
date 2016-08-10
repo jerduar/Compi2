@@ -27,8 +27,7 @@ letra ["][^\"]*["]
 {dec}        { columna=columna+strlen(yylval.TEXT); strcpy(yylval.TEXT, yytext); return decimal; }
 {letra}        { columna=columna+strlen(yylval.TEXT); strcpy(yylval.TEXT, yytext); return cadena; }
 {identificador} { columna=columna+strlen(yylval.TEXT); strcpy(yylval.TEXT, yytext); return identificador; }
-"\n"    {columna = 0;fila++;}
-"\t"    {columna++;}
-"\r"    {columna++;}
+\n    {columna = 0;fila = fila + 1;}
+[\t\r]    {columna = columna + 1;}
 .               {}
 %%

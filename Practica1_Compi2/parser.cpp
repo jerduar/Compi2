@@ -88,7 +88,7 @@ extern char *yytext; //lexema actual donde esta el parser (analisis lexico) lo m
 int yyerror(const char* mens){
 //metodo que se llama al haber un error sintactico
 //SE IMPRIME EN CONSOLA EL ERROR
-std::cout <<mens<<" error: "<<yytext << " linea: " << yylineno << " columna: " << columna << std::endl;
+std::cout <<mens<<" error: "<<yytext << " linea: " << fila << " columna: " << columna << std::endl;
 return 0;
 }
 
@@ -98,6 +98,14 @@ void setSalida(QTextEdit* sal) {
 salida=sal;
 }
 
+void setFila(){
+    fila = 1;
+}
+
+void setColumna(){
+    columna = 0;
+}
+
 struct Operador{
 //ESTRUCTURA LA CUAL CONTENDRA LOS TIPOS DE LOS NO TERMINALES PARA HEREDAR VALORES
 QString  texto;
@@ -105,7 +113,7 @@ float valor;
 };
 
 
-#line 109 "parser.cpp" /* yacc.c:339  */
+#line 117 "parser.cpp" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -161,14 +169,14 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 46 "ASintactico.y" /* yacc.c:355  */
+#line 54 "ASintactico.y" /* yacc.c:355  */
 
 //se especifican los tipo de valores para los no terminales y lo terminales
 char TEXT [256];
 struct Operador * VAL;
 struct Nodo *NODE;
 
-#line 172 "parser.cpp" /* yacc.c:355  */
+#line 180 "parser.cpp" /* yacc.c:355  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -185,7 +193,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 189 "parser.cpp" /* yacc.c:358  */
+#line 197 "parser.cpp" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -484,9 +492,9 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    82,    82,    84,    86,    87,    90,    95,    99,   101,
-     102,   104,   105,   107,   108,   111,   112,   114,   116,   117,
-     118,   119,   120
+       0,    90,    90,    92,    94,    95,    98,   103,   107,   109,
+     110,   112,   113,   115,   116,   119,   120,   122,   124,   125,
+     126,   127,   128
 };
 #endif
 
@@ -1281,140 +1289,140 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 82 "ASintactico.y" /* yacc.c:1646  */
+#line 90 "ASintactico.y" /* yacc.c:1646  */
     {(yyvsp[0].NODE)->Recorrido();}
-#line 1287 "parser.cpp" /* yacc.c:1646  */
+#line 1295 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 3:
-#line 84 "ASintactico.y" /* yacc.c:1646  */
+#line 92 "ASintactico.y" /* yacc.c:1646  */
     {(yyval.NODE) = (yyvsp[-1].NODE);}
-#line 1293 "parser.cpp" /* yacc.c:1646  */
+#line 1301 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 4:
-#line 86 "ASintactico.y" /* yacc.c:1646  */
+#line 94 "ASintactico.y" /* yacc.c:1646  */
     {(yyvsp[-2].NODE)->Hijos->append((yyvsp[0].NODE));(yyval.NODE) = (yyvsp[-2].NODE);}
-#line 1299 "parser.cpp" /* yacc.c:1646  */
+#line 1307 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 5:
-#line 87 "ASintactico.y" /* yacc.c:1646  */
+#line 95 "ASintactico.y" /* yacc.c:1646  */
     {(yyval.NODE) = new Nodo();(yyval.NODE)->Hijos->append((yyvsp[0].NODE));/*$$->Recorrido();*/}
-#line 1305 "parser.cpp" /* yacc.c:1646  */
+#line 1313 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 6:
-#line 90 "ASintactico.y" /* yacc.c:1646  */
+#line 98 "ASintactico.y" /* yacc.c:1646  */
     {
                                         (yyval.NODE) = (yyvsp[-1].NODE);
                                         (yyval.NODE)->Nombre = (yyvsp[-4].TEXT);
                                         //$$->Recorrido();
                                       }
-#line 1315 "parser.cpp" /* yacc.c:1646  */
+#line 1323 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 7:
-#line 95 "ASintactico.y" /* yacc.c:1646  */
+#line 103 "ASintactico.y" /* yacc.c:1646  */
     {QTextStream(stdout) << "Produccion AO" << endl;
                                     (yyval.NODE) = (yyvsp[-1].NODE);
                                     (yyval.NODE)->Nombre = (yyvsp[-4].TEXT);
                                    }
-#line 1324 "parser.cpp" /* yacc.c:1646  */
+#line 1332 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 8:
-#line 99 "ASintactico.y" /* yacc.c:1646  */
+#line 107 "ASintactico.y" /* yacc.c:1646  */
     {(yyval.NODE) = (yyvsp[-1].NODE); (yyval.NODE)->Nombre = (yyvsp[-4].TEXT);}
-#line 1330 "parser.cpp" /* yacc.c:1646  */
+#line 1338 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 9:
-#line 101 "ASintactico.y" /* yacc.c:1646  */
+#line 109 "ASintactico.y" /* yacc.c:1646  */
     {/*QTextStream(stdout) <<  $3->Valor << endl;*/(yyvsp[-2].NODE)->Hijos->append((yyvsp[0].NODE));(yyval.NODE) = (yyvsp[-2].NODE);}
-#line 1336 "parser.cpp" /* yacc.c:1646  */
+#line 1344 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 10:
-#line 102 "ASintactico.y" /* yacc.c:1646  */
+#line 110 "ASintactico.y" /* yacc.c:1646  */
     {/*QTextStream(stdout) << $1->Valor << endl;*/ (yyval.NODE) = new Nodo(); (yyval.NODE)->Hijos->append((yyvsp[0].NODE));}
-#line 1342 "parser.cpp" /* yacc.c:1646  */
+#line 1350 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 11:
-#line 104 "ASintactico.y" /* yacc.c:1646  */
+#line 112 "ASintactico.y" /* yacc.c:1646  */
     {Nodo *hijo = new Nodo(); hijo->Valor = (yyvsp[0].TEXT); (yyval.NODE)->Hijos->append(hijo);}
-#line 1348 "parser.cpp" /* yacc.c:1646  */
+#line 1356 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 12:
-#line 105 "ASintactico.y" /* yacc.c:1646  */
+#line 113 "ASintactico.y" /* yacc.c:1646  */
     {(yyval.NODE) = new Nodo(); Nodo *hijo = new Nodo(); hijo->Valor = (yyvsp[0].TEXT); (yyval.NODE)->Hijos->append(hijo);}
-#line 1354 "parser.cpp" /* yacc.c:1646  */
+#line 1362 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 13:
-#line 107 "ASintactico.y" /* yacc.c:1646  */
+#line 115 "ASintactico.y" /* yacc.c:1646  */
     {(yyval.NODE) = new Nodo(); (yyval.NODE)->Valor = (yyvsp[0].TEXT); (yyval.NODE)->Nombre = (yyvsp[-2].TEXT);}
-#line 1360 "parser.cpp" /* yacc.c:1646  */
+#line 1368 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 108 "ASintactico.y" /* yacc.c:1646  */
+#line 116 "ASintactico.y" /* yacc.c:1646  */
     {(yyval.NODE) = (yyvsp[0].NODE);}
-#line 1366 "parser.cpp" /* yacc.c:1646  */
+#line 1374 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 15:
-#line 111 "ASintactico.y" /* yacc.c:1646  */
+#line 119 "ASintactico.y" /* yacc.c:1646  */
     {(yyvsp[-2].NODE)->Hijos->append((yyvsp[0].NODE)); (yyval.NODE) = (yyvsp[-2].NODE);}
-#line 1372 "parser.cpp" /* yacc.c:1646  */
+#line 1380 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 16:
-#line 112 "ASintactico.y" /* yacc.c:1646  */
+#line 120 "ASintactico.y" /* yacc.c:1646  */
     {(yyval.NODE) = new Nodo(); (yyval.NODE)->Hijos->append((yyvsp[0].NODE)); }
-#line 1378 "parser.cpp" /* yacc.c:1646  */
+#line 1386 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 17:
-#line 114 "ASintactico.y" /* yacc.c:1646  */
+#line 122 "ASintactico.y" /* yacc.c:1646  */
     {(yyval.NODE) = (yyvsp[-1].NODE);}
-#line 1384 "parser.cpp" /* yacc.c:1646  */
+#line 1392 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 18:
-#line 116 "ASintactico.y" /* yacc.c:1646  */
+#line 124 "ASintactico.y" /* yacc.c:1646  */
     {/*QTextStream(stdout) << "cadena" << endl;*/strcmp((yyval.TEXT),(yyvsp[0].TEXT));strcat((yyval.TEXT),":cadena");}
-#line 1390 "parser.cpp" /* yacc.c:1646  */
+#line 1398 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 19:
-#line 117 "ASintactico.y" /* yacc.c:1646  */
+#line 125 "ASintactico.y" /* yacc.c:1646  */
     {/*QTextStream(stdout) << "decimal" << endl;*/strcmp((yyval.TEXT),(yyvsp[0].TEXT));strcat((yyval.TEXT),":decimal");}
-#line 1396 "parser.cpp" /* yacc.c:1646  */
+#line 1404 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 20:
-#line 118 "ASintactico.y" /* yacc.c:1646  */
+#line 126 "ASintactico.y" /* yacc.c:1646  */
     {/*QTextStream(stdout) << "entero" << endl;*/strcmp((yyval.TEXT),(yyvsp[0].TEXT));strcat((yyval.TEXT),":entero");}
-#line 1402 "parser.cpp" /* yacc.c:1646  */
+#line 1410 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 21:
-#line 119 "ASintactico.y" /* yacc.c:1646  */
+#line 127 "ASintactico.y" /* yacc.c:1646  */
     {/*QTextStream(stdout) << "verdadero" << endl;*/ strcmp((yyval.TEXT),(yyvsp[0].TEXT));strcat((yyval.TEXT),":verdadero");}
-#line 1408 "parser.cpp" /* yacc.c:1646  */
+#line 1416 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 22:
-#line 120 "ASintactico.y" /* yacc.c:1646  */
+#line 128 "ASintactico.y" /* yacc.c:1646  */
     {/*QTextStream(stdout) << "falso" << endl;*/ strcmp((yyval.TEXT),(yyvsp[0].TEXT));strcat((yyval.TEXT),":falso");}
-#line 1414 "parser.cpp" /* yacc.c:1646  */
+#line 1422 "parser.cpp" /* yacc.c:1646  */
     break;
 
 
-#line 1418 "parser.cpp" /* yacc.c:1646  */
+#line 1426 "parser.cpp" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1642,5 +1650,5 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 121 "ASintactico.y" /* yacc.c:1906  */
+#line 129 "ASintactico.y" /* yacc.c:1906  */
 

@@ -116,8 +116,11 @@ void Ventana_Principal::on_actionGenerar_HTML_triggered()
             stream1 << actual->enviar_texto();
         }
 
+
         const char* x = "temp.txt";
         FILE* input = fopen(x, "r" );
+        setFila();
+        setColumna();
         yyrestart(input);//SE PASA LA CADENA DE ENTRADA A FLEX
         yyparse();//SE INICIA LA COMPILACION
     }
@@ -185,5 +188,26 @@ void Ventana_Principal::on_bt_reemplazar_clicked()
 
     if(actual != NULL){
         actual->repleace(ui->lineEdit_2->text(),ui->lineEdit->text());
+    }
+}
+
+void Ventana_Principal::on_bt_buscar_3_clicked()
+{
+    Pestana *actual = (Pestana*)ui->tabWidget->currentWidget();
+
+    if(actual != NULL){
+        QFile file("temp2.txt"); //SE CREA UN ARCHIVO TEMPORAL PARA COMPILARLO
+        if ( file.open( file.WriteOnly ) ) { //BUFFER PARA EL TEXTO QUE SE DESEA COMPILAR
+            QTextStream stream1( &file );
+            stream1 << actual->enviar_texto();
+        }
+
+
+        const char* x = "temp2.txt";
+        FILE* input = fopen(x, "r" );
+        setFila();
+        setColumna();
+        jjrestart(input);//SE PASA LA CADENA DE ENTRADA A FLEX
+        jjparse();//SE INICIA LA COMPILACION
     }
 }

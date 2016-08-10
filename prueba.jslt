@@ -1,0 +1,10 @@
+<jsl:transformacion ruta="/ola" version="Compi2">
+	<jsl: variable entero=juan23>
+	<jsl: variable=juan23 valor = 'c'>
+
+	## esto es un comentario
+
+	<jsl:plantilla nombreObj=Persona>
+		<jsl: variable=juan23 valor = 'c'>
+	</jsl:plantilla>
+</jsl:final>

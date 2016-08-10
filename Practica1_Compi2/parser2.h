@@ -30,14 +30,14 @@
    This special exception was added by the Free Software Foundation in
    version 2.2 of Bison.  */
 
-#ifndef YY_JS_PARSER2_H_INCLUDED
-# define YY_JS_PARSER2_H_INCLUDED
+#ifndef YY_JJ_PARSER2_H_INCLUDED
+# define YY_JJ_PARSER2_H_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
 #endif
 #if YYDEBUG
-extern int jsdebug;
+extern int jjdebug;
 #endif
 
 /* Token type.  */
@@ -45,19 +45,68 @@ extern int jsdebug;
 # define YYTOKENTYPE
   enum yytokentype
   {
-    llavea = 258,
-    llavec = 259,
-    dospuntos = 260,
-    cora = 261,
-    corc = 262,
-    coma = 263,
-    cadena = 264,
-    identificador = 265,
-    comilla = 266,
-    falso = 267,
-    verdadero = 268,
-    decimal = 269,
-    entero = 270
+    dospuntos = 258,
+    jslt = 259,
+    transformacion = 260,
+    ruta = 261,
+    version = 262,
+    final = 263,
+    break_a = 264,
+    break_c = 265,
+    slash = 266,
+    asignar = 267,
+    variable = 268,
+    valor = 269,
+    paracada = 270,
+    si = 271,
+    encaso = 272,
+    de = 273,
+    cualquierotro = 274,
+    seleccionar = 275,
+    plantilla = 276,
+    condicion = 277,
+    igualigual = 278,
+    diferente = 279,
+    menor_que = 280,
+    menor_igual = 281,
+    mayor_que = 282,
+    mayor_igual = 283,
+    es_nulo = 284,
+    oor = 285,
+    aand = 286,
+    nand = 287,
+    nor = 288,
+    xxor = 289,
+    nnot = 290,
+    mas = 291,
+    menos = 292,
+    division = 293,
+    por = 294,
+    modulo = 295,
+    potencia = 296,
+    incremento = 297,
+    decremento = 298,
+    suma_igual = 299,
+    tipo_entero = 300,
+    tipo_cadena = 301,
+    tipo_doble = 302,
+    tipo_bool = 303,
+    tipo_char = 304,
+    cora = 305,
+    corc = 306,
+    coma = 307,
+    cadena = 308,
+    identificador = 309,
+    falso = 310,
+    verdadero = 311,
+    decimal = 312,
+    caracter = 313,
+    entero = 314,
+    igual = 315,
+    nombreobj = 316,
+    plantilla_aplicar = 317,
+    para = 318,
+    parc = 319
   };
 #endif
 
@@ -66,14 +115,14 @@ extern int jsdebug;
 
 union YYSTYPE
 {
-#line 46 "Sintactico_JSLT.y" /* yacc.c:1909  */
+#line 45 "Sintactico_JSLT.y" /* yacc.c:1909  */
 
 //se especifican los tipo de valores para los no terminales y lo terminales
 char TEXT [256];
 struct Operador * VAL;
 struct Nodo *NODE;
 
-#line 77 "parser2.h" /* yacc.c:1909  */
+#line 126 "parser2.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -82,8 +131,8 @@ typedef union YYSTYPE YYSTYPE;
 #endif
 
 
-extern YYSTYPE jslval;
+extern YYSTYPE jjlval;
 
-int jsparse (void);
+int jjparse (void);
 
-#endif /* !YY_JS_PARSER2_H_INCLUDED  */
+#endif /* !YY_JJ_PARSER2_H_INCLUDED  */
