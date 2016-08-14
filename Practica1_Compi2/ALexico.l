@@ -8,8 +8,7 @@ int columna=0;
 int fila = 1;
 %}
 digito [0-9]
-decimal [{digito}+"."{digito}+]
-dec ["]{decimal}["]
+dec ["]([0-9])+"."([0-9])+["]
 entero \"{digito}+\"
 identificador [a-z][a-z0-9]*
 letra ["][^\"]*["]
