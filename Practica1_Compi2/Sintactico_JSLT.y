@@ -179,6 +179,12 @@ INICIO : break_a jslt dospuntos transformacion ruta igual cadena version igual c
         $$->addHijo($7);
         $$->addHijo($8);
         $$->addHijo($9);
+
+        QString temp;
+        temp.sprintf($9);
+        temp.remove(0,0);
+        temp.remove(temp.size()-1,temp.size()-1);
+
         $$->addHijo($10);
         $$->addHijo($11);
         $$->addHijo($12);
@@ -190,7 +196,10 @@ INICIO : break_a jslt dospuntos transformacion ruta igual cadena version igual c
         $$->addHijo($18);
     };
 
-LISTA_SENTENCIAS : LISTA_SENTENCIAS SENTENCIA{}
+LISTA_SENTENCIAS : LISTA_SENTENCIAS SENTENCIA{
+        $1->addHijo($2);
+        $$ = $1;
+    }
     | SENTENCIA{
         $$ = new NodoAST("LISTA_SENTENCIAS");
         $$->addHijo($1);
@@ -203,7 +212,10 @@ SENTENCIA : ASIGNACION{}
     }
     | PLANTILLA{}
     | APLICAR_PLANTILLA{}
-    | VALOR_DE{}
+    | VALOR_DE{
+        $$ = new NodoAST("SENTENCIA");
+        $$-> addHijo($1);
+    }
     | PARA_CADA{}
     | HTML{}
     | EN_CASO{}
@@ -243,7 +255,10 @@ EXP_ARIT : EXP_ARIT por EXP_ARIT{}
     | entero{}
     | caracter{}
     | cadena{}
-    | decimal{};
+    | decimal{
+        $$ = new NodoAST("EXP_ARIT");
+        $$->addHijo($1);
+    };
 
 PLANTILLA : break_a jslt dospuntos plantilla nombreobj igual identificador break_c LISTA_SENTENCIAS break_a slash jslt dospuntos plantilla break_c{};
 
@@ -301,7 +316,17 @@ TIPO : tipo_entero{
         $$->Hijos->append(aux);
     };
 
-VALOR_DE :  break_a jslt jslt dospuntos valor_de seleccionar igual identificador break_c{};
+VALOR_DE :  break_a jslt dospuntos valor_de seleccionar igual identificador break_c{
+        $$ = new NodoAST("VALOR_DE");
+        $$->addHijo($1);
+        $$->addHijo($2);
+        $$->addHijo($3);
+        $$->addHijo($4);
+        $$->addHijo($5);
+        $$->addHijo($6);
+        $$->addHijo($7);
+        $$->addHijo($8);
+    };
 
 PARA_CADA : break_a jslt dospuntos para_cada seleccionar igual identificador break_c LISTA_SENTENCIAS break_a slash jslt dospuntos para_cada break_c{};
 
