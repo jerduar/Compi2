@@ -38,7 +38,7 @@ void setFila(){
 }
 
 void setColumna(){
-    columna = 0;
+    columna = 1;
 }
 
 struct Operador{
@@ -78,7 +78,7 @@ struct Nodo *NODE;
 %type<NODE>  O
 %type<NODE>  LA
 %type<NODE>  A
-%type<NODE> AO
+%type<NODE>  AO
 %type<NODE>  L
 %type<NODE>  LV
 %type<NODE> LO

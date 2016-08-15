@@ -243,7 +243,10 @@ EXP_ARIT : EXP_ARIT por EXP_ARIT{}
     | entero{}
     | caracter{}
     | cadena{}
-    | decimal{};
+    | decimal{
+        $$ = new NodoAST("EXP_ARIT");
+        $$->addHijo($1);
+    };
 
 PLANTILLA : break_a jslt dospuntos plantilla nombreobj igual identificador break_c LISTA_SENTENCIAS break_a slash jslt dospuntos plantilla break_c{};
 

@@ -205,9 +205,13 @@ void Ventana_Principal::on_bt_buscar_3_clicked()
 
         const char* x = "temp2.txt";
         FILE* input = fopen(x, "r" );
-        setFila();
-        setColumna();
+        jjsetFila();
+        jjsetColumna();
         jjrestart(input);//SE PASA LA CADENA DE ENTRADA A FLEX
         jjparse();//SE INICIA LA COMPILACION
+
+        ArbolAST *nuevo;
+        nuevo = setArbol();
+        nuevo->Dibujar();
     }
 }

@@ -19,7 +19,9 @@ SOURCES += main.cpp\
         parser.cpp \
         nodo.cpp\
         parser2.cpp\
-        scanner2.cpp
+        scanner2.cpp \
+    nodoast.cpp \
+    arbolast.cpp
 
 
 HEADERS  += ventana_principal.h \
@@ -28,7 +30,9 @@ HEADERS  += ventana_principal.h \
     parser.h \
     nodo.h\
     parser2.h\
-    scanner2.h
+    scanner2.h \
+    nodoast.h \
+    arbolast.h
 
 
 FORMS    += ventana_principal.ui \

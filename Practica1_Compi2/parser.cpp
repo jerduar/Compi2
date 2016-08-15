@@ -103,7 +103,7 @@ void setFila(){
 }
 
 void setColumna(){
-    columna = 0;
+    columna = 1;
 }
 
 struct Operador{
