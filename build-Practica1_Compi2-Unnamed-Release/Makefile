@@ -55,7 +55,9 @@ SOURCES       = ../Practica1_Compi2/main.cpp \
 		../Practica1_Compi2/parser.cpp \
 		../Practica1_Compi2/nodo.cpp \
 		../Practica1_Compi2/parser2.cpp \
-		../Practica1_Compi2/scanner2.cpp moc_ventana_principal.cpp \
+		../Practica1_Compi2/scanner2.cpp \
+		../Practica1_Compi2/nodoast.cpp \
+		../Practica1_Compi2/arbolast.cpp moc_ventana_principal.cpp \
 		moc_pestana.cpp
 OBJECTS       = main.o \
 		ventana_principal.o \
@@ -65,6 +67,8 @@ OBJECTS       = main.o \
 		nodo.o \
 		parser2.o \
 		scanner2.o \
+		nodoast.o \
+		arbolast.o \
 		moc_ventana_principal.o \
 		moc_pestana.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
@@ -129,14 +133,18 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		../Practica1_Compi2/parser.h \
 		../Practica1_Compi2/nodo.h \
 		../Practica1_Compi2/parser2.h \
-		../Practica1_Compi2/scanner2.h ../Practica1_Compi2/main.cpp \
+		../Practica1_Compi2/scanner2.h \
+		../Practica1_Compi2/nodoast.h \
+		../Practica1_Compi2/arbolast.h ../Practica1_Compi2/main.cpp \
 		../Practica1_Compi2/ventana_principal.cpp \
 		../Practica1_Compi2/pestana.cpp \
 		../Practica1_Compi2/scanner.cpp \
 		../Practica1_Compi2/parser.cpp \
 		../Practica1_Compi2/nodo.cpp \
 		../Practica1_Compi2/parser2.cpp \
-		../Practica1_Compi2/scanner2.cpp
+		../Practica1_Compi2/scanner2.cpp \
+		../Practica1_Compi2/nodoast.cpp \
+		../Practica1_Compi2/arbolast.cpp
 QMAKE_TARGET  = Practica1_Compi2
 DESTDIR       = #avoid trailing-slash linebreak
 TARGET        = Practica1_Compi2
@@ -302,8 +310,8 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents ../Practica1_Compi2/ventana_principal.h ../Practica1_Compi2/pestana.h ../Practica1_Compi2/scanner.h ../Practica1_Compi2/parser.h ../Practica1_Compi2/nodo.h ../Practica1_Compi2/parser2.h ../Practica1_Compi2/scanner2.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../Practica1_Compi2/main.cpp ../Practica1_Compi2/ventana_principal.cpp ../Practica1_Compi2/pestana.cpp ../Practica1_Compi2/scanner.cpp ../Practica1_Compi2/parser.cpp ../Practica1_Compi2/nodo.cpp ../Practica1_Compi2/parser2.cpp ../Practica1_Compi2/scanner2.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../Practica1_Compi2/ventana_principal.h ../Practica1_Compi2/pestana.h ../Practica1_Compi2/scanner.h ../Practica1_Compi2/parser.h ../Practica1_Compi2/nodo.h ../Practica1_Compi2/parser2.h ../Practica1_Compi2/scanner2.h ../Practica1_Compi2/nodoast.h ../Practica1_Compi2/arbolast.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../Practica1_Compi2/main.cpp ../Practica1_Compi2/ventana_principal.cpp ../Practica1_Compi2/pestana.cpp ../Practica1_Compi2/scanner.cpp ../Practica1_Compi2/parser.cpp ../Practica1_Compi2/nodo.cpp ../Practica1_Compi2/parser2.cpp ../Practica1_Compi2/scanner2.cpp ../Practica1_Compi2/nodoast.cpp ../Practica1_Compi2/arbolast.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../Practica1_Compi2/ventana_principal.ui ../Practica1_Compi2/pestana.ui $(DISTDIR)/
 
 
@@ -332,6 +340,7 @@ compiler_moc_header_clean:
 	-$(DEL_FILE) moc_ventana_principal.cpp moc_pestana.cpp
 moc_ventana_principal.cpp: ../Practica1_Compi2/parser.h \
 		../Practica1_Compi2/parser2.h \
+		../Practica1_Compi2/nodoast.h \
 		../Practica1_Compi2/ventana_principal.h
 	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/jerduar/COMPI2/Practica1_Compi2 -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../Practica1_Compi2/ventana_principal.h -o moc_ventana_principal.cpp
 
@@ -361,12 +370,14 @@ compiler_clean: compiler_moc_header_clean compiler_uic_clean
 
 main.o: ../Practica1_Compi2/main.cpp ../Practica1_Compi2/ventana_principal.h \
 		../Practica1_Compi2/parser.h \
-		../Practica1_Compi2/parser2.h
+		../Practica1_Compi2/parser2.h \
+		../Practica1_Compi2/nodoast.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../Practica1_Compi2/main.cpp
 
 ventana_principal.o: ../Practica1_Compi2/ventana_principal.cpp ../Practica1_Compi2/ventana_principal.h \
 		../Practica1_Compi2/parser.h \
 		../Practica1_Compi2/parser2.h \
+		../Practica1_Compi2/nodoast.h \
 		ui_ventana_principal.h \
 		../Practica1_Compi2/pestana.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ventana_principal.o ../Practica1_Compi2/ventana_principal.cpp
@@ -386,11 +397,18 @@ nodo.o: ../Practica1_Compi2/nodo.cpp ../Practica1_Compi2/nodo.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o nodo.o ../Practica1_Compi2/nodo.cpp
 
 parser2.o: ../Practica1_Compi2/parser2.cpp ../Practica1_Compi2/scanner2.h \
-		../Practica1_Compi2/nodo.h
+		../Practica1_Compi2/nodoast.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o parser2.o ../Practica1_Compi2/parser2.cpp
 
 scanner2.o: ../Practica1_Compi2/scanner2.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o scanner2.o ../Practica1_Compi2/scanner2.cpp
+
+nodoast.o: ../Practica1_Compi2/nodoast.cpp ../Practica1_Compi2/nodoast.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o nodoast.o ../Practica1_Compi2/nodoast.cpp
+
+arbolast.o: ../Practica1_Compi2/arbolast.cpp ../Practica1_Compi2/arbolast.h \
+		../Practica1_Compi2/nodoast.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o arbolast.o ../Practica1_Compi2/arbolast.cpp
 
 moc_ventana_principal.o: moc_ventana_principal.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_ventana_principal.o moc_ventana_principal.cpp
