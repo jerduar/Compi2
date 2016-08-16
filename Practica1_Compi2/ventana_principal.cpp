@@ -125,10 +125,11 @@ void Ventana_Principal::on_actionGenerar_HTML_triggered()
         setColumna();
         yyrestart(input);//SE PASA LA CADENA DE ENTRADA A FLEX
         yyparse();//SE INICIA LA COMPILACION
+        QTextStream(stdout) << "termino el json" << endl;
 
 
         ArbolJ *nuevo = setArbolito();
-        if(nuevo != NULL){
+        if(nuevo != NULL && correctojson() != 1){
             nuevo->Dibujar();
         }
     }

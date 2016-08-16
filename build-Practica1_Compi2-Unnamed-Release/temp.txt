@@ -5,8 +5,8 @@
 	"title": "Empire Burlesque",
 	"artist": "Bob Daniel",
 	"country": "USA",
-	"company": "Columbia",
-	"price": "10.90",,
+	"company": "Columbia",,
+	"price": "10.90",
 	"year": "1985",
 	"bestSeller": "falso"
 },

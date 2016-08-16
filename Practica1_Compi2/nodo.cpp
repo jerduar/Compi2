@@ -7,6 +7,7 @@ Nodo::Nodo()
     this->Hijos = new QList<Nodo*>;
     this->esPadre = false;
     this->Nombre = "null";
+    this->identificador = index_nodo++;
 }
 
 void Nodo::Recorrido()

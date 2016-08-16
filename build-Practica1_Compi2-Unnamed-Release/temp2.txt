@@ -8,7 +8,7 @@
 	"company": "Columbia",
 	"price": "10.90",
 	"year": "1985",
-	"bestSeller": "falso"
+	"bestSeller": "falso",
 },
 {
 "title": "Luna nueva",

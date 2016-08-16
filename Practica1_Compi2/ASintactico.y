@@ -1,22 +1,13 @@
 %{
 #include "scanner.h"//se importa el header del analisis sintactico
-
 #include <iostream> //libreria para imprimir en cosola de C
-
 #include <QString> //libreria para manejo de STRINGS de QT
-
 #include <QTextStream>
-
 #include <QStringList>
-
 #include <arbolj.h>
-
 #include <nodo.h>//OBJETO PARA ALMECENAR LOS ATRIBUTOS DE LOS OBJETOS
-
 #include <QHash> //Libreria para manejar HASH TABLES de QT, se usa para la tabla de simbolos
-
 #include <QListWidget>
-
 #include <QTextEdit> //libreria QTextEdit de QT para poder mostrar el resultado en pantalla
 
 extern int fila; //linea actual donde se encuentra el parser (analisis lexico) lo maneja BISON
@@ -24,6 +15,10 @@ extern int columna; //columna actual donde se encuentra el parser (analisis lexi
 extern char *yytext; //lexema actual donde esta el parser (analisis lexico) lo maneja BISON
 
 int correcto_json = 1;
+
+extern int correctojson(){
+    return correcto_json;
+}
 
 QListWidget *ventanita_json;
 
@@ -36,7 +31,7 @@ int yyerror(const char* mens){
 //SE IMPRIME EN CONSOLA EL ERROR
 std::cout <<mens<<" error: "<<yytext << " linea: " << fila << " columna: " << columna << std::endl;
 QTextStream(stdout) << "INGRESANDO ERROR" << endl;
-//ventanita_json->addItem("Error Sintactico : " + (QString)yytext + " linea: " + fila + " columna: " + QString::number(columna - strlen(yytext)));
+ventanita_json->addItem("Error Sintactico : " + (QString)yytext + " linea: " + fila + " columna: " + QString::number(columna - strlen(yytext)));
 QTextStream(stdout) << "ERROR ingresado" << endl;
 return 0;
 }
@@ -113,7 +108,8 @@ S : J{
         }else{
         arbolito = NULL;
         }
-     };
+     }
+    | error{yyerror; correcto_json = 1; QTextStream(stdout) << "termino el error4 " << endl;arbolito = NULL;};
 
 J : llavea LO llavec{$$ = $2;};
 
@@ -132,7 +128,9 @@ O : cadena dospuntos llavea LA llavec {
                                     $$ = $4;
                                     $$->Nombre = $1;
                                    }
-    | cadena dospuntos cora LV corc{$$ = $4; $$->Nombre = $1;};
+    | cadena dospuntos cora LV corc{$$ = $4; $$->Nombre = $1;}
+
+    | error{yyerror; correcto_json = 1;};
 
 LA : LA coma A{$1->Hijos->append($3);$$ = $1;QTextStream(stdout) <<  "PRDUCCION LA COMA A" << endl;}
     | A{/*QTextStream(stdout) << $1->Valor << endl;*/ $$ = new Nodo(); $$->Hijos->append($1);};
@@ -145,7 +143,7 @@ A : cadena dospuntos VALOR{$$ = new Nodo(); $$->Valor = $3; $$->Nombre = $1;}
     | O {$$ = $1;};
 
 
-AO : AO coma L{$1->Hijos->append($3); $$ = $1;}
+AO : AO coma L{$1->Hijos->append($3); $$ = $1;QTextStream(stdout) << "PRODUCCION AO COM L" << endl;}
     | L{$$ = new Nodo(); $$->Hijos->append($1); };
 
 L : llavea LA llavec{$$ = $2; QTextStream(stdout) << "PRODUCCION" << endl;};
@@ -154,5 +152,6 @@ VALOR : cadena {/*QTextStream(stdout) << "cadena" << endl;*/strcmp($$,$1);strcat
     | decimal{/*QTextStream(stdout) << "decimal" << endl;*/strcmp($$,$1);strcat($$,":decimal");}
     | entero {/*QTextStream(stdout) << "entero" << endl;*/strcmp($$,$1);strcat($$,":entero");}
     | verdadero {/*QTextStream(stdout) << "verdadero" << endl;*/ strcmp($$,$1);strcat($$,":verdadero");}
-    | falso{/*QTextStream(stdout) << "falso" << endl;*/ strcmp($$,$1);strcat($$,":falso");};
+    | falso{/*QTextStream(stdout) << "falso" << endl;*/ strcmp($$,$1);strcat($$,":falso");}
+    | error{yyerror; correcto_json = 1;};
 %%

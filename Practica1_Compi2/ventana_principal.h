@@ -24,6 +24,7 @@ extern int jjrestart( FILE* archivo);//METODO QUE PASA EL ARCHIVO A FLEX
 extern int jjparse(); //METODO QUE INICIA EL ANALISIS SINTACTICO
 extern void setFila();
 extern void setColumna();
+extern int correctojson();
 
 extern void jjsetFila();
 extern void jjsetColumna();

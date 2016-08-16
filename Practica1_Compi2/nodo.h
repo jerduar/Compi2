@@ -5,6 +5,7 @@
 #include <QTextStream>
 #include <QStringList>
 
+static int index_nodo = 0;//id para identificar los nodos, se usará en la graficación del árbol
 
 struct Nodo
 {
@@ -13,6 +14,7 @@ public:
     QString Nombre;
     QString Valor;
     QString Tipo;
+    int identificador;
     bool esPadre;
     
     Nodo();
