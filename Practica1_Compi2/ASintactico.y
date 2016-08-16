@@ -9,10 +9,13 @@
 
 #include <QStringList>
 
+#include <arbolj.h>
+
 #include <nodo.h>//OBJETO PARA ALMECENAR LOS ATRIBUTOS DE LOS OBJETOS
 
 #include <QHash> //Libreria para manejar HASH TABLES de QT, se usa para la tabla de simbolos
 
+#include <QListWidget>
 
 #include <QTextEdit> //libreria QTextEdit de QT para poder mostrar el resultado en pantalla
 
@@ -20,11 +23,27 @@ extern int fila; //linea actual donde se encuentra el parser (analisis lexico) l
 extern int columna; //columna actual donde se encuentra el parser (analisis lexico) lo maneja BISON
 extern char *yytext; //lexema actual donde esta el parser (analisis lexico) lo maneja BISON
 
+int correcto_json = 1;
+
+QListWidget *ventanita_json;
+
+void SetVentanita_json(QListWidget *ven){
+    ventanita_json = ven;
+}
+
 int yyerror(const char* mens){
 //metodo que se llama al haber un error sintactico
 //SE IMPRIME EN CONSOLA EL ERROR
 std::cout <<mens<<" error: "<<yytext << " linea: " << fila << " columna: " << columna << std::endl;
+QTextStream(stdout) << "INGRESANDO ERROR" << endl;
+//ventanita_json->addItem("Error Sintactico : " + (QString)yytext + " linea: " + fila + " columna: " + QString::number(columna - strlen(yytext)));
+QTextStream(stdout) << "ERROR ingresado" << endl;
 return 0;
+}
+
+ArbolJ *arbolito;
+ArbolJ *setArbolito(){
+    return arbolito;
 }
 
 QTextEdit* salida; //puntero al QTextEdit de salida
@@ -87,7 +106,14 @@ struct Nodo *NODE;
 %left comilla
 %%
 
-S : J{$1->Recorrido();};
+S : J{
+        if($1 != NULL){
+        arbolito = new ArbolJ();
+        arbolito->raiz = $1;
+        }else{
+        arbolito = NULL;
+        }
+     };
 
 J : llavea LO llavec{$$ = $2;};
 
@@ -96,18 +122,21 @@ LO : LO coma O{$1->Hijos->append($3);$$ = $1;}
 
 
 O : cadena dospuntos llavea LA llavec {
+                                        QTextStream(stdout) << "Produccion AO" << endl;
                                         $$ = $4;
                                         $$->Nombre = $1;
                                         //$$->Recorrido();
                                       }
-    | cadena dospuntos cora AO corc{QTextStream(stdout) << "Produccion AO" << endl;
+    | cadena dospuntos cora AO corc{
+                                    QTextStream(stdout) << "Produccion AO" << endl;
                                     $$ = $4;
                                     $$->Nombre = $1;
                                    }
     | cadena dospuntos cora LV corc{$$ = $4; $$->Nombre = $1;};
 
-LA : LA coma A{/*QTextStream(stdout) <<  $3->Valor << endl;*/$1->Hijos->append($3);$$ = $1;}
+LA : LA coma A{$1->Hijos->append($3);$$ = $1;QTextStream(stdout) <<  "PRDUCCION LA COMA A" << endl;}
     | A{/*QTextStream(stdout) << $1->Valor << endl;*/ $$ = new Nodo(); $$->Hijos->append($1);};
+
 
 LV : LV coma VALOR{Nodo *hijo = new Nodo(); hijo->Valor = $3; $$->Hijos->append(hijo);}
     | VALOR{$$ = new Nodo(); Nodo *hijo = new Nodo(); hijo->Valor = $1; $$->Hijos->append(hijo);};
@@ -119,7 +148,7 @@ A : cadena dospuntos VALOR{$$ = new Nodo(); $$->Valor = $3; $$->Nombre = $1;}
 AO : AO coma L{$1->Hijos->append($3); $$ = $1;}
     | L{$$ = new Nodo(); $$->Hijos->append($1); };
 
-L : llavea LA llavec{$$ = $2;};
+L : llavea LA llavec{$$ = $2; QTextStream(stdout) << "PRODUCCION" << endl;};
 
 VALOR : cadena {/*QTextStream(stdout) << "cadena" << endl;*/strcmp($$,$1);strcat($$,":cadena");}
     | decimal{/*QTextStream(stdout) << "decimal" << endl;*/strcmp($$,$1);strcat($$,":decimal");}

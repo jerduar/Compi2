@@ -1,10 +1,25 @@
-<jsl:transformacion ruta="/ola" version="Compi2">
+<jsl:transformacion ruta="ola" version="Compi2">
 	<jsl: variable entero=juan23>
 	<jsl: variable=juan23 valor = 'c'>
+	<jsl: if condicion = asig == 87>
+		<jsl: variable=juan23 valor = 'c'>	
+	</jsl:if>
 
-	## esto es un comentario
+	<jsl:plantilla nombreObj=comida>
+		<jsl:para-cada seleccionar = sal>
+		<jsl:plantilla-aplicar seleccionar=comida/>
+		</jsl:para-cada>
 
-	<jsl:plantilla nombreObj=Persona>
-		<jsl: variable=juan23 valor = 'c'>
+		<jsl: en-caso>
+			<jsl:de condicion = e == 3>
+				<jsl: variable=juan23 valor = 'c'>
+			</jsl:de>
+			<jsl:de condicion = e == 3>
+				<jsl: variable=juan23 valor = 'c'>
+			</jsl:de>
+			<jsl:cualquier-otro>
+				<jsl: variable=juan23 valor = 'c'>
+			</jsl:cualquier-otro>
+		</jsl:en-caso>
 	</jsl:plantilla>
 </jsl:final>

@@ -4,6 +4,13 @@
 #include <iostream>
 #include <QTextStream>
 #include <QString>
+#include <QListWidget>
+
+QListWidget *ventana;
+void SetVentana(QListWidget *vista){
+    ventana = vista;
+}
+
 int columna_jslt=0;
 int fila_jslt = 1;
 %}
@@ -13,11 +20,30 @@ decimal {digito}+"."{digito}+
 entero {digito}+
 comentario_linea "##"[^\n]*
 comentario_multilinea "#*"[^"*#"]*"*#"
-identificador [a-zñA-ZÑ][a-zA-Z0-9]*
+identificador [a-zñA-ZÑ][a-zñA-ZÑ0-9]*
 letra ["][^\"]*["]
 %%
 ":"                         { columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return dospuntos; }
 "html"                      { columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return tok_html; }
+"h1"                        { columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return tok_h1; }
+"h2"                        { columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return tok_h2; }
+"h3"                        { columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return tok_h3; }
+"h4"                        { columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return tok_h4; }
+"h5"                        { columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return tok_h5; }
+"h6"                        { columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return tok_h6; }
+"title"                     { columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return tok_title; }
+"body"                      { columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return tok_body; }
+"head"                      { columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return tok_head; }
+"table"                     { columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return tok_table; }
+"th"                        { columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return tok_th; }
+"tr"                        { columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return tok_tr; }
+"td"                        { columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return tok_td; }
+"boder"                     { columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return tok_boder; }
+"bgcolor"                   { columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return tok_bgcolor; }
+"width"                     { columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return tok_width; }
+"p"                         { columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return tok_p; }
+"b"                         { columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return tok_b; }
+"i"                         { columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return tok_i; }
 "jsl"                       { columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return jslt; }
 "transformacion"            { columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return transformacion; }
 "ruta"                      { columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return ruta; }
@@ -84,5 +110,7 @@ letra ["][^\"]*["]
 [\t\r]                      { columna_jslt = columna_jslt + 1; }
 " "                         {columna_jslt = columna_jslt + 1; }
 "   "                       {columna_jslt = columna_jslt + 1; }
-.                           {QTextStream(stdout) << "Error Lexico : " << jjtext << " fila : " << fila_jslt << " columna : " << QString::number(columna_jslt) << endl;}
+.                           {QTextStream(stdout) << "Error Lexico : " << jjtext << " fila : " << fila_jslt << " columna : " << QString::number(columna_jslt) << endl;
+                             QString aux = "Error Lexico : " + (QString)jjtext + " fila : " + QString::number(fila_jslt) + " columna : " + QString::number(columna_jslt);
+                             ventana->addItem(aux);}
 %%

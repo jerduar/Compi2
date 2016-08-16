@@ -11,6 +11,7 @@ Nodo::Nodo()
 
 void Nodo::Recorrido()
 {
+    QTextStream(stdout) << "recorrido" << endl;
     for(int i = 0; i < this->Hijos->size(); i++){
         this->Hijos->at(i)->Visitar();
         this->Hijos->at(i)->Recorrido();

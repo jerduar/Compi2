@@ -6,10 +6,10 @@
 	"artist": "Bob Daniel",
 	"country": "USA",
 	"company": "Columbia",
-	"price": "10.90",
+	"price": "10.90",,
 	"year": "1985",
 	"bestSeller": "falso"
-},,
+},
 {
 "title": "Luna nueva",
 "artist": "Alguien en el mundo",

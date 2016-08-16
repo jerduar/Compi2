@@ -167,6 +167,7 @@
      <string>Errores</string>
     </property>
     <addaction name="actionVer_Reportes"/>
+    <addaction name="actionVer_Reporte_JSON"/>
    </widget>
    <addaction name="menuArchivo"/>
    <addaction name="menuGenerar"/>
@@ -200,12 +201,17 @@
   </action>
   <action name="actionVer_Reportes">
    <property name="text">
-    <string>Ver Reportes</string>
+    <string>Ver Reporte JSLT</string>
    </property>
   </action>
   <action name="actionGenerar_HTML">
    <property name="text">
     <string>Generar HTML</string>
+   </property>
+  </action>
+  <action name="actionVer_Reporte_JSON">
+   <property name="text">
+    <string>Ver Reporte JSON</string>
    </property>
   </action>
  </widget>

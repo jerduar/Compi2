@@ -118,7 +118,7 @@ extern int jjdebug;
 
 union YYSTYPE
 {
-#line 60 "Sintactico_JSLT.y" /* yacc.c:1909  */
+#line 70 "Sintactico_JSLT.y" /* yacc.c:1909  */
 
 //se especifican los tipo de valores para los no terminales y lo terminales
 char TEXT [256];

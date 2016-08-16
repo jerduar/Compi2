@@ -11,6 +11,8 @@
 
 #include <QStringList>
 
+#include <QListWidget>
+
 #include <nodoast.h>//NODO PARA LA CREACIÓN DE AST
 
 #include <QHash> //Libreria para manejar HASH TABLES de QT, se usa para la tabla de simbolos
@@ -21,13 +23,21 @@ extern int fila_jslt; //linea actual donde se encuentra el parser (analisis lexi
 extern int columna_jslt; //columna actual donde se encuentra el parser (analisis lexico) lo maneja BISON
 extern char *jjtext; //lexema actual donde esta el parser (analisis lexico) lo maneja BISON
 
+QListWidget *ventanita;
+
 int jjerror(const char* mens){
 //metodo que se llama al haber un error sintactico
 //SE IMPRIME EN CONSOLA EL ERROR
-std::cout <<"Error Sintactico : "<< jjtext << " linea: " << fila_jslt << " columna: " << columna_jslt - strlen(jjtext) << std::endl;
+//std::cout << mens <<"Error Sintactico : "<< jjtext << " linea: " << fila_jslt << " columna: " << columna_jslt - strlen(jjtext) << std::endl;
+ventanita->addItem("Error Sintactico : " + (QString)jjtext + " linea: " + fila_jslt + " columna: " + QString::number(columna_jslt - strlen(jjtext)));
 return 0;
 }
 
+void SetVentanita(QListWidget *ven){
+    ventanita = ven;
+}
+
+int correcto = 1;
 QTextEdit* salida_jslt; //puntero al QTextEdit de salida
 void setSalidaJSLT(QTextEdit* exit) {
 //metodo que asigna el valor al QTextEdit de salida
@@ -130,6 +140,7 @@ struct NodoAST *NODE;
 %token<TEXT>  valor_de
 %token<TEXT>  tok_html
 
+
 //NO TERMINALES DE TIPO VAL, POSEEN ATRIBUTOS INT VALOR, Y QSTRING TEXTO
 %type<NODE>  S
 %type<NODE>  INICIO
@@ -151,6 +162,10 @@ struct NodoAST *NODE;
 %type<NODE>  CASO
 %type<NODE>  HTML
 %type<NODE>  SENTENCIAS_HTML
+%type<NODE>  CUALQUIER
+%type<NODE>  CASOS
+%type<NODE>  MOD1
+%type<NODE>  MOD2
 
 %left mas menos
 %left division por modulo
@@ -165,7 +180,14 @@ struct NodoAST *NODE;
 
 S : INICIO{
         generado = new ArbolAST();
-        generado->raiz = $1;
+
+        if(correcto != 0){
+            generado->raiz = $1;
+            QTextStream(stdout) << "PRODUCCIÓN S" << endl;
+        }else{
+            generado = NULL;
+        }
+
         };
 
 INICIO : break_a jslt dospuntos transformacion ruta igual cadena version igual cadena break_c LISTA_SENTENCIAS break_a slash jslt dospuntos final break_c{
@@ -205,66 +227,275 @@ LISTA_SENTENCIAS : LISTA_SENTENCIAS SENTENCIA{
         $$->addHijo($1);
     };
 
-SENTENCIA : ASIGNACION{}
+SENTENCIA : ASIGNACION{
+         $$ = new NodoAST("SENTENCIA");
+         $$->addHijo($1);
+    }
     | DECLARACION{
         $$ = new NodoAST("SENTENCIA");
         $$->addHijo($1);
     }
-    | PLANTILLA{}
-    | APLICAR_PLANTILLA{}
+    | PLANTILLA{
+            $$ = new NodoAST("SENTENCIA");
+            $$-> addHijo($1);
+        }
+    | APLICAR_PLANTILLA{
+            $$ = new NodoAST("SENTENCIA");
+            $$-> addHijo($1);
+        }
     | VALOR_DE{
         $$ = new NodoAST("SENTENCIA");
         $$-> addHijo($1);
     }
-    | PARA_CADA{}
+    | PARA_CADA{
+            $$ = new NodoAST("SENTENCIA");
+            $$-> addHijo($1);
+        }
     | HTML{}
-    | EN_CASO{}
-    | SI{}
-    | error{jjerror;};
+    | EN_CASO{
+            $$ = new NodoAST("SENTENCIA");
+            $$->addHijo($1);
+        }
+    | SI{
+            $$ = new NodoAST("SENTENCIA");
+            $$->addHijo($1);
+        }
+    | MOD1{
+            $$ = new NodoAST("SENTENCIA");
+            $$->addHijo($1);
+        }
+    | MOD2{
+            $$ = new NodoAST("SENTENCIA");
+            $$->addHijo($1);
+        }
+    | error{jjerror; correcto = 0;};
 
-SI : break_a jslt dospuntos si condicion igual EXP_LOGICA break_c LISTA_SENTENCIAS break_a slash jslt dospuntos si break_c{};
+SI : break_a jslt dospuntos si condicion igual EXP_LOGICA break_c LISTA_SENTENCIAS break_a slash jslt dospuntos si break_c{
+        $$ = new NodoAST("SI");
+        $$->addHijo($1);
+        $$->addHijo($2);
+        $$->addHijo($3);
+        $$->addHijo($4);
+        $$->addHijo($5);
+        $$->addHijo($6);
+        $$->addHijo($7);
+        $$->addHijo($8);
+        $$->addHijo($9);
+        $$->addHijo($10);
+        $$->addHijo($11);
+        $$->addHijo($12);
+        $$->addHijo($13);
+        $$->addHijo($14);
+        $$->addHijo($15);
+    };
 
 HTML : break_a tok_html break_c SENTENCIAS_HTML break_a slash tok_html break_c{};
 
 SENTENCIAS_HTML : identificador{};
 
-EXP_LOGICA : EXP_LOGICA oor EXP_LOGICA{}
-    | EXP_LOGICA aand EXP_LOGICA{}
-    | EXP_LOGICA nand EXP_LOGICA{}
-    | EXP_LOGICA nor EXP_LOGICA{}
-    | EXP_LOGICA xxor EXP_LOGICA{}
-    | nnot EXP_LOGICA{}
-    | EXP_REL{};
+EXP_LOGICA : EXP_LOGICA oor EXP_LOGICA{
+            $$ = new NodoAST("EXP_LOGICA");
+            $$->addHijo($1);
+            $$->addHijo($2);
+            $$->addHijo($3);
+    }
+    | EXP_LOGICA aand EXP_LOGICA{
+            $$ = new NodoAST("EXP_LOGICA");
+            $$->addHijo($1);
+            $$->addHijo($2);
+            $$->addHijo($3);
+        }
+    | EXP_LOGICA nand EXP_LOGICA{
+            $$ = new NodoAST("EXP_LOGICA");
+            $$->addHijo($1);
+            $$->addHijo($2);
+            $$->addHijo($3);
+        }
+    | EXP_LOGICA nor EXP_LOGICA{
+            $$ = new NodoAST("EXP_LOGICA");
+            $$->addHijo($1);
+            $$->addHijo($2);
+            $$->addHijo($3);
+        }
+    | EXP_LOGICA xxor EXP_LOGICA{
+            $$ = new NodoAST("EXP_LOGICA");
+            $$->addHijo($1);
+            $$->addHijo($2);
+            $$->addHijo($3);
+        }
+    | nnot EXP_LOGICA{
+            $$ = new NodoAST("EXP_LOGICA");
+            $$->addHijo($1);
+            $$->addHijo($2);
+        }
+    | EXP_REL{
+            $$ = new NodoAST("EXP_LOGICA");
+            $$->addHijo($1);
+        };
 
-EXP_REL : EXP_ARIT igualigual EXP_ARIT{}
-    | EXP_ARIT diferente EXP_ARIT{}
-    | EXP_ARIT menor_que EXP_ARIT{}
-    | EXP_ARIT menor_igual EXP_ARIT{}
-    | EXP_ARIT mayor_que EXP_ARIT{}
-    | EXP_ARIT mayor_igual EXP_ARIT{}
-    | es_nulo EXP_ARIT{};
+EXP_REL : EXP_ARIT igualigual EXP_ARIT{
+            $$ = new NodoAST("EXP_REL");
+            $$->addHijo($1);
+            $$->addHijo($2);
+            $$->addHijo($3);
+        }
+    | EXP_ARIT diferente EXP_ARIT{
+            $$ = new NodoAST("EXP_REL");
+            $$->addHijo($1);
+            $$->addHijo($2);
+            $$->addHijo($3);
+        }
+    | EXP_ARIT menor_que EXP_ARIT{
+            $$ = new NodoAST("EXP_REL");
+            $$->addHijo($1);
+            $$->addHijo($2);
+            $$->addHijo($3);
+        }
+    | EXP_ARIT menor_igual EXP_ARIT{
+            $$ = new NodoAST("EXP_REL");
+            $$->addHijo($1);
+            $$->addHijo($2);
+            $$->addHijo($3);
+        }
+    | EXP_ARIT mayor_que EXP_ARIT{
+            $$ = new NodoAST("EXP_REL");
+            $$->addHijo($1);
+            $$->addHijo($2);
+            $$->addHijo($3);
+        }
+    | EXP_ARIT mayor_igual EXP_ARIT{
+            $$ = new NodoAST("EXP_REL");
+            $$->addHijo($1);
+            $$->addHijo($2);
+            $$->addHijo($3);
+        }
+    | es_nulo EXP_ARIT{
+            $$ = new NodoAST("EXP_REL");
+            $$->addHijo($1);
+            $$->addHijo($2);
+        };
 
-EXP_ARIT : EXP_ARIT por EXP_ARIT{}
-    | EXP_ARIT mas EXP_ARIT{}
-    | EXP_ARIT menos EXP_ARIT{}
-    | EXP_ARIT division EXP_ARIT{}
-    | EXP_ARIT modulo EXP_ARIT{}
-    | EXP_ARIT potencia EXP_ARIT{}
-    | para EXP_ARIT parc{}
-    | identificador{}
-    | entero{}
-    | caracter{}
-    | cadena{}
+EXP_ARIT : EXP_ARIT por EXP_ARIT{
+            $$ = new NodoAST("EXP_ARIT");
+            $$->addHijo($1);
+            $$->addHijo($2);
+            $$->addHijo($3);
+        }
+    | EXP_ARIT mas EXP_ARIT{
+            $$ = new NodoAST("EXP_ARIT");
+            $$->addHijo($1);
+            $$->addHijo($2);
+            $$->addHijo($3);
+        }
+    | EXP_ARIT menos EXP_ARIT{
+            $$ = new NodoAST("EXP_ARIT");
+            $$->addHijo($1);
+            $$->addHijo($2);
+            $$->addHijo($3);
+        }
+    | EXP_ARIT division EXP_ARIT{
+
+            $$ = new NodoAST("EXP_ARIT");
+            $$->addHijo($1);
+            $$->addHijo($2);
+            $$->addHijo($3);
+        }
+    | EXP_ARIT modulo EXP_ARIT{
+
+            $$ = new NodoAST("EXP_ARIT");
+            $$->addHijo($1);
+            $$->addHijo($2);
+            $$->addHijo($3);
+        }
+    | EXP_ARIT potencia EXP_ARIT{
+
+            $$ = new NodoAST("EXP_ARIT");
+            $$->addHijo($1);
+            $$->addHijo($2);
+            $$->addHijo($3);
+        }
+    | para EXP_ARIT parc{
+
+            $$ = new NodoAST("EXP_ARIT");
+            $$->addHijo($1);
+            $$->addHijo($2);
+            $$->addHijo($3);
+        }
+    | identificador{
+            $$ = new NodoAST("EXP_ARIT");
+            $$->addHijo($1);
+        }
+    | entero{
+
+            $$ = new NodoAST("EXP_ARIT");
+            $$->addHijo($1);
+    }
+    | caracter{
+            $$ = new NodoAST("EXP_ARIT");
+            $$->addHijo($1);
+    }
+    | cadena{
+        $$ = new NodoAST("EXP_ARIT");
+        $$->addHijo($1);
+    }
     | decimal{
         $$ = new NodoAST("EXP_ARIT");
         $$->addHijo($1);
-    };
+    }
+    | MOD1{
+            $$ = new NodoAST("EXP_ARIT");
+            $$->addHijo($1);
+        }
+    | MOD2{
+            $$ = new NodoAST("EXP_ARIT");
+            $$->addHijo($1);
+        };
 
-PLANTILLA : break_a jslt dospuntos plantilla nombreobj igual identificador break_c LISTA_SENTENCIAS break_a slash jslt dospuntos plantilla break_c{};
+PLANTILLA : break_a jslt dospuntos plantilla nombreobj igual identificador break_c LISTA_SENTENCIAS break_a slash jslt dospuntos plantilla break_c{
+            $$ = new NodoAST("PLANTILLA");
+            $$->addHijo($1);
+            $$->addHijo($2);
+            $$->addHijo($3);
+            $$->addHijo($4);
+            $$->addHijo($5);
+            $$->addHijo($6);
+            $$->addHijo($7);
+            $$->addHijo($8);
+            $$->addHijo($9);
+            $$->addHijo($10);
+            $$->addHijo($11);
+            $$->addHijo($12);
+            $$->addHijo($13);
+            $$->addHijo($14);
+            $$->addHijo($15);
+        };
 
-APLICAR_PLANTILLA : break_a jslt plantilla_aplicar seleccionar igual identificador slash break_c{};
+APLICAR_PLANTILLA : break_a jslt dospuntos plantilla_aplicar seleccionar igual identificador slash break_c{
+            $$ = new NodoAST("APLICAR_PLANTILLA");
+            $$->addHijo($1);
+            $$->addHijo($2);
+            $$->addHijo($3);
+            $$->addHijo($4);
+            $$->addHijo($5);
+            $$->addHijo($6);
+            $$->addHijo($7);
+            $$->addHijo($8);
+            $$->addHijo($9);
+        };
 
-ASIGNACION : break_a jslt dospuntos variable igual identificador valor igual EXP_ARIT break_c{};
+ASIGNACION : break_a jslt dospuntos variable igual identificador valor igual EXP_ARIT break_c{
+            $$ = new NodoAST("ASIGNACION");
+            $$->addHijo($1);
+            $$->addHijo($2);
+            $$->addHijo($3);
+            $$->addHijo($4);
+            $$->addHijo($5);
+            $$->addHijo($6);
+            $$->addHijo($7);
+            $$->addHijo($8);
+            $$->addHijo($9);
+            $$->addHijo($10);
+        };
 
 DECLARACION : break_a jslt dospuntos variable TIPO igual identificador break_c{
         $$ = new NodoAST("DECLARACION");
@@ -328,16 +559,114 @@ VALOR_DE :  break_a jslt dospuntos valor_de seleccionar igual identificador brea
         $$->addHijo($8);
     };
 
-PARA_CADA : break_a jslt dospuntos para_cada seleccionar igual identificador break_c LISTA_SENTENCIAS break_a slash jslt dospuntos para_cada break_c{};
+PARA_CADA : break_a jslt dospuntos paracada seleccionar igual identificador break_c LISTA_SENTENCIAS break_a slash jslt dospuntos paracada break_c{
+            $$ = new NodoAST("PARA_CADA");
+            $$->addHijo($1);
+            $$->addHijo($2);
+            $$->addHijo($3);
+            $$->addHijo($4);
+            $$->addHijo($5);
+            $$->addHijo($6);
+            $$->addHijo($7);
+            $$->addHijo($8);
+            $$->addHijo($9);
+            $$->addHijo($10);
+            $$->addHijo($11);
+            $$->addHijo($12);
+            $$->addHijo($13);
+            $$->addHijo($14);
+            $$->addHijo($15);
+        };
 
-EN_CASO : break_a jslt dospuntos encaso break_c LISTA_CASOS break_a slash jslt dospuntos encaso break_c{};
+EN_CASO : break_a jslt dospuntos encaso break_c LISTA_CASOS break_a slash jslt dospuntos encaso break_c{
+            $$ = new NodoAST("EN_CASO");
+            $$->addHijo($1);
+            $$->addHijo($2);
+            $$->addHijo($3);
+            $$->addHijo($4);
+            $$->addHijo($5);
+            $$->addHijo($6);
+            $$->addHijo($7);
+            $$->addHijo($8);
+            $$->addHijo($9);
+            $$->addHijo($10);
+            $$->addHijo($11);
+            $$->addHijo($12);
+        };
 
-LISTA_CASOS : LISTA_CASOS CASO{}
-    | CASO{};
+LISTA_CASOS : LISTA_CASOS CASOS{
+            $1->addHijo($2);
+            $$ = $1;
+        }
+    | CASOS{
+            $$ = new NodoAST("LISTA_CASOS");
+            $$->addHijo($1);
+        };
+
+CASOS : CASO{
+            $$ = new NodoAST("CASOS");
+            $$->addHijo($1);
+        };
+    | CUALQUIER{
+            $$ = new NodoAST("CASOS");
+            $$->addHijo($1);
+        };
 
 CASO : break_a jslt dospuntos de condicion igual EXP_LOGICA break_c LISTA_SENTENCIAS break_a slash jslt dospuntos de break_c{
+            $$ = new NodoAST("CASO");
+            $$->addHijo($1);
+            $$->addHijo($2);
+            $$->addHijo($3);
+            $$->addHijo($4);
+            $$->addHijo($5);
+            $$->addHijo($6);
+            $$->addHijo($7);
+            $$->addHijo($8);
+            $$->addHijo($9);
+            $$->addHijo($10);
+            $$->addHijo($11);
+            $$->addHijo($12);
+            $$->addHijo($13);
+            $$->addHijo($14);
+            $$->addHijo($15);
+        };
 
+CUALQUIER : break_a jslt dospuntos cualquierotro break_c LISTA_SENTENCIAS  break_a slash jslt dospuntos cualquierotro break_c{
+            $$ = new NodoAST("CUALQUIER");
+            $$->addHijo($1);
+            $$->addHijo($2);
+            $$->addHijo($3);
+            $$->addHijo($4);
+            $$->addHijo($5);
+            $$->addHijo($6);
+            $$->addHijo($7);
+            $$->addHijo($8);
+            $$->addHijo($9);
+            $$->addHijo($10);
+            $$->addHijo($11);
+            $$->addHijo($12);
+        };
+
+MOD1 : incremento identificador{
+            $$ = new NodoAST("MOD1");
+            $$->addHijo($1);
+            $$->addHijo($2);
         }
-    | break_a jslt dospuntos cualquierotro break_c LISTA_SENTENCIAS  break_a slash jslt dospuntos cualquierotro break_c{};
+        | decremento identificador{
+            $$ = new NodoAST("MOD1");
+            $$->addHijo($1);
+            $$->addHijo($2);
+        };
+
+MOD2 : identificador incremento{
+            $$ = new NodoAST("MOD2");
+            $$->addHijo($1);
+            $$->addHijo($2);
+        }
+        | identificador decremento{
+            $$ = new NodoAST("MOD2");
+            $$->addHijo($1);
+            $$->addHijo($2);
+        };
 
 %%

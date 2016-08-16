@@ -4,6 +4,13 @@
 #include <iostream>
 #include <QTextStream>
 #include <QString>
+#include <QListWidget>
+
+QListWidget *ventana_json;
+void SetVentana_json(QListWidget *vista){
+    ventana_json = vista;
+}
+
 int columna=0;
 int fila = 1;
 %}
@@ -29,5 +36,8 @@ letra ["][^\"]*["]
 \n                      {columna = 1;fila = fila + 1;}
 [[:blank:]]             {/*Se ingnora*/}
 [\t\r]                  {columna = columna + 1;}
-.                       {QTextStream(stdout) << "Error Lexico :" << yytext << " fila : " + QString::number(fila) << " columna : " << QString::number(columna) << endl;}
+.                       {QTextStream(stdout) << "Error Lexico :" << yytext << " fila : " + QString::number(fila) << " columna : " << QString::number(columna) << endl;
+                            QString aux = "Error Lexico : " + (QString)yytext + " fila : " + QString::number(fila) + " columna : " + QString::number(columna);
+                            ventana_json->addItem(aux);
+                        }
 %%

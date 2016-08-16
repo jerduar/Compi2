@@ -11,6 +11,8 @@ Ventana_Principal::Ventana_Principal(QWidget *parent) :
     ui->setupUi(this);
     ui->tabWidget->setTabsClosable(true);
     connect(ui->tabWidget, SIGNAL(tabCloseRequested(int)),this,SLOT(closeTab(int)));
+    this->errores = new VentanaErrores();
+    this->errores_json = new VentanaErrores();
 
 }
 
@@ -71,8 +73,6 @@ void Ventana_Principal::OpenFile()
         }
             archivo.close();
     }
-
-
 }
 
 void Ventana_Principal::GuardarComo()
@@ -116,13 +116,21 @@ void Ventana_Principal::on_actionGenerar_HTML_triggered()
             stream1 << actual->enviar_texto();
         }
 
-
         const char* x = "temp.txt";
         FILE* input = fopen(x, "r" );
+
+        errores_json->ven()->clear();
+        SetVentanita_json(errores_json->ven());
         setFila();
         setColumna();
         yyrestart(input);//SE PASA LA CADENA DE ENTRADA A FLEX
         yyparse();//SE INICIA LA COMPILACION
+
+
+        ArbolJ *nuevo = setArbolito();
+        if(nuevo != NULL){
+            nuevo->Dibujar();
+        }
     }
 
 }
@@ -205,13 +213,32 @@ void Ventana_Principal::on_bt_buscar_3_clicked()
 
         const char* x = "temp2.txt";
         FILE* input = fopen(x, "r" );
+        this->errores->ven()->clear();
+        SetVentana(this->errores->ven());
+        SetVentanita(this->errores->ven());
         jjsetFila();
         jjsetColumna();
         jjrestart(input);//SE PASA LA CADENA DE ENTRADA A FLEX
         jjparse();//SE INICIA LA COMPILACION
 
+
         ArbolAST *nuevo;
         nuevo = setArbol();
-        nuevo->Dibujar();
+        if(nuevo != NULL){
+            QTextStream(stdout) << "Dibujando" << endl;
+            nuevo->Dibujar();
+        }else{
+            QMessageBox::information(this,"ÁRBOL","El árbol es nulo");
+        }
     }
+}
+
+void Ventana_Principal::on_actionVer_Reportes_triggered()
+{
+    this->errores->setVisible(true);
+}
+
+void Ventana_Principal::on_actionVer_Reporte_JSON_triggered()
+{
+    this->errores_json->setVisible(true);
 }

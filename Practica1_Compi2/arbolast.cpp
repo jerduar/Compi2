@@ -8,6 +8,7 @@ ArbolAST::ArbolAST()
 void ArbolAST::Dibujar()
 {
     this->grafo = "graph g{\n ";
+
     this->RecorridoDibujo(raiz);
     this->grafo += "}";
     //QTextStream(stdout) << grafo << endl;
@@ -28,6 +29,7 @@ void ArbolAST::RecorridoDibujo(NodoAST *raiz)
     if(raiz != NULL){
 
         grafo += "nodo" + QString::number(raiz->identificador) + "[label=\"" + raiz->etiqueta + "\"];\n";
+        QTextStream(stdout) << "etiqueta : " + raiz->etiqueta << endl;
         int index;
         for(index = 0; index < raiz->Hijos->length(); index++){
             RecorridoDibujo(raiz->Hijos->at(index));

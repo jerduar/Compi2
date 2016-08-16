@@ -35,6 +35,7 @@ public:
     QAction *actionAbrir;
     QAction *actionVer_Reportes;
     QAction *actionGenerar_HTML;
+    QAction *actionVer_Reporte_JSON;
     QWidget *centralWidget;
     QTabWidget *tabWidget;
     QLineEdit *lineEdit;
@@ -73,6 +74,8 @@ public:
         actionVer_Reportes->setObjectName(QStringLiteral("actionVer_Reportes"));
         actionGenerar_HTML = new QAction(Ventana_Principal);
         actionGenerar_HTML->setObjectName(QStringLiteral("actionGenerar_HTML"));
+        actionVer_Reporte_JSON = new QAction(Ventana_Principal);
+        actionVer_Reporte_JSON->setObjectName(QStringLiteral("actionVer_Reporte_JSON"));
         centralWidget = new QWidget(Ventana_Principal);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         tabWidget = new QTabWidget(centralWidget);
@@ -126,6 +129,7 @@ public:
         menuArchivo->addAction(actionAbrir);
         menuGenerar->addAction(actionGenerar_HTML);
         menuErrores->addAction(actionVer_Reportes);
+        menuErrores->addAction(actionVer_Reporte_JSON);
 
         retranslateUi(Ventana_Principal);
 
@@ -143,8 +147,9 @@ public:
         actionGuardar_Como->setText(QApplication::translate("Ventana_Principal", "Guardar Como", 0));
         actionGuardar->setText(QApplication::translate("Ventana_Principal", "Guardar", 0));
         actionAbrir->setText(QApplication::translate("Ventana_Principal", "Abrir", 0));
-        actionVer_Reportes->setText(QApplication::translate("Ventana_Principal", "Ver Reportes", 0));
+        actionVer_Reportes->setText(QApplication::translate("Ventana_Principal", "Ver Reporte JSLT", 0));
         actionGenerar_HTML->setText(QApplication::translate("Ventana_Principal", "Generar HTML", 0));
+        actionVer_Reporte_JSON->setText(QApplication::translate("Ventana_Principal", "Ver Reporte JSON", 0));
         bt_buscar->setText(QApplication::translate("Ventana_Principal", "BUSCAR", 0));
         bt_reemplazar->setText(QApplication::translate("Ventana_Principal", "REEMPLAZAR", 0));
         bt_reemplazarAll->setText(QApplication::translate("Ventana_Principal", "REEMPLAZAR TODO", 0));

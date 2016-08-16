@@ -57,8 +57,11 @@ SOURCES       = ../Practica1_Compi2/main.cpp \
 		../Practica1_Compi2/parser2.cpp \
 		../Practica1_Compi2/scanner2.cpp \
 		../Practica1_Compi2/nodoast.cpp \
-		../Practica1_Compi2/arbolast.cpp moc_ventana_principal.cpp \
-		moc_pestana.cpp
+		../Practica1_Compi2/arbolast.cpp \
+		../Practica1_Compi2/ventanaerrores.cpp \
+		../Practica1_Compi2/arbolj.cpp moc_ventana_principal.cpp \
+		moc_pestana.cpp \
+		moc_ventanaerrores.cpp
 OBJECTS       = main.o \
 		ventana_principal.o \
 		pestana.o \
@@ -69,8 +72,11 @@ OBJECTS       = main.o \
 		scanner2.o \
 		nodoast.o \
 		arbolast.o \
+		ventanaerrores.o \
+		arbolj.o \
 		moc_ventana_principal.o \
-		moc_pestana.o
+		moc_pestana.o \
+		moc_ventanaerrores.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/unix.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/linux.conf \
@@ -135,7 +141,9 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		../Practica1_Compi2/parser2.h \
 		../Practica1_Compi2/scanner2.h \
 		../Practica1_Compi2/nodoast.h \
-		../Practica1_Compi2/arbolast.h ../Practica1_Compi2/main.cpp \
+		../Practica1_Compi2/arbolast.h \
+		../Practica1_Compi2/ventanaerrores.h \
+		../Practica1_Compi2/arbolj.h ../Practica1_Compi2/main.cpp \
 		../Practica1_Compi2/ventana_principal.cpp \
 		../Practica1_Compi2/pestana.cpp \
 		../Practica1_Compi2/scanner.cpp \
@@ -144,7 +152,9 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		../Practica1_Compi2/parser2.cpp \
 		../Practica1_Compi2/scanner2.cpp \
 		../Practica1_Compi2/nodoast.cpp \
-		../Practica1_Compi2/arbolast.cpp
+		../Practica1_Compi2/arbolast.cpp \
+		../Practica1_Compi2/ventanaerrores.cpp \
+		../Practica1_Compi2/arbolj.cpp
 QMAKE_TARGET  = Practica1_Compi2
 DESTDIR       = #avoid trailing-slash linebreak
 TARGET        = Practica1_Compi2
@@ -172,7 +182,7 @@ first: all
 
 ####### Build rules
 
-$(TARGET): ui_ventana_principal.h ui_pestana.h $(OBJECTS)  
+$(TARGET): ui_ventana_principal.h ui_pestana.h ui_ventanaerrores.h $(OBJECTS)  
 	$(LINK) $(LFLAGS) -o $(TARGET) $(OBJECTS) $(OBJCOMP) $(LIBS)
 
 Makefile: ../Practica1_Compi2/Practica1_Compi2.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64/qmake.conf /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
@@ -310,9 +320,9 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents ../Practica1_Compi2/ventana_principal.h ../Practica1_Compi2/pestana.h ../Practica1_Compi2/scanner.h ../Practica1_Compi2/parser.h ../Practica1_Compi2/nodo.h ../Practica1_Compi2/parser2.h ../Practica1_Compi2/scanner2.h ../Practica1_Compi2/nodoast.h ../Practica1_Compi2/arbolast.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../Practica1_Compi2/main.cpp ../Practica1_Compi2/ventana_principal.cpp ../Practica1_Compi2/pestana.cpp ../Practica1_Compi2/scanner.cpp ../Practica1_Compi2/parser.cpp ../Practica1_Compi2/nodo.cpp ../Practica1_Compi2/parser2.cpp ../Practica1_Compi2/scanner2.cpp ../Practica1_Compi2/nodoast.cpp ../Practica1_Compi2/arbolast.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../Practica1_Compi2/ventana_principal.ui ../Practica1_Compi2/pestana.ui $(DISTDIR)/
+	$(COPY_FILE) --parents ../Practica1_Compi2/ventana_principal.h ../Practica1_Compi2/pestana.h ../Practica1_Compi2/scanner.h ../Practica1_Compi2/parser.h ../Practica1_Compi2/nodo.h ../Practica1_Compi2/parser2.h ../Practica1_Compi2/scanner2.h ../Practica1_Compi2/nodoast.h ../Practica1_Compi2/arbolast.h ../Practica1_Compi2/ventanaerrores.h ../Practica1_Compi2/arbolj.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../Practica1_Compi2/main.cpp ../Practica1_Compi2/ventana_principal.cpp ../Practica1_Compi2/pestana.cpp ../Practica1_Compi2/scanner.cpp ../Practica1_Compi2/parser.cpp ../Practica1_Compi2/nodo.cpp ../Practica1_Compi2/parser2.cpp ../Practica1_Compi2/scanner2.cpp ../Practica1_Compi2/nodoast.cpp ../Practica1_Compi2/arbolast.cpp ../Practica1_Compi2/ventanaerrores.cpp ../Practica1_Compi2/arbolj.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../Practica1_Compi2/ventana_principal.ui ../Practica1_Compi2/pestana.ui ../Practica1_Compi2/ventanaerrores.ui $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -335,28 +345,38 @@ check: first
 
 compiler_rcc_make_all:
 compiler_rcc_clean:
-compiler_moc_header_make_all: moc_ventana_principal.cpp moc_pestana.cpp
+compiler_moc_header_make_all: moc_ventana_principal.cpp moc_pestana.cpp moc_ventanaerrores.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_ventana_principal.cpp moc_pestana.cpp
+	-$(DEL_FILE) moc_ventana_principal.cpp moc_pestana.cpp moc_ventanaerrores.cpp
 moc_ventana_principal.cpp: ../Practica1_Compi2/parser.h \
 		../Practica1_Compi2/parser2.h \
 		../Practica1_Compi2/nodoast.h \
+		../Practica1_Compi2/arbolast.h \
+		../Practica1_Compi2/ventanaerrores.h \
+		../Practica1_Compi2/arbolj.h \
+		../Practica1_Compi2/nodo.h \
 		../Practica1_Compi2/ventana_principal.h
 	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/jerduar/COMPI2/Practica1_Compi2 -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../Practica1_Compi2/ventana_principal.h -o moc_ventana_principal.cpp
 
 moc_pestana.cpp: ../Practica1_Compi2/pestana.h
 	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/jerduar/COMPI2/Practica1_Compi2 -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../Practica1_Compi2/pestana.h -o moc_pestana.cpp
 
+moc_ventanaerrores.cpp: ../Practica1_Compi2/ventanaerrores.h
+	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/jerduar/COMPI2/Practica1_Compi2 -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../Practica1_Compi2/ventanaerrores.h -o moc_ventanaerrores.cpp
+
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
-compiler_uic_make_all: ui_ventana_principal.h ui_pestana.h
+compiler_uic_make_all: ui_ventana_principal.h ui_pestana.h ui_ventanaerrores.h
 compiler_uic_clean:
-	-$(DEL_FILE) ui_ventana_principal.h ui_pestana.h
+	-$(DEL_FILE) ui_ventana_principal.h ui_pestana.h ui_ventanaerrores.h
 ui_ventana_principal.h: ../Practica1_Compi2/ventana_principal.ui
 	/usr/lib/x86_64-linux-gnu/qt5/bin/uic ../Practica1_Compi2/ventana_principal.ui -o ui_ventana_principal.h
 
 ui_pestana.h: ../Practica1_Compi2/pestana.ui
 	/usr/lib/x86_64-linux-gnu/qt5/bin/uic ../Practica1_Compi2/pestana.ui -o ui_pestana.h
+
+ui_ventanaerrores.h: ../Practica1_Compi2/ventanaerrores.ui
+	/usr/lib/x86_64-linux-gnu/qt5/bin/uic ../Practica1_Compi2/ventanaerrores.ui -o ui_ventanaerrores.h
 
 compiler_yacc_decl_make_all:
 compiler_yacc_decl_clean:
@@ -371,13 +391,21 @@ compiler_clean: compiler_moc_header_clean compiler_uic_clean
 main.o: ../Practica1_Compi2/main.cpp ../Practica1_Compi2/ventana_principal.h \
 		../Practica1_Compi2/parser.h \
 		../Practica1_Compi2/parser2.h \
-		../Practica1_Compi2/nodoast.h
+		../Practica1_Compi2/nodoast.h \
+		../Practica1_Compi2/arbolast.h \
+		../Practica1_Compi2/ventanaerrores.h \
+		../Practica1_Compi2/arbolj.h \
+		../Practica1_Compi2/nodo.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../Practica1_Compi2/main.cpp
 
 ventana_principal.o: ../Practica1_Compi2/ventana_principal.cpp ../Practica1_Compi2/ventana_principal.h \
 		../Practica1_Compi2/parser.h \
 		../Practica1_Compi2/parser2.h \
 		../Practica1_Compi2/nodoast.h \
+		../Practica1_Compi2/arbolast.h \
+		../Practica1_Compi2/ventanaerrores.h \
+		../Practica1_Compi2/arbolj.h \
+		../Practica1_Compi2/nodo.h \
 		ui_ventana_principal.h \
 		../Practica1_Compi2/pestana.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ventana_principal.o ../Practica1_Compi2/ventana_principal.cpp
@@ -397,6 +425,7 @@ nodo.o: ../Practica1_Compi2/nodo.cpp ../Practica1_Compi2/nodo.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o nodo.o ../Practica1_Compi2/nodo.cpp
 
 parser2.o: ../Practica1_Compi2/parser2.cpp ../Practica1_Compi2/scanner2.h \
+		../Practica1_Compi2/arbolast.h \
 		../Practica1_Compi2/nodoast.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o parser2.o ../Practica1_Compi2/parser2.cpp
 
@@ -410,11 +439,22 @@ arbolast.o: ../Practica1_Compi2/arbolast.cpp ../Practica1_Compi2/arbolast.h \
 		../Practica1_Compi2/nodoast.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o arbolast.o ../Practica1_Compi2/arbolast.cpp
 
+ventanaerrores.o: ../Practica1_Compi2/ventanaerrores.cpp ../Practica1_Compi2/ventanaerrores.h \
+		ui_ventanaerrores.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ventanaerrores.o ../Practica1_Compi2/ventanaerrores.cpp
+
+arbolj.o: ../Practica1_Compi2/arbolj.cpp ../Practica1_Compi2/arbolj.h \
+		../Practica1_Compi2/nodo.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o arbolj.o ../Practica1_Compi2/arbolj.cpp
+
 moc_ventana_principal.o: moc_ventana_principal.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_ventana_principal.o moc_ventana_principal.cpp
 
 moc_pestana.o: moc_pestana.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_pestana.o moc_pestana.cpp
+
+moc_ventanaerrores.o: moc_ventanaerrores.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_ventanaerrores.o moc_ventanaerrores.cpp
 
 ####### Install
 

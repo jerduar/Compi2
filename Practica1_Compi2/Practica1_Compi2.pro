@@ -21,7 +21,9 @@ SOURCES += main.cpp\
         parser2.cpp\
         scanner2.cpp \
     nodoast.cpp \
-    arbolast.cpp
+    arbolast.cpp \
+    ventanaerrores.cpp \
+    arbolj.cpp
 
 
 HEADERS  += ventana_principal.h \
@@ -32,11 +34,14 @@ HEADERS  += ventana_principal.h \
     parser2.h\
     scanner2.h \
     nodoast.h \
-    arbolast.h
+    arbolast.h \
+    ventanaerrores.h \
+    arbolj.h
 
 
 FORMS    += ventana_principal.ui \
-    pestana.ui
+    pestana.ui \
+    ventanaerrores.ui
 
 OTHER_FILES += ALexico.l\
                ASintactico.y\

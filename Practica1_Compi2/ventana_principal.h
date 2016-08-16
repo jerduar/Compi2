@@ -13,6 +13,9 @@
 #include <QFile>
 #include <nodoast.h>
 #include <arbolast.h>
+#include <ventanaerrores.h>
+#include <QListWidget>
+#include <arbolj.h>
 
 extern int yyrestart( FILE* archivo);//METODO QUE PASA EL ARCHIVO A FLEX
 extern int yyparse(); //METODO QUE INICIA EL ANALISIS SINTACTICO
@@ -25,8 +28,13 @@ extern void setColumna();
 extern void jjsetFila();
 extern void jjsetColumna();
 
-extern ArbolAST* setArbol();//METODO PARA RETORNAR EL ARBOL AST
+extern void SetVentana(QListWidget *vista);
+extern void SetVentanita(QListWidget *vista);
+extern void SetVentana_json(QListWidget *vista);
+extern void SetVentanita_json(QListWidget *vista);
+extern ArbolJ *setArbolito();
 
+extern ArbolAST* setArbol();//METODO PARA RETORNAR EL ARBOL AST
 
 namespace Ui {
 class Ventana_Principal;
@@ -69,10 +77,16 @@ private slots:
 
     void on_bt_buscar_3_clicked();
 
+    void on_actionVer_Reportes_triggered();
+
+    void on_actionVer_Reporte_JSON_triggered();
+
 private:
     Ui::Ventana_Principal *ui;
     void OpenFile();
     void GuardarComo();
+    VentanaErrores *errores;
+    VentanaErrores *errores_json;
 };
 
 #endif // VENTANA_PRINCIPAL_H
