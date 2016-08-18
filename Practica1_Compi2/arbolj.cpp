@@ -25,7 +25,7 @@ void ArbolJ::Dibujar()
     this->grafo = "graph g{\n";
     Recorrer(this->raiz);
     grafo += "}";
-    QTextStream(stdout) << grafo << endl;
+    //QTextStream(stdout) << grafo << endl;
 
     QFile archivo("grafo_json.dot");
     archivo.open(QIODevice::WriteOnly);

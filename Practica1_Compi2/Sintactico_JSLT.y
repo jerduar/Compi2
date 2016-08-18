@@ -2,21 +2,13 @@
 #include "scanner2.h"//se importa el header del analisis sintactico
 
 #include <iostream> //libreria para imprimir en cosola de C
-
 #include <QString> //libreria para manejo de STRINGS de QT
-
 #include <QTextStream>
-
 #include <arbolast.h>
-
 #include <QStringList>
-
 #include <QListWidget>
-
 #include <nodoast.h>//NODO PARA LA CREACIÓN DE AST
-
 #include <QHash> //Libreria para manejar HASH TABLES de QT, se usa para la tabla de simbolos
-
 #include <QTextEdit> //libreria QTextEdit de QT para poder mostrar el resultado en pantalla
 
 extern int fila_jslt; //linea actual donde se encuentra el parser (analisis lexico) lo maneja BISON
@@ -29,7 +21,7 @@ int jjerror(const char* mens){
 //metodo que se llama al haber un error sintactico
 //SE IMPRIME EN CONSOLA EL ERROR
 //std::cout << mens <<"Error Sintactico : "<< jjtext << " linea: " << fila_jslt << " columna: " << columna_jslt - strlen(jjtext) << std::endl;
-ventanita->addItem("Error Sintactico : " + (QString)jjtext + " linea: " + fila_jslt + " columna: " + QString::number(columna_jslt - strlen(jjtext)));
+ventanita->addItem("Error Sintactico : " + (QString)jjtext + " linea: " + QString::number(fila_jslt) + " columna: " + QString::number(columna_jslt - strlen(jjtext)));
 return 0;
 }
 
@@ -139,6 +131,27 @@ struct NodoAST *NODE;
 %token<TEXT>  parc
 %token<TEXT>  valor_de
 %token<TEXT>  tok_html
+%token<TEXT>  tok_h1
+%token<TEXT>  tok_h2
+%token<TEXT>  tok_h3
+%token<TEXT>  tok_h4
+%token<TEXT>  tok_h5
+%token<TEXT>  tok_h6
+%token<TEXT>  tok_title
+%token<TEXT>  tok_body
+%token<TEXT>  tok_head
+%token<TEXT>  tok_table
+%token<TEXT>  tok_th
+%token<TEXT>  tok_tr
+%token<TEXT>  tok_td
+%token<TEXT>  tok_boder
+%token<TEXT>  tok_bgcolor
+%token<TEXT>  tok_width
+%token<TEXT>  tok_p
+%token<TEXT>  tok_b
+%token<TEXT>  tok_i
+%token<TEXT>  arroba
+%token<TEXT>  arroba_doble
 
 
 //NO TERMINALES DE TIPO VAL, POSEEN ATRIBUTOS INT VALOR, Y QSTRING TEXTO
@@ -166,6 +179,8 @@ struct NodoAST *NODE;
 %type<NODE>  CASOS
 %type<NODE>  MOD1
 %type<NODE>  MOD2
+%type<NODE>  LLAMADA_OBJETO
+%type<NODE>  LLAMADA
 
 %left mas menos
 %left division por modulo
@@ -180,15 +195,12 @@ struct NodoAST *NODE;
 
 S : INICIO{
         generado = new ArbolAST();
-
         if(correcto != 0){
             generado->raiz = $1;
-            QTextStream(stdout) << "PRODUCCIÓN S" << endl;
         }else{
             generado = NULL;
         }
-
-        };
+    };
 
 INICIO : break_a jslt dospuntos transformacion ruta igual cadena version igual cadena break_c LISTA_SENTENCIAS break_a slash jslt dospuntos final break_c{
         $$ = new NodoAST("INICIO");
@@ -217,6 +229,13 @@ INICIO : break_a jslt dospuntos transformacion ruta igual cadena version igual c
         $$->addHijo($17);
         $$->addHijo($18);
     };
+
+LLAMADA_OBJETO : LISTA_LLAMADAS arroba LLAMADA{}
+    | LISTA_LLAMADAS arrobla_doble LLAMADA{}
+    | LLAMADA{};
+
+LLAMADA : identificador{};
+
 
 LISTA_SENTENCIAS : LISTA_SENTENCIAS SENTENCIA{
         $1->addHijo($2);

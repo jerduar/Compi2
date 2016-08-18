@@ -6,8 +6,6 @@ VentanaErrores::VentanaErrores(QWidget *parent) :
     ui(new Ui::VentanaErrores)
 {
     ui->setupUi(this);
-
-
 }
 
 VentanaErrores::~VentanaErrores()

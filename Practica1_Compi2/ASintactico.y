@@ -29,10 +29,10 @@ void SetVentanita_json(QListWidget *ven){
 int yyerror(const char* mens){
 //metodo que se llama al haber un error sintactico
 //SE IMPRIME EN CONSOLA EL ERROR
-std::cout <<mens<<" error: "<<yytext << " linea: " << fila << " columna: " << columna << std::endl;
-QTextStream(stdout) << "INGRESANDO ERROR" << endl;
-ventanita_json->addItem("Error Sintactico : " + (QString)yytext + " linea: " + fila + " columna: " + QString::number(columna - strlen(yytext)));
-QTextStream(stdout) << "ERROR ingresado" << endl;
+//std::cout <<mens<<" error: "<<yytext << " linea: " << fila << " columna: " << columna << std::endl;
+//QTextStream(stdout) << "INGRESANDO ERROR" << endl;
+ventanita_json->addItem("Error Sintactico : " + (QString)yytext + " linea: " + QString::number(fila) + " columna: " + QString::number(columna - strlen(yytext)));
+//QTextStream(stdout) << "ERROR ingresado" << endl;
 return 0;
 }
 
@@ -109,49 +109,136 @@ S : J{
         arbolito = NULL;
         }
      }
-    | error{yyerror; correcto_json = 1; QTextStream(stdout) << "termino el error4 " << endl;arbolito = NULL;};
 
-J : llavea LO llavec{$$ = $2;};
+    | error{
+        yyerror;
+        correcto_json = 1;
+        /*QTextStream(stdout) << "termino el error4 " << endl;*/
+        arbolito = NULL;
+    };
 
-LO : LO coma O{$1->Hijos->append($3);$$ = $1;}
-    | O{$$ = new Nodo();$$->Hijos->append($1);/*$$->Recorrido();*/};
+J : llavea LO llavec{
+        $$ = $2;
+    };
+
+LO : LO coma O{
+        $1->Hijos->append($3);
+        $$ = $1;
+    }
+
+    | O{
+        $$ = new Nodo();
+        $$->Hijos->append($1);
+        /*$$->Recorrido();*/
+    };
 
 
 O : cadena dospuntos llavea LA llavec {
-                                        QTextStream(stdout) << "Produccion AO" << endl;
-                                        $$ = $4;
-                                        $$->Nombre = $1;
-                                        //$$->Recorrido();
-                                      }
+       //QTextStream(stdout) << "Produccion AO" << endl;
+        $$ = $4;
+        $$->Nombre = $1;
+      //$$->Recorrido();
+    }
+
     | cadena dospuntos cora AO corc{
-                                    QTextStream(stdout) << "Produccion AO" << endl;
-                                    $$ = $4;
-                                    $$->Nombre = $1;
-                                   }
-    | cadena dospuntos cora LV corc{$$ = $4; $$->Nombre = $1;}
+      //QTextStream(stdout) << "Produccion AO" << endl;
+        $$ = $4;
+        $$->Nombre = $1;
+    }
 
-    | error{yyerror; correcto_json = 1;};
+    | cadena dospuntos cora LV corc{
+        $$ = $4;
+        $$->Nombre = $1;
+    }
 
-LA : LA coma A{$1->Hijos->append($3);$$ = $1;QTextStream(stdout) <<  "PRDUCCION LA COMA A" << endl;}
-    | A{/*QTextStream(stdout) << $1->Valor << endl;*/ $$ = new Nodo(); $$->Hijos->append($1);};
+    | error{
+        yyerror;
+        correcto_json = 1;
+    };
+
+LA : LA coma A{
+        $1->Hijos->append($3);
+        $$ = $1;
+        /*QTextStream(stdout) <<  "PRDUCCION LA COMA A" << endl;*/
+    }
+
+    | A{
+        /*QTextStream(stdout) << $1->Valor << endl;*/
+        $$ = new Nodo();
+        $$->Hijos->append($1);
+    };
 
 
-LV : LV coma VALOR{Nodo *hijo = new Nodo(); hijo->Valor = $3; $$->Hijos->append(hijo);}
-    | VALOR{$$ = new Nodo(); Nodo *hijo = new Nodo(); hijo->Valor = $1; $$->Hijos->append(hijo);};
+LV : LV coma VALOR{
+        Nodo *hijo = new Nodo();
+        hijo->Valor = $3;
+        $$->Hijos->append(hijo);
+    }
 
-A : cadena dospuntos VALOR{$$ = new Nodo(); $$->Valor = $3; $$->Nombre = $1;}
-    | O {$$ = $1;};
+    | VALOR{
+        $$ = new Nodo();
+        Nodo *hijo = new Nodo();
+        hijo->Valor = $1;
+        $$->Hijos->append(hijo);
+    };
+
+A : cadena dospuntos VALOR{
+        $$ = new Nodo();
+        $$->Valor = $3;
+        $$->Nombre = $1;
+    }
+
+    | O {
+        $$ = $1;
+    };
 
 
-AO : AO coma L{$1->Hijos->append($3); $$ = $1;QTextStream(stdout) << "PRODUCCION AO COM L" << endl;}
-    | L{$$ = new Nodo(); $$->Hijos->append($1); };
+AO : AO coma L{
+        $1->Hijos->append($3);
+        $$ = $1;
+        /*QTextStream(stdout) << "PRODUCCION AO COM L" << endl;*/
+    }
 
-L : llavea LA llavec{$$ = $2; QTextStream(stdout) << "PRODUCCION" << endl;};
+    | L{
+        $$ = new Nodo();
+        $$->Hijos->append($1);
+    };
 
-VALOR : cadena {/*QTextStream(stdout) << "cadena" << endl;*/strcmp($$,$1);strcat($$,":cadena");}
-    | decimal{/*QTextStream(stdout) << "decimal" << endl;*/strcmp($$,$1);strcat($$,":decimal");}
-    | entero {/*QTextStream(stdout) << "entero" << endl;*/strcmp($$,$1);strcat($$,":entero");}
-    | verdadero {/*QTextStream(stdout) << "verdadero" << endl;*/ strcmp($$,$1);strcat($$,":verdadero");}
-    | falso{/*QTextStream(stdout) << "falso" << endl;*/ strcmp($$,$1);strcat($$,":falso");}
-    | error{yyerror; correcto_json = 1;};
+L : llavea LA llavec{
+        $$ = $2;
+        /*QTextStream(stdout) << "PRODUCCION" << endl;*/
+    };
+
+VALOR : cadena {
+        /*QTextStream(stdout) << "cadena" << endl;*/
+        strcmp($$,$1);strcat($$,":cadena");
+    }
+
+    | decimal{
+        /*QTextStream(stdout) << "decimal" << endl;*/
+        strcmp($$,$1);
+        strcat($$,":decimal");
+    }
+
+    | entero {
+        /*QTextStream(stdout) << "entero" << endl;*/
+        strcmp($$,$1);
+        strcat($$,":entero");
+    }
+
+    | verdadero {
+        /*QTextStream(stdout) << "verdadero" << endl;*/
+        strcmp($$,$1);
+        strcat($$,":verdadero");
+    }
+
+    | falso{
+        /*QTextStream(stdout) << "falso" << endl;*/
+        strcmp($$,$1);
+        strcat($$,":falso");}
+
+    | error{
+        yyerror;
+        correcto_json = 1;
+    };
 %%

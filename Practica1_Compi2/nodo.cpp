@@ -12,7 +12,7 @@ Nodo::Nodo()
 
 void Nodo::Recorrido()
 {
-    QTextStream(stdout) << "recorrido" << endl;
+    //QTextStream(stdout) << "recorrido" << endl;
     for(int i = 0; i < this->Hijos->size(); i++){
         this->Hijos->at(i)->Visitar();
         this->Hijos->at(i)->Recorrido();
@@ -21,5 +21,5 @@ void Nodo::Recorrido()
 
 void Nodo::Visitar()
 {
-    QTextStream(stdout) << this->Nombre + ": " + this->Valor << endl;
+    //QTextStream(stdout) << this->Nombre + ": " + this->Valor << endl;
 }

@@ -1,24 +1,25 @@
-{
-"coleccion": {
-"cd": [
-{
-	"title": "Empire Burlesque",
-	"artist": "Bob Daniel",
-	"country": "USA",
-	"company": "Columbia",
-	"price": "10.90",
-	"year": "1985",
-	"bestSeller": "falso",
-},
-{
-"title": "Luna nueva",
-"artist": "Alguien en el mundo",
-"country": "Alguna parte del mundo",
-"company": "Imaginacion",
-"price": "12",
-"year": "1800",
-"bestSeller": "verdadero"
-}
-]
-}
-}
+<jsl:transformacion ruta="ola" version="Compi2">
+	<jsl: variable entero=juan23>
+	<jsl: variable=juan23 valor = 'c'>
+	<jsl: if condicion = asig == 87>
+		<jsl: variable=juan23 valor = 'c'>	
+	</jsl:if>
+
+	<jsl:plantilla nombreObj=comida>
+		<jsl:para-cada seleccionar = sal>
+		<jsl:plantilla-aplicar seleccionar=comida/>
+		</jsl:para-cada>
+
+		<jsl: en-caso>
+			<jsl:de condicion = e == 3>
+				<jsl: variable=juan23 valor = 'c'>
+			</jsl:de>
+			<jsl:de condicion = e == 3>
+				<jsl: variable=juan23 valor = 'c'>
+			</jsl:de>
+			<jsl:cualquier-otro>
+				<jsl: variable=juan23 valor = 'c'>
+			</jsl:cualquier-otro>
+		</jsl:en-caso>
+	</jsl:plantilla>
+</jsl:final>

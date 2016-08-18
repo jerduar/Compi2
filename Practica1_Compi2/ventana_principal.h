@@ -16,6 +16,7 @@
 #include <ventanaerrores.h>
 #include <QListWidget>
 #include <arbolj.h>
+#include <QTimer>
 
 extern int yyrestart( FILE* archivo);//METODO QUE PASA EL ARCHIVO A FLEX
 extern int yyparse(); //METODO QUE INICIA EL ANALISIS SINTACTICO
@@ -37,6 +38,8 @@ extern ArbolJ *setArbolito();
 
 extern ArbolAST* setArbol();//METODO PARA RETORNAR EL ARBOL AST
 
+extern void setEdit(QTextEdit *edi);
+
 namespace Ui {
 class Ventana_Principal;
 }
@@ -53,15 +56,11 @@ private slots:
 
     void on_actionAbrir_triggered();
 
-    void on_pushButton_clicked();
-
     void on_actionGenerar_HTML_triggered();
 
     void on_actionGuardar_triggered();
 
     void closeTab(const int& index);
-
-
 
     void on_bt_buscar_2_clicked();
 
@@ -70,7 +69,6 @@ private slots:
     void on_actionGuardar_Como_triggered();
 
     void on_bt_buscar_clicked();
-
 
     void on_bt_reemplazarAll_clicked();
 
@@ -82,12 +80,24 @@ private slots:
 
     void on_actionVer_Reporte_JSON_triggered();
 
+    void Prueba();
+
+    void Analisis();
+
 private:
     Ui::Ventana_Principal *ui;
+
+    //ADMINISTRACIÓN DE ARCHIVOS
     void OpenFile();
     void GuardarComo();
+
+    //VENTANAS DE ERROR
     VentanaErrores *errores;
     VentanaErrores *errores_json;
+
+    //MÉTODOS DE ANÁLISIS
+    void AnalisisJSON();
+    void AnalisisJSLT();
 };
 
 #endif // VENTANA_PRINCIPAL_H

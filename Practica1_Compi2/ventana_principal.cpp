@@ -14,6 +14,11 @@ Ventana_Principal::Ventana_Principal(QWidget *parent) :
     this->errores = new VentanaErrores();
     this->errores_json = new VentanaErrores();
 
+    //ANÁLISIS EN TIEMPO REAL
+    QTimer *t = new QTimer(this);
+    connect(t, SIGNAL(timeout()), this, SLOT(Analisis()));
+    t->start(2000);
+
 }
 
 Ventana_Principal::~Ventana_Principal()
@@ -100,12 +105,25 @@ void Ventana_Principal::GuardarComo()
     }
 }
 
-void Ventana_Principal::on_pushButton_clicked()
+void Ventana_Principal::Prueba()
 {
-
+    QTextStream(stdout) << "probando qtimer" << endl;
 }
 
-void Ventana_Principal::on_actionGenerar_HTML_triggered()
+void Ventana_Principal::Analisis()
+{
+    Pestana *actual = (Pestana*)ui->tabWidget->currentWidget();
+
+    if(actual != NULL){
+        if(actual->enviar_texto().at(0) == '{'){
+            AnalisisJSON();
+        }else if(actual->enviar_texto().at(0) == '<'){
+            AnalisisJSLT();
+        }
+    }
+}
+
+void Ventana_Principal::AnalisisJSON()
 {
     Pestana *actual = (Pestana*)ui->tabWidget->currentWidget();
 
@@ -123,17 +141,53 @@ void Ventana_Principal::on_actionGenerar_HTML_triggered()
         SetVentanita_json(errores_json->ven());
         setFila();
         setColumna();
+        setEdit(actual->textedit());
         yyrestart(input);//SE PASA LA CADENA DE ENTRADA A FLEX
         yyparse();//SE INICIA LA COMPILACION
-        QTextStream(stdout) << "termino el json" << endl;
-
 
         ArbolJ *nuevo = setArbolito();
         if(nuevo != NULL && correctojson() != 1){
-            nuevo->Dibujar();
+            //nuevo->Dibujar();
         }
     }
+}
 
+void Ventana_Principal::AnalisisJSLT()
+{
+    Pestana *actual = (Pestana*)ui->tabWidget->currentWidget();
+
+    if(actual != NULL){
+        QFile file("temp2.txt"); //SE CREA UN ARCHIVO TEMPORAL PARA COMPILARLO
+        if ( file.open( file.WriteOnly ) ) { //BUFFER PARA EL TEXTO QUE SE DESEA COMPILAR
+            QTextStream stream1( &file );
+            stream1 << actual->enviar_texto();
+        }
+
+
+        const char* x = "temp2.txt";
+        FILE* input = fopen(x, "r" );
+        this->errores->ven()->clear();
+        SetVentana(this->errores->ven());
+        SetVentanita(this->errores->ven());
+        jjsetFila();
+        jjsetColumna();
+        jjrestart(input);//SE PASA LA CADENA DE ENTRADA A FLEX
+        jjparse();//SE INICIA LA COMPILACION
+
+
+        ArbolAST *nuevo;
+        nuevo = setArbol();
+        if(nuevo != NULL){
+            //nuevo->Dibujar();
+        }else{
+            //QMessageBox::information(this,"ÁRBOL","El árbol es nulo");
+        }
+    }
+}
+
+void Ventana_Principal::on_actionGenerar_HTML_triggered()
+{
+    this->AnalisisJSON();
 }
 
 void Ventana_Principal::on_actionGuardar_triggered()
@@ -205,33 +259,19 @@ void Ventana_Principal::on_bt_buscar_3_clicked()
     Pestana *actual = (Pestana*)ui->tabWidget->currentWidget();
 
     if(actual != NULL){
-        QFile file("temp2.txt"); //SE CREA UN ARCHIVO TEMPORAL PARA COMPILARLO
-        if ( file.open( file.WriteOnly ) ) { //BUFFER PARA EL TEXTO QUE SE DESEA COMPILAR
-            QTextStream stream1( &file );
-            stream1 << actual->enviar_texto();
-        }
 
+        QTextEdit *editor = actual->textedit();
 
-        const char* x = "temp2.txt";
-        FILE* input = fopen(x, "r" );
-        this->errores->ven()->clear();
-        SetVentana(this->errores->ven());
-        SetVentanita(this->errores->ven());
-        jjsetFila();
-        jjsetColumna();
-        jjrestart(input);//SE PASA LA CADENA DE ENTRADA A FLEX
-        jjparse();//SE INICIA LA COMPILACION
-
-
-        ArbolAST *nuevo;
-        nuevo = setArbol();
-        if(nuevo != NULL){
-            QTextStream(stdout) << "Dibujando" << endl;
-            nuevo->Dibujar();
-        }else{
-            QMessageBox::information(this,"ÁRBOL","El árbol es nulo");
-        }
+        int fw1 = editor->fontWeight();
+        QColor gris1 = QColor("red");
+        editor->setFontWeight(QFont::DemiBold);
+        editor->setTextColor(QColor(gris1));
+        editor->insertPlainText("hola");
+        editor->setFontWeight(fw1);
+        editor->setTextColor(gris1);
     }
+    //this->AnalisisJSLT();
+
 }
 
 void Ventana_Principal::on_actionVer_Reportes_triggered()

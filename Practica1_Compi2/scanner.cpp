@@ -505,15 +505,22 @@ char *yytext;
 #include <QTextStream>
 #include <QString>
 #include <QListWidget>
+#include <QTextEdit>
 
 QListWidget *ventana_json;
 void SetVentana_json(QListWidget *vista){
     ventana_json = vista;
 }
 
+QTextEdit *editor;
+void setEdit(QTextEdit *edi){
+    editor = edi;
+    //editor->setFontWeight(QFont::DemiBold);
+}
+
 int columna=0;
 int fila = 1;
-#line 517 "scanner.cpp"
+#line 524 "scanner.cpp"
 
 #define INITIAL 0
 
@@ -731,9 +738,9 @@ YY_DECL
 		}
 
 	{
-#line 22 "ALexico.l"
+#line 29 "ALexico.l"
 
-#line 737 "scanner.cpp"
+#line 744 "scanner.cpp"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -792,89 +799,106 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 23 "ALexico.l"
+#line 30 "ALexico.l"
 { columna=columna+strlen(yylval.TEXT); strcpy(yylval.TEXT, yytext); return llavec; }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 24 "ALexico.l"
+#line 31 "ALexico.l"
 { columna=columna+strlen(yylval.TEXT); strcpy(yylval.TEXT, yytext); return llavea; }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 25 "ALexico.l"
+#line 32 "ALexico.l"
 { columna=columna+strlen(yylval.TEXT); strcpy(yylval.TEXT, yytext); return dospuntos; }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 26 "ALexico.l"
+#line 33 "ALexico.l"
 { columna=columna+strlen(yylval.TEXT); strcpy(yylval.TEXT, yytext); return falso; }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 27 "ALexico.l"
+#line 34 "ALexico.l"
 { columna=columna+strlen(yylval.TEXT); strcpy(yylval.TEXT, yytext); return verdadero; }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 28 "ALexico.l"
+#line 35 "ALexico.l"
 { columna=columna+strlen(yylval.TEXT); strcpy(yylval.TEXT, yytext); return cora; }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 29 "ALexico.l"
+#line 36 "ALexico.l"
 { columna=columna+strlen(yylval.TEXT); strcpy(yylval.TEXT, yytext); return corc; }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 30 "ALexico.l"
+#line 37 "ALexico.l"
 { columna=columna+strlen(yylval.TEXT); strcpy(yylval.TEXT, yytext); return coma; }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 31 "ALexico.l"
+#line 38 "ALexico.l"
 { columna=columna+strlen(yylval.TEXT); strcpy(yylval.TEXT, yytext); return comilla; }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 32 "ALexico.l"
+#line 39 "ALexico.l"
 { columna=columna+strlen(yylval.TEXT); strcpy(yylval.TEXT, yytext); return entero; }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 33 "ALexico.l"
+#line 40 "ALexico.l"
 { columna=columna+strlen(yylval.TEXT); strcpy(yylval.TEXT, yytext); return decimal; }
 	YY_BREAK
 case 12:
 /* rule 12 can match eol */
 YY_RULE_SETUP
-#line 34 "ALexico.l"
-{ columna=columna+strlen(yylval.TEXT); strcpy(yylval.TEXT, yytext); return cadena; }
+#line 41 "ALexico.l"
+{ columna=columna+strlen(yylval.TEXT); strcpy(yylval.TEXT, yytext);
+                          //QList<QTextEdit::ExtraSelection> extraSelections;
+
+    if(!editor->isReadOnly())
+    {
+        QColor color = QColor(Qt::yellow).lighter(130);
+        //QTextEdit::ExtraSelection extra;
+
+        if(editor->find(yytext)){
+            editor->setTextColor(color);
+            QString nuevo = editor->toPlainText().insert(0,"hola");
+            editor->insertPlainText(nuevo);
+            //extra.cursor = editor->textCursor();
+            //extraSelections.append(extra);
+        }
+    }
+    //xeditor->setExtraSelections(extraSelections);
+                        return cadena; }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 35 "ALexico.l"
+#line 59 "ALexico.l"
 { columna=columna+strlen(yylval.TEXT); strcpy(yylval.TEXT, yytext); return identificador; }
 	YY_BREAK
 case 14:
 /* rule 14 can match eol */
 YY_RULE_SETUP
-#line 36 "ALexico.l"
+#line 60 "ALexico.l"
 {columna = 1;fila = fila + 1;}
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 37 "ALexico.l"
+#line 61 "ALexico.l"
 {/*Se ingnora*/}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 38 "ALexico.l"
+#line 62 "ALexico.l"
 {columna = columna + 1;}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 39 "ALexico.l"
+#line 63 "ALexico.l"
 {QTextStream(stdout) << "Error Lexico :" << yytext << " fila : " + QString::number(fila) << " columna : " << QString::number(columna) << endl;
                             QString aux = "Error Lexico : " + (QString)yytext + " fila : " + QString::number(fila) + " columna : " + QString::number(columna);
                             ventana_json->addItem(aux);
@@ -882,10 +906,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 43 "ALexico.l"
+#line 67 "ALexico.l"
 ECHO;
 	YY_BREAK
-#line 889 "scanner.cpp"
+#line 913 "scanner.cpp"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1886,7 +1910,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 43 "ALexico.l"
+#line 67 "ALexico.l"
 
 
 

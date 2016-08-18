@@ -5,10 +5,17 @@
 #include <QTextStream>
 #include <QString>
 #include <QListWidget>
+#include <QTextEdit>
 
 QListWidget *ventana_json;
 void SetVentana_json(QListWidget *vista){
     ventana_json = vista;
+}
+
+QTextEdit *editor;
+void setEdit(QTextEdit *edi){
+    editor = edi;
+    //editor->setFontWeight(QFont::DemiBold);
 }
 
 int columna=0;
@@ -31,7 +38,24 @@ letra ["][^\"]*["]
 ["]                     { columna=columna+strlen(yylval.TEXT); strcpy(yylval.TEXT, yytext); return comilla; }
 {entero}                { columna=columna+strlen(yylval.TEXT); strcpy(yylval.TEXT, yytext); return entero; }
 {dec}                   { columna=columna+strlen(yylval.TEXT); strcpy(yylval.TEXT, yytext); return decimal; }
-{letra}                 { columna=columna+strlen(yylval.TEXT); strcpy(yylval.TEXT, yytext); return cadena; }
+{letra}                 { columna=columna+strlen(yylval.TEXT); strcpy(yylval.TEXT, yytext);
+                          //QList<QTextEdit::ExtraSelection> extraSelections;
+
+    if(!editor->isReadOnly())
+    {
+        QColor color = QColor(Qt::yellow).lighter(130);
+        //QTextEdit::ExtraSelection extra;
+
+        if(editor->find(yytext)){
+            editor->setTextColor(color);
+            QString nuevo = editor->toPlainText().insert(0,"hola");
+            editor->insertPlainText(nuevo);
+            //extra.cursor = editor->textCursor();
+            //extraSelections.append(extra);
+        }
+    }
+    //xeditor->setExtraSelections(extraSelections);
+                        return cadena; }
 {identificador}         { columna=columna+strlen(yylval.TEXT); strcpy(yylval.TEXT, yytext); return identificador; }
 \n                      {columna = 1;fila = fila + 1;}
 [[:blank:]]             {/*Se ingnora*/}

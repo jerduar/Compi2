@@ -94,10 +94,10 @@ void SetVentanita_json(QListWidget *ven){
 int yyerror(const char* mens){
 //metodo que se llama al haber un error sintactico
 //SE IMPRIME EN CONSOLA EL ERROR
-std::cout <<mens<<" error: "<<yytext << " linea: " << fila << " columna: " << columna << std::endl;
-QTextStream(stdout) << "INGRESANDO ERROR" << endl;
+//std::cout <<mens<<" error: "<<yytext << " linea: " << fila << " columna: " << columna << std::endl;
+//QTextStream(stdout) << "INGRESANDO ERROR" << endl;
 ventanita_json->addItem("Error Sintactico : " + (QString)yytext + " linea: " + fila + " columna: " + QString::number(columna - strlen(yytext)));
-QTextStream(stdout) << "ERROR ingresado" << endl;
+//QTextStream(stdout) << "ERROR ingresado" << endl;
 return 0;
 }
 
@@ -506,9 +506,9 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,   104,   104,   112,   114,   116,   117,   120,   126,   131,
-     133,   135,   136,   139,   140,   142,   143,   146,   147,   149,
-     151,   152,   153,   154,   155,   156
+       0,   104,   104,   113,   120,   124,   129,   136,   143,   149,
+     154,   159,   165,   172,   178,   185,   191,   196,   202,   207,
+     212,   217,   223,   229,   235,   240
 };
 #endif
 
@@ -1318,154 +1318,228 @@ yyreduce:
     break;
 
   case 3:
-#line 112 "ASintactico.y" /* yacc.c:1646  */
-    {yyerror; correcto_json = 1; QTextStream(stdout) << "termino el error4 " << endl;arbolito = NULL;}
-#line 1324 "parser.cpp" /* yacc.c:1646  */
+#line 113 "ASintactico.y" /* yacc.c:1646  */
+    {
+        yyerror;
+        correcto_json = 1;
+        /*QTextStream(stdout) << "termino el error4 " << endl;*/
+        arbolito = NULL;
+    }
+#line 1329 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 4:
-#line 114 "ASintactico.y" /* yacc.c:1646  */
-    {(yyval.NODE) = (yyvsp[-1].NODE);}
-#line 1330 "parser.cpp" /* yacc.c:1646  */
+#line 120 "ASintactico.y" /* yacc.c:1646  */
+    {
+        (yyval.NODE) = (yyvsp[-1].NODE);
+    }
+#line 1337 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 5:
-#line 116 "ASintactico.y" /* yacc.c:1646  */
-    {(yyvsp[-2].NODE)->Hijos->append((yyvsp[0].NODE));(yyval.NODE) = (yyvsp[-2].NODE);}
-#line 1336 "parser.cpp" /* yacc.c:1646  */
+#line 124 "ASintactico.y" /* yacc.c:1646  */
+    {
+        (yyvsp[-2].NODE)->Hijos->append((yyvsp[0].NODE));
+        (yyval.NODE) = (yyvsp[-2].NODE);
+    }
+#line 1346 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 6:
-#line 117 "ASintactico.y" /* yacc.c:1646  */
-    {(yyval.NODE) = new Nodo();(yyval.NODE)->Hijos->append((yyvsp[0].NODE));/*$$->Recorrido();*/}
-#line 1342 "parser.cpp" /* yacc.c:1646  */
+#line 129 "ASintactico.y" /* yacc.c:1646  */
+    {
+        (yyval.NODE) = new Nodo();
+        (yyval.NODE)->Hijos->append((yyvsp[0].NODE));
+        /*$$->Recorrido();*/
+    }
+#line 1356 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 7:
-#line 120 "ASintactico.y" /* yacc.c:1646  */
+#line 136 "ASintactico.y" /* yacc.c:1646  */
     {
-                                        QTextStream(stdout) << "Produccion AO" << endl;
-                                        (yyval.NODE) = (yyvsp[-1].NODE);
-                                        (yyval.NODE)->Nombre = (yyvsp[-4].TEXT);
-                                        //$$->Recorrido();
-                                      }
-#line 1353 "parser.cpp" /* yacc.c:1646  */
+       //QTextStream(stdout) << "Produccion AO" << endl;
+        (yyval.NODE) = (yyvsp[-1].NODE);
+        (yyval.NODE)->Nombre = (yyvsp[-4].TEXT);
+      //$$->Recorrido();
+    }
+#line 1367 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 8:
-#line 126 "ASintactico.y" /* yacc.c:1646  */
+#line 143 "ASintactico.y" /* yacc.c:1646  */
     {
-                                    QTextStream(stdout) << "Produccion AO" << endl;
-                                    (yyval.NODE) = (yyvsp[-1].NODE);
-                                    (yyval.NODE)->Nombre = (yyvsp[-4].TEXT);
-                                   }
-#line 1363 "parser.cpp" /* yacc.c:1646  */
+      //QTextStream(stdout) << "Produccion AO" << endl;
+        (yyval.NODE) = (yyvsp[-1].NODE);
+        (yyval.NODE)->Nombre = (yyvsp[-4].TEXT);
+    }
+#line 1377 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 9:
-#line 131 "ASintactico.y" /* yacc.c:1646  */
-    {(yyval.NODE) = (yyvsp[-1].NODE); (yyval.NODE)->Nombre = (yyvsp[-4].TEXT);}
-#line 1369 "parser.cpp" /* yacc.c:1646  */
+#line 149 "ASintactico.y" /* yacc.c:1646  */
+    {
+        (yyval.NODE) = (yyvsp[-1].NODE);
+        (yyval.NODE)->Nombre = (yyvsp[-4].TEXT);
+    }
+#line 1386 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 10:
-#line 133 "ASintactico.y" /* yacc.c:1646  */
-    {yyerror; correcto_json = 1;}
-#line 1375 "parser.cpp" /* yacc.c:1646  */
+#line 154 "ASintactico.y" /* yacc.c:1646  */
+    {
+        yyerror;
+        correcto_json = 1;
+    }
+#line 1395 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 11:
-#line 135 "ASintactico.y" /* yacc.c:1646  */
-    {(yyvsp[-2].NODE)->Hijos->append((yyvsp[0].NODE));(yyval.NODE) = (yyvsp[-2].NODE);QTextStream(stdout) <<  "PRDUCCION LA COMA A" << endl;}
-#line 1381 "parser.cpp" /* yacc.c:1646  */
-    break;
-
-  case 12:
-#line 136 "ASintactico.y" /* yacc.c:1646  */
-    {/*QTextStream(stdout) << $1->Valor << endl;*/ (yyval.NODE) = new Nodo(); (yyval.NODE)->Hijos->append((yyvsp[0].NODE));}
-#line 1387 "parser.cpp" /* yacc.c:1646  */
-    break;
-
-  case 13:
-#line 139 "ASintactico.y" /* yacc.c:1646  */
-    {Nodo *hijo = new Nodo(); hijo->Valor = (yyvsp[0].TEXT); (yyval.NODE)->Hijos->append(hijo);}
-#line 1393 "parser.cpp" /* yacc.c:1646  */
-    break;
-
-  case 14:
-#line 140 "ASintactico.y" /* yacc.c:1646  */
-    {(yyval.NODE) = new Nodo(); Nodo *hijo = new Nodo(); hijo->Valor = (yyvsp[0].TEXT); (yyval.NODE)->Hijos->append(hijo);}
-#line 1399 "parser.cpp" /* yacc.c:1646  */
-    break;
-
-  case 15:
-#line 142 "ASintactico.y" /* yacc.c:1646  */
-    {(yyval.NODE) = new Nodo(); (yyval.NODE)->Valor = (yyvsp[0].TEXT); (yyval.NODE)->Nombre = (yyvsp[-2].TEXT);}
+#line 159 "ASintactico.y" /* yacc.c:1646  */
+    {
+        (yyvsp[-2].NODE)->Hijos->append((yyvsp[0].NODE));
+        (yyval.NODE) = (yyvsp[-2].NODE);
+        /*QTextStream(stdout) <<  "PRDUCCION LA COMA A" << endl;*/
+    }
 #line 1405 "parser.cpp" /* yacc.c:1646  */
     break;
 
+  case 12:
+#line 165 "ASintactico.y" /* yacc.c:1646  */
+    {
+        /*QTextStream(stdout) << $1->Valor << endl;*/
+        (yyval.NODE) = new Nodo();
+        (yyval.NODE)->Hijos->append((yyvsp[0].NODE));
+    }
+#line 1415 "parser.cpp" /* yacc.c:1646  */
+    break;
+
+  case 13:
+#line 172 "ASintactico.y" /* yacc.c:1646  */
+    {
+        Nodo *hijo = new Nodo();
+        hijo->Valor = (yyvsp[0].TEXT);
+        (yyval.NODE)->Hijos->append(hijo);
+    }
+#line 1425 "parser.cpp" /* yacc.c:1646  */
+    break;
+
+  case 14:
+#line 178 "ASintactico.y" /* yacc.c:1646  */
+    {
+        (yyval.NODE) = new Nodo();
+        Nodo *hijo = new Nodo();
+        hijo->Valor = (yyvsp[0].TEXT);
+        (yyval.NODE)->Hijos->append(hijo);
+    }
+#line 1436 "parser.cpp" /* yacc.c:1646  */
+    break;
+
+  case 15:
+#line 185 "ASintactico.y" /* yacc.c:1646  */
+    {
+        (yyval.NODE) = new Nodo();
+        (yyval.NODE)->Valor = (yyvsp[0].TEXT);
+        (yyval.NODE)->Nombre = (yyvsp[-2].TEXT);
+    }
+#line 1446 "parser.cpp" /* yacc.c:1646  */
+    break;
+
   case 16:
-#line 143 "ASintactico.y" /* yacc.c:1646  */
-    {(yyval.NODE) = (yyvsp[0].NODE);}
-#line 1411 "parser.cpp" /* yacc.c:1646  */
+#line 191 "ASintactico.y" /* yacc.c:1646  */
+    {
+        (yyval.NODE) = (yyvsp[0].NODE);
+    }
+#line 1454 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 17:
-#line 146 "ASintactico.y" /* yacc.c:1646  */
-    {(yyvsp[-2].NODE)->Hijos->append((yyvsp[0].NODE)); (yyval.NODE) = (yyvsp[-2].NODE);QTextStream(stdout) << "PRODUCCION AO COM L" << endl;}
-#line 1417 "parser.cpp" /* yacc.c:1646  */
+#line 196 "ASintactico.y" /* yacc.c:1646  */
+    {
+        (yyvsp[-2].NODE)->Hijos->append((yyvsp[0].NODE));
+        (yyval.NODE) = (yyvsp[-2].NODE);
+        /*QTextStream(stdout) << "PRODUCCION AO COM L" << endl;*/
+    }
+#line 1464 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 18:
-#line 147 "ASintactico.y" /* yacc.c:1646  */
-    {(yyval.NODE) = new Nodo(); (yyval.NODE)->Hijos->append((yyvsp[0].NODE)); }
-#line 1423 "parser.cpp" /* yacc.c:1646  */
+#line 202 "ASintactico.y" /* yacc.c:1646  */
+    {
+        (yyval.NODE) = new Nodo();
+        (yyval.NODE)->Hijos->append((yyvsp[0].NODE));
+    }
+#line 1473 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 19:
-#line 149 "ASintactico.y" /* yacc.c:1646  */
-    {(yyval.NODE) = (yyvsp[-1].NODE); QTextStream(stdout) << "PRODUCCION" << endl;}
-#line 1429 "parser.cpp" /* yacc.c:1646  */
+#line 207 "ASintactico.y" /* yacc.c:1646  */
+    {
+        (yyval.NODE) = (yyvsp[-1].NODE);
+        /*QTextStream(stdout) << "PRODUCCION" << endl;*/
+    }
+#line 1482 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 20:
-#line 151 "ASintactico.y" /* yacc.c:1646  */
-    {/*QTextStream(stdout) << "cadena" << endl;*/strcmp((yyval.TEXT),(yyvsp[0].TEXT));strcat((yyval.TEXT),":cadena");}
-#line 1435 "parser.cpp" /* yacc.c:1646  */
+#line 212 "ASintactico.y" /* yacc.c:1646  */
+    {
+        /*QTextStream(stdout) << "cadena" << endl;*/
+        strcmp((yyval.TEXT),(yyvsp[0].TEXT));strcat((yyval.TEXT),":cadena");
+    }
+#line 1491 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 21:
-#line 152 "ASintactico.y" /* yacc.c:1646  */
-    {/*QTextStream(stdout) << "decimal" << endl;*/strcmp((yyval.TEXT),(yyvsp[0].TEXT));strcat((yyval.TEXT),":decimal");}
-#line 1441 "parser.cpp" /* yacc.c:1646  */
+#line 217 "ASintactico.y" /* yacc.c:1646  */
+    {
+        /*QTextStream(stdout) << "decimal" << endl;*/
+        strcmp((yyval.TEXT),(yyvsp[0].TEXT));
+        strcat((yyval.TEXT),":decimal");
+    }
+#line 1501 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 22:
-#line 153 "ASintactico.y" /* yacc.c:1646  */
-    {/*QTextStream(stdout) << "entero" << endl;*/strcmp((yyval.TEXT),(yyvsp[0].TEXT));strcat((yyval.TEXT),":entero");}
-#line 1447 "parser.cpp" /* yacc.c:1646  */
+#line 223 "ASintactico.y" /* yacc.c:1646  */
+    {
+        /*QTextStream(stdout) << "entero" << endl;*/
+        strcmp((yyval.TEXT),(yyvsp[0].TEXT));
+        strcat((yyval.TEXT),":entero");
+    }
+#line 1511 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 23:
-#line 154 "ASintactico.y" /* yacc.c:1646  */
-    {/*QTextStream(stdout) << "verdadero" << endl;*/ strcmp((yyval.TEXT),(yyvsp[0].TEXT));strcat((yyval.TEXT),":verdadero");}
-#line 1453 "parser.cpp" /* yacc.c:1646  */
+#line 229 "ASintactico.y" /* yacc.c:1646  */
+    {
+        /*QTextStream(stdout) << "verdadero" << endl;*/
+        strcmp((yyval.TEXT),(yyvsp[0].TEXT));
+        strcat((yyval.TEXT),":verdadero");
+    }
+#line 1521 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 24:
-#line 155 "ASintactico.y" /* yacc.c:1646  */
-    {/*QTextStream(stdout) << "falso" << endl;*/ strcmp((yyval.TEXT),(yyvsp[0].TEXT));strcat((yyval.TEXT),":falso");}
-#line 1459 "parser.cpp" /* yacc.c:1646  */
+#line 235 "ASintactico.y" /* yacc.c:1646  */
+    {
+        /*QTextStream(stdout) << "falso" << endl;*/
+        strcmp((yyval.TEXT),(yyvsp[0].TEXT));
+        strcat((yyval.TEXT),":falso");}
+#line 1530 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 25:
-#line 156 "ASintactico.y" /* yacc.c:1646  */
-    {yyerror; correcto_json = 1;}
-#line 1465 "parser.cpp" /* yacc.c:1646  */
+#line 240 "ASintactico.y" /* yacc.c:1646  */
+    {
+        yyerror;
+        correcto_json = 1;
+    }
+#line 1539 "parser.cpp" /* yacc.c:1646  */
     break;
 
 
-#line 1469 "parser.cpp" /* yacc.c:1646  */
+#line 1543 "parser.cpp" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1693,5 +1767,5 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 157 "ASintactico.y" /* yacc.c:1906  */
+#line 244 "ASintactico.y" /* yacc.c:1906  */
 

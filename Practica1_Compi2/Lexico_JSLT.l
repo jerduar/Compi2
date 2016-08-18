@@ -87,6 +87,8 @@ letra ["][^\"]*["]
 "%"                         { columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return modulo; }
 "^"                         { columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return potencia; }
 "++"                        { columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return incremento; }
+"@"                        { columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return arroba; }
+"@@"                        { columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return arroba_doble; }
 "--"                        { columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return decremento; }
 "+="                        { columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return suma_igual; }
 "entero"                    { columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return tipo_entero; }
@@ -110,7 +112,6 @@ letra ["][^\"]*["]
 [\t\r]                      { columna_jslt = columna_jslt + 1; }
 " "                         {columna_jslt = columna_jslt + 1; }
 "   "                       {columna_jslt = columna_jslt + 1; }
-.                           {QTextStream(stdout) << "Error Lexico : " << jjtext << " fila : " << fila_jslt << " columna : " << QString::number(columna_jslt) << endl;
-                             QString aux = "Error Lexico : " + (QString)jjtext + " fila : " + QString::number(fila_jslt) + " columna : " + QString::number(columna_jslt);
+.                           {QString aux = "Error Lexico : " + (QString)jjtext + " fila : " + QString::number(fila_jslt) + " columna : " + QString::number(columna_jslt);
                              ventana->addItem(aux);}
 %%

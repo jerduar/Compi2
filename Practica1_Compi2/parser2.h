@@ -109,7 +109,27 @@ extern int jjdebug;
     para = 319,
     parc = 320,
     valor_de = 321,
-    tok_html = 322
+    tok_html = 322,
+    tok_h1 = 323,
+    tok_h2 = 324,
+    tok_h3 = 325,
+    tok_h4 = 326,
+    tok_h5 = 327,
+    tok_h6 = 328,
+    tok_title = 329,
+    tok_body = 330,
+    tok_head = 331,
+    tok_table = 332,
+    tok_th = 333,
+    tok_tr = 334,
+    tok_td = 335,
+    tok_boder = 336,
+    tok_bgcolor = 337,
+    tok_width = 338,
+    tok_p = 339,
+    tok_b = 340,
+    tok_i = 341,
+    arroba = 342
   };
 #endif
 
@@ -118,14 +138,14 @@ extern int jjdebug;
 
 union YYSTYPE
 {
-#line 70 "Sintactico_JSLT.y" /* yacc.c:1909  */
+#line 62 "Sintactico_JSLT.y" /* yacc.c:1909  */
 
 //se especifican los tipo de valores para los no terminales y lo terminales
 char TEXT [256];
 struct Operador * VAL;
 struct NodoAST *NODE;
 
-#line 129 "parser2.h" /* yacc.c:1909  */
+#line 149 "parser2.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;
