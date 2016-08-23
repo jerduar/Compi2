@@ -418,6 +418,7 @@ scanner.o: ../Practica1_Compi2/scanner.cpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o scanner.o ../Practica1_Compi2/scanner.cpp
 
 parser.o: ../Practica1_Compi2/parser.cpp ../Practica1_Compi2/scanner.h \
+		../Practica1_Compi2/arbolj.h \
 		../Practica1_Compi2/nodo.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o parser.o ../Practica1_Compi2/parser.cpp
 

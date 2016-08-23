@@ -17,6 +17,8 @@
 #include <QListWidget>
 #include <arbolj.h>
 #include <QTimer>
+#include <QCompleter>
+#include <QStringListModel>
 
 extern int yyrestart( FILE* archivo);//METODO QUE PASA EL ARCHIVO A FLEX
 extern int yyparse(); //METODO QUE INICIA EL ANALISIS SINTACTICO
@@ -39,6 +41,7 @@ extern ArbolJ *setArbolito();
 extern ArbolAST* setArbol();//METODO PARA RETORNAR EL ARBOL AST
 
 extern void setEdit(QTextEdit *edi);
+void setEdit_jslt(QTextEdit *edi);
 
 namespace Ui {
 class Ventana_Principal;
@@ -98,6 +101,11 @@ private:
     //MÉTODOS DE ANÁLISIS
     void AnalisisJSON();
     void AnalisisJSLT();
+
+    //AUTOCOMPLETADO
+    QCompleter *completer;
+
+    QAbstractItemModel *modelFromFile(const QString& fileName);
 };
 
 #endif // VENTANA_PRINCIPAL_H

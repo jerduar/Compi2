@@ -3,6 +3,9 @@
 
 #include <QFrame>
 #include <QTextEdit>
+#include <QCompleter>
+#include <QFocusEvent>
+#include <QKeyEvent>
 
 namespace Ui {
 class Pestana;
@@ -31,10 +34,26 @@ public:
 
     QTextEdit *textedit();
 
+    //AUTOCOMPLETADO
+    void setCompleter(QCompleter *completer);
+    QCompleter *completer() const;
+
+protected:
+    void keyPressEvent(QKeyEvent *e) Q_DECL_OVERRIDE;
+    void focusInEvent(QFocusEvent *e) Q_DECL_OVERRIDE;
+
+private slots:
+    void insertCompletion(const QString &completion);
+
+
 private:
     Ui::Pestana *ui;
     //VARIABLES
     QString path;
+
+    //AUTOCOMPLETADO
+    QCompleter *c;
+    QString textUnderCursor() const;
 };
 
 #endif // PESTANA_H

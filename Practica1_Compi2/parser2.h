@@ -129,7 +129,8 @@ extern int jjdebug;
     tok_p = 339,
     tok_b = 340,
     tok_i = 341,
-    arroba = 342
+    arroba = 342,
+    arroba_doble = 343
   };
 #endif
 
@@ -145,7 +146,7 @@ char TEXT [256];
 struct Operador * VAL;
 struct NodoAST *NODE;
 
-#line 149 "parser2.h" /* yacc.c:1909  */
+#line 150 "parser2.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

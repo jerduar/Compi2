@@ -8,6 +8,10 @@ Pestana::Pestana(QWidget *parent) :
     ui->setupUi(this);
     this->path = "";
 
+    ui->textEdit->setPlainText(tr("This TextEdit provides autocompletions for words that have more than"
+                        " 3 characters. You can trigger autocompletion using ") +
+                        QKeySequence("Ctrl+E").toString(QKeySequence::NativeText));
+
 
 }
 
@@ -101,4 +105,72 @@ void Pestana::repleace(QString reemplazo, QString texto_buscado)
 QTextEdit *Pestana::textedit()
 {
     return ui->textEdit;
+}
+
+void Pestana::setCompleter(QCompleter *completer)
+{
+    if(c)
+        QObject::disconnect(c,0,this,0);
+
+    c = completer;
+
+    if(!c)
+        return;
+
+    c->setWidget(this);
+    c->setCompletionMode(QCompleter::PopupCompletion);
+    c->setCaseSensitivity(Qt::CaseInsensitive);
+    QObject::connect(c,SIGNAL(activated(QString)),this,SLOT(insertCompletion(QString)));
+}
+
+QCompleter *Pestana::completer() const
+{
+    return c;
+}
+
+void Pestana::keyPressEvent(QKeyEvent *e)
+{
+    if(c && c->popup()->isVisible()){
+        switch(e->key()){
+        case Qt::Key_Enter:
+        case Qt::Key_Return:
+        case Qt::Key_Escape:
+        case Qt::Key_Tab:
+        case Qt::Key_Backtab:
+            e->ignore();
+            return;
+        default:
+            break;
+        }
+    }
+
+    bool isShortcut = ((e->modifiers() & Qt::ControlModifier) && e->key() == Qt::Key_E);
+    if(!c || !isShortcut)
+        QFrame::keyPressEvent(e);
+}
+
+void Pestana::focusInEvent(QFocusEvent *e)
+{
+    if(c)
+        c->setWidget(this);
+    QFrame::focusInEvent(e);
+}
+
+void Pestana::insertCompletion(const QString &completion)
+{
+    if(c->widget() != this)
+        return;
+
+    QTextCursor tc = textedit()->textCursor();
+    int extra = completion.length() - c->completionPrefix().length();
+    tc.movePosition(QTextCursor::Left);
+    tc.insertText(completion.right(extra));
+    textedit()->setTextCursor(tc);
+}
+
+QString Pestana::textUnderCursor() const
+{
+    QTextCursor tc = ui->textEdit->textCursor();
+    tc.select(QTextCursor::WordUnderCursor);
+    return tc.selectedText();
 }

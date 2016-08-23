@@ -17,7 +17,9 @@ Ventana_Principal::Ventana_Principal(QWidget *parent) :
     //ANÁLISIS EN TIEMPO REAL
     QTimer *t = new QTimer(this);
     connect(t, SIGNAL(timeout()), this, SLOT(Analisis()));
-    t->start(2000);
+    t->start(500);
+
+    completer = new QCompleter(this);
 
 }
 
@@ -163,6 +165,14 @@ void Ventana_Principal::AnalisisJSLT()
             stream1 << actual->enviar_texto();
         }
 
+        //INICIO DE AUTOCOMPLETADO
+
+        completer->setModel(modelFromFile("/home/jerduar/COMPI2/palabras.txt"));
+        completer->setModelSorting(QCompleter::CaseInsensitivelySortedModel);
+        completer->setCaseSensitivity(Qt::CaseInsensitive);
+        completer->setWrapAround(false);
+        actual->setCompleter(completer);
+
 
         const char* x = "temp2.txt";
         FILE* input = fopen(x, "r" );
@@ -171,6 +181,7 @@ void Ventana_Principal::AnalisisJSLT()
         SetVentanita(this->errores->ven());
         jjsetFila();
         jjsetColumna();
+        setEdit_jslt(actual->textedit());
         jjrestart(input);//SE PASA LA CADENA DE ENTRADA A FLEX
         jjparse();//SE INICIA LA COMPILACION
 
@@ -183,6 +194,31 @@ void Ventana_Principal::AnalisisJSLT()
             //QMessageBox::information(this,"ÁRBOL","El árbol es nulo");
         }
     }
+}
+
+QAbstractItemModel *Ventana_Principal::modelFromFile(const QString &fileName)
+{
+    QFile file(fileName);
+    if(!file.open(QFile::ReadOnly))
+        return new QStringListModel(completer);
+
+#ifndef QT_NO_CURSOR
+    //QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
+#endif
+    QStringList words;
+
+    while(!file.atEnd()){
+        QByteArray line = file.readLine();
+        if(!line.isEmpty()){
+            words << line.trimmed();
+        }
+
+    }
+
+#ifdef QT_NO_CURSOR
+    QApplication::restoreOverrideCursor();
+#endif
+    return new QStringListModel(words,completer);
 }
 
 void Ventana_Principal::on_actionGenerar_HTML_triggered()

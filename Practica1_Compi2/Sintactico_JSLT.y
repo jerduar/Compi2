@@ -181,6 +181,7 @@ struct NodoAST *NODE;
 %type<NODE>  MOD2
 %type<NODE>  LLAMADA_OBJETO
 %type<NODE>  LLAMADA
+%type<NODE>  LISTA_LLAMADAS
 
 %left mas menos
 %left division por modulo
@@ -230,8 +231,8 @@ INICIO : break_a jslt dospuntos transformacion ruta igual cadena version igual c
         $$->addHijo($18);
     };
 
-LLAMADA_OBJETO : LISTA_LLAMADAS arroba LLAMADA{}
-    | LISTA_LLAMADAS arrobla_doble LLAMADA{}
+LLAMADA_OBJETO : LLAMADA_OBJETO arroba LLAMADA{}
+    | LLAMADA_OBJETO arroba_doble LLAMADA{}
     | LLAMADA{};
 
 LLAMADA : identificador{};
@@ -347,6 +348,7 @@ EXP_LOGICA : EXP_LOGICA oor EXP_LOGICA{
             $$->addHijo($1);
             $$->addHijo($2);
         }
+
     | EXP_REL{
             $$ = new NodoAST("EXP_LOGICA");
             $$->addHijo($1);
@@ -370,6 +372,8 @@ EXP_REL : EXP_ARIT igualigual EXP_ARIT{
             $$->addHijo($2);
             $$->addHijo($3);
         }
+    | para EXP_REL parc{}
+
     | EXP_ARIT menor_igual EXP_ARIT{
             $$ = new NodoAST("EXP_REL");
             $$->addHijo($1);

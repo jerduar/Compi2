@@ -815,59 +815,112 @@ YY_RULE_SETUP
 case 4:
 YY_RULE_SETUP
 #line 33 "ALexico.l"
-{ columna=columna+strlen(yylval.TEXT); strcpy(yylval.TEXT, yytext); return falso; }
+{ columna=columna+strlen(yylval.TEXT); strcpy(yylval.TEXT, yytext);
+if(!editor->isReadOnly() && !editor->hasFocus())
+{
+    QColor color = QColor(Qt::yellow).lighter(130);
+
+    if(editor->find(yytext)){
+        editor->setTextColor(color);
+        editor->insertPlainText((QString)yytext);
+    }
+}
+
+
+                         return falso; }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 34 "ALexico.l"
-{ columna=columna+strlen(yylval.TEXT); strcpy(yylval.TEXT, yytext); return verdadero; }
+#line 46 "ALexico.l"
+{ columna=columna+strlen(yylval.TEXT); strcpy(yylval.TEXT, yytext);
+if(!editor->isReadOnly() && !editor->hasFocus())
+{
+    QColor color = QColor(Qt::yellow).lighter(130);
+    //QTextEdit::ExtraSelection extra;
+
+    if(editor->find(yytext)){
+        editor->setTextColor(color);
+        editor->insertPlainText((QString)yytext);
+        //extra.cursor = editor->textCursor();
+        //extraSelections.append(extra);
+    }
+}
+
+return verdadero; }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 35 "ALexico.l"
+#line 61 "ALexico.l"
 { columna=columna+strlen(yylval.TEXT); strcpy(yylval.TEXT, yytext); return cora; }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 36 "ALexico.l"
+#line 62 "ALexico.l"
 { columna=columna+strlen(yylval.TEXT); strcpy(yylval.TEXT, yytext); return corc; }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 37 "ALexico.l"
+#line 63 "ALexico.l"
 { columna=columna+strlen(yylval.TEXT); strcpy(yylval.TEXT, yytext); return coma; }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 38 "ALexico.l"
+#line 64 "ALexico.l"
 { columna=columna+strlen(yylval.TEXT); strcpy(yylval.TEXT, yytext); return comilla; }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 39 "ALexico.l"
-{ columna=columna+strlen(yylval.TEXT); strcpy(yylval.TEXT, yytext); return entero; }
+#line 65 "ALexico.l"
+{ columna=columna+strlen(yylval.TEXT); strcpy(yylval.TEXT, yytext);
+if(!editor->isReadOnly() && !editor->hasFocus())
+{
+    QColor color = QColor(Qt::yellow).lighter(130);
+    //QTextEdit::ExtraSelection extra;
+
+    if(editor->find(yytext)){
+        editor->setTextColor(color);
+        editor->insertPlainText((QString)yytext);
+        //extra.cursor = editor->textCursor();
+        //extraSelections.append(extra);
+    }
+}
+
+return entero; }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 40 "ALexico.l"
-{ columna=columna+strlen(yylval.TEXT); strcpy(yylval.TEXT, yytext); return decimal; }
+#line 81 "ALexico.l"
+{ columna=columna+strlen(yylval.TEXT); strcpy(yylval.TEXT, yytext);
+
+if(!editor->isReadOnly() && !editor->hasFocus())
+{
+    QColor color = QColor(Qt::yellow).lighter(130);
+    //QTextEdit::ExtraSelection extra;
+
+    if(editor->find(yytext)){
+        editor->setTextColor(color);
+        editor->insertPlainText((QString)yytext);
+        //extra.cursor = editor->textCursor();
+        //extraSelections.append(extra);
+    }
+}
+return decimal; }
 	YY_BREAK
 case 12:
 /* rule 12 can match eol */
 YY_RULE_SETUP
-#line 41 "ALexico.l"
+#line 96 "ALexico.l"
 { columna=columna+strlen(yylval.TEXT); strcpy(yylval.TEXT, yytext);
                           //QList<QTextEdit::ExtraSelection> extraSelections;
 
-    if(!editor->isReadOnly())
+    if(!editor->isReadOnly() && !editor->hasFocus())
     {
         QColor color = QColor(Qt::yellow).lighter(130);
         //QTextEdit::ExtraSelection extra;
 
         if(editor->find(yytext)){
             editor->setTextColor(color);
-            QString nuevo = editor->toPlainText().insert(0,"hola");
-            editor->insertPlainText(nuevo);
+            editor->insertPlainText((QString)yytext);
             //extra.cursor = editor->textCursor();
             //extraSelections.append(extra);
         }
@@ -877,28 +930,28 @@ YY_RULE_SETUP
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 59 "ALexico.l"
+#line 113 "ALexico.l"
 { columna=columna+strlen(yylval.TEXT); strcpy(yylval.TEXT, yytext); return identificador; }
 	YY_BREAK
 case 14:
 /* rule 14 can match eol */
 YY_RULE_SETUP
-#line 60 "ALexico.l"
+#line 114 "ALexico.l"
 {columna = 1;fila = fila + 1;}
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 61 "ALexico.l"
+#line 115 "ALexico.l"
 {/*Se ingnora*/}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 62 "ALexico.l"
+#line 116 "ALexico.l"
 {columna = columna + 1;}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 63 "ALexico.l"
+#line 117 "ALexico.l"
 {QTextStream(stdout) << "Error Lexico :" << yytext << " fila : " + QString::number(fila) << " columna : " << QString::number(columna) << endl;
                             QString aux = "Error Lexico : " + (QString)yytext + " fila : " + QString::number(fila) + " columna : " + QString::number(columna);
                             ventana_json->addItem(aux);
@@ -906,10 +959,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 67 "ALexico.l"
+#line 121 "ALexico.l"
 ECHO;
 	YY_BREAK
-#line 913 "scanner.cpp"
+#line 966 "scanner.cpp"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1910,7 +1963,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 67 "ALexico.l"
+#line 121 "ALexico.l"
 
 
 

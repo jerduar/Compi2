@@ -1,7 +1,7 @@
 <jsl:transformacion ruta="ola" version="Compi2">
 	<jsl: variable entero=juan23>
 	<jsl: variable=juan23 valor = 'c'>
-	<jsl: if condicion = asig == 87>
+	<jsl: if condicion = asig == 87.4>
 		<jsl: variable=juan23 valor = 'c'>	
 	</jsl:if>
 

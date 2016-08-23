@@ -398,8 +398,8 @@ static void yy_fatal_error (yyconst char msg[]  );
 	*yy_cp = '\0'; \
 	(yy_c_buf_p) = yy_cp;
 
-#define YY_NUM_RULES 90
-#define YY_END_OF_BUFFER 91
+#define YY_NUM_RULES 91
+#define YY_END_OF_BUFFER 92
 /* This struct is not used in this scanner,
    but its presence is necessary. */
 struct yy_trans_info
@@ -407,37 +407,37 @@ struct yy_trans_info
 	flex_int32_t yy_verify;
 	flex_int32_t yy_nxt;
 	};
-static yyconst flex_int16_t yy_accept[266] =
+static yyconst flex_int16_t yy_accept[267] =
     {   0,
-        0,    0,   91,   89,   86,   85,   87,   57,   89,   89,
-       62,   89,   89,   73,   74,   60,   58,   78,   59,   29,
-       79,    1,   27,   44,   28,   65,   82,   76,   77,   63,
-       82,   20,   82,   82,   82,   82,   82,   21,   82,   82,
-       19,   82,   82,   82,   82,   82,   89,    0,    0,   46,
-        0,    0,    0,   81,   83,    0,   53,    0,    0,   56,
-        0,   64,   67,   66,    0,   79,   45,   82,   82,   82,
-       82,   82,   82,   82,   38,   82,   82,   82,   82,    3,
-        4,    5,    6,    7,    8,   82,   82,   36,   82,   82,
-       82,   82,   82,   82,   82,   15,   13,   82,   14,   82,
+        0,    0,   92,   90,   87,   86,   88,   57,   90,   90,
+       62,   90,   90,   74,   75,   60,   58,   79,   59,   29,
+       80,    1,   27,   44,   28,   65,   83,   77,   78,   63,
+       83,   20,   83,   83,   83,   83,   83,   21,   83,   83,
+       19,   83,   83,   83,   83,   83,   90,    0,    0,   46,
+        0,    0,    0,   82,   84,    0,   53,    0,    0,   56,
+        0,   64,   68,   67,    0,   80,   45,   66,   83,   83,
+       83,   83,   83,   83,   83,   38,   83,   83,   83,   83,
+        3,    4,    5,    6,    7,    8,   83,   83,   36,   83,
+       83,   83,   83,   83,   83,   83,   15,   13,   83,   14,
 
-       82,   82,   52,   88,   54,   55,   51,   83,    0,    0,
-       49,   47,   75,   80,   82,   82,   82,   82,   82,   82,
-       82,   82,   61,   82,    0,   82,   82,   82,   82,   22,
-       82,   82,   82,   82,   82,   82,   82,   82,   82,   82,
-       82,   82,   84,   50,   48,   82,   82,   82,   10,   82,
-       82,   82,   82,   82,   82,    0,   82,   82,   11,    2,
-       82,   82,   82,   24,   82,   82,   82,   82,   82,   82,
-       82,   82,   82,   82,   16,   82,   82,   82,   82,   82,
-       70,    0,   82,   26,   82,    0,   82,   82,   12,    9,
-       82,   33,   82,   82,   18,   82,   82,   82,   69,   82,
+       83,   83,   83,   52,   89,   54,   55,   51,   84,    0,
+        0,   49,   47,   76,   81,   83,   83,   83,   83,   83,
+       83,   83,   83,   61,   83,    0,   83,   83,   83,   83,
+       22,   83,   83,   83,   83,   83,   83,   83,   83,   83,
+       83,   83,   83,   85,   50,   48,   83,   83,   83,   10,
+       83,   83,   83,   83,   83,   83,    0,   83,   83,   11,
+        2,   83,   83,   83,   24,   83,   83,   83,   83,   83,
+       83,   83,   83,   83,   83,   16,   83,   83,   83,   83,
+       83,   71,    0,   83,   26,   83,    0,   83,   83,   12,
+        9,   83,   33,   83,   83,   18,   83,   83,   83,   70,
 
-       82,   82,    0,   68,   82,    0,   82,   82,   82,    0,
-       82,   82,   31,   17,   71,   82,   82,   82,   37,   82,
-        0,   82,   82,   82,    0,   82,   25,   72,   82,   82,
-       82,    0,   82,   82,   82,   34,   32,   43,   82,   30,
-       35,   41,   82,   82,    0,    0,   82,   82,    0,    0,
-       40,   82,    0,    0,   82,    0,    0,   82,   39,    0,
-       23,    0,    0,   42,    0
+       83,   83,   83,    0,   69,   83,    0,   83,   83,   83,
+        0,   83,   83,   31,   17,   72,   83,   83,   83,   37,
+       83,    0,   83,   83,   83,    0,   83,   25,   73,   83,
+       83,   83,    0,   83,   83,   83,   34,   32,   43,   83,
+       30,   35,   41,   83,   83,    0,    0,   83,   83,    0,
+        0,   40,   83,    0,    0,   83,    0,    0,   83,   39,
+        0,   23,    0,    0,   42,    0
     } ;
 
 static yyconst YY_CHAR yy_ec[256] =
@@ -483,73 +483,75 @@ static yyconst YY_CHAR yy_meta[62] =
         1
     } ;
 
-static yyconst flex_uint16_t yy_base[271] =
+static yyconst flex_uint16_t yy_base[272] =
     {   0,
-        0,    0,  321,  322,  322,  322,  316,   53,  313,   56,
-      322,   56,    0,  322,  322,  322,   50,  322,  302,  322,
-       51,  322,  322,  289,  322,  322,    0,  322,  322,  322,
+        0,    0,  322,  323,  323,  323,  317,   53,  314,   56,
+      323,   56,    0,  323,  323,  323,   50,  323,  303,  323,
+       51,  323,  323,  290,  323,  287,    0,  323,  323,  323,
       263,   35,   30,   42,  267,  270,   83,  272,  259,  262,
-       44,  255,  269,   57,   47,  264,  248,  302,  296,  322,
-      245,  243,  296,  322,    0,  288,  322,  246,  245,  322,
-      288,  322,  322,  322,   97,  107,  322,    0,  253,  258,
-       50,   58,  247,  258,    0,  237,  255,   79,  243,    0,
-        0,    0,    0,    0,    0,  254,  242,    0,  242,  240,
-      234,  249,  230,  237,  245,    0,    0,  227,  244,   42,
+       44,  255,  269,   57,   47,  264,  248,  302,  296,  323,
+      245,  243,  296,  323,    0,  288,  323,  246,  245,  323,
+      288,  323,  323,  323,   97,  107,  323,  323,    0,  253,
+      258,   50,   58,  247,  258,    0,  237,  255,   79,  243,
+        0,    0,    0,    0,    0,    0,  254,  242,    0,  242,
+      240,  234,  249,  230,  237,  245,    0,    0,  227,  244,
 
-      227,  239,  322,  322,  322,  322,  322,    0,  264,  269,
-      235,  234,  322,  119,  231,  223,   94,  225,  230,  233,
-      229,  221,    0,  220,  227,  224,  227,  223,  215,    0,
-      223,  223,  210,  221,  216,  209,  208,  205,  203,  207,
-      197,  195,  322,  322,  322,  200,  201,  194,    0,  205,
-      196,  205,  198,  190,  200,  203,  186,  191,    0,    0,
-      184,  219,  180,    0,  195,  192,  191,  177,  177,  192,
-      183,  183,  189,  175,    0,  187,  186,  167,  182,  164,
-        0,  165,  168,    0,  176,  177,  170,  175,    0,    0,
-      171,  195,  173,  160,    0,  156,  155,  158,    0,  165,
+       42,  227,  239,  323,  323,  323,  323,  323,    0,  264,
+      269,  235,  234,  323,  119,  231,  223,   94,  225,  230,
+      233,  229,  221,    0,  220,  227,  224,  227,  223,  215,
+        0,  223,  223,  210,  221,  216,  209,  208,  205,  203,
+      207,  197,  195,  323,  323,  323,  200,  201,  194,    0,
+      205,  196,  205,  198,  190,  200,  203,  186,  191,    0,
+        0,  184,  219,  180,    0,  195,  192,  191,  177,  177,
+      192,  183,  183,  189,  175,    0,  187,  186,  167,  182,
+      164,    0,  165,  168,    0,  176,  177,  170,  175,    0,
+        0,  171,  195,  173,  160,    0,  156,  155,  158,    0,
 
-      160,  159,  153,    0,  169,  164,  153,  154,  148,  157,
-      149,  146,    0,    0,    0,  141,  143,  151,  322,  153,
-      150,  142,  138,  134,  145,  144,    0,    0,  135,  130,
-      136,  144,  143,  130,  130,  322,    0,    0,  160,    0,
-      322,  159,  138,  137,  121,  128,  109,  113,   96,   99,
-        0,  104,   95,  100,   96,   87,   91,   77,  322,   75,
-        0,   75,   40,  322,  322,  152,  157,   62,  162,  167
+      165,  160,  159,  153,    0,  169,  164,  153,  154,  148,
+      157,  149,  146,    0,    0,    0,  141,  143,  151,  323,
+      153,  150,  142,  138,  134,  145,  144,    0,    0,  135,
+      130,  136,  144,  143,  130,  130,  323,    0,    0,  160,
+        0,  323,  159,  138,  137,  121,  128,  109,  113,   96,
+       99,    0,  104,   95,  100,   96,   87,   91,   77,  323,
+       75,    0,   75,   40,  323,  323,  152,  157,   62,  162,
+      167
     } ;
 
-static yyconst flex_int16_t yy_def[271] =
+static yyconst flex_int16_t yy_def[272] =
     {   0,
-      265,    1,  265,  265,  265,  265,  265,  265,  266,  265,
-      265,  265,  267,  265,  265,  265,  265,  265,  265,  265,
-      265,  265,  265,  265,  265,  265,  268,  265,  265,  265,
-      268,  268,  268,  268,  268,  268,  268,  268,  268,  268,
-      268,  268,  268,  268,  268,  268,  265,  265,  265,  265,
-      265,  265,  266,  265,  269,  270,  265,  265,  265,  265,
-      265,  265,  265,  265,  265,  265,  265,  268,  268,  268,
-      268,  268,  268,  268,  268,  268,  268,  268,  268,  268,
-      268,  268,  268,  268,  268,  268,  268,  268,  268,  268,
-      268,  268,  268,  268,  268,  268,  268,  268,  268,  268,
+      266,    1,  266,  266,  266,  266,  266,  266,  267,  266,
+      266,  266,  268,  266,  266,  266,  266,  266,  266,  266,
+      266,  266,  266,  266,  266,  266,  269,  266,  266,  266,
+      269,  269,  269,  269,  269,  269,  269,  269,  269,  269,
+      269,  269,  269,  269,  269,  269,  266,  266,  266,  266,
+      266,  266,  267,  266,  270,  271,  266,  266,  266,  266,
+      266,  266,  266,  266,  266,  266,  266,  266,  269,  269,
+      269,  269,  269,  269,  269,  269,  269,  269,  269,  269,
+      269,  269,  269,  269,  269,  269,  269,  269,  269,  269,
+      269,  269,  269,  269,  269,  269,  269,  269,  269,  269,
 
-      268,  268,  265,  265,  265,  265,  265,  269,  270,  265,
-      265,  265,  265,  265,  268,  268,  268,  268,  268,  268,
-      268,  268,  268,  268,  265,  268,  268,  268,  268,  268,
-      268,  268,  268,  268,  268,  268,  268,  268,  268,  268,
-      268,  268,  265,  265,  265,  268,  268,  268,  268,  268,
-      268,  268,  268,  268,  268,  265,  268,  268,  268,  268,
-      268,  268,  268,  268,  268,  268,  268,  268,  268,  268,
-      268,  268,  268,  268,  268,  268,  268,  268,  268,  268,
-      268,  265,  268,  268,  268,  265,  268,  268,  268,  268,
-      268,  268,  268,  268,  268,  268,  268,  268,  268,  268,
+      269,  269,  269,  266,  266,  266,  266,  266,  270,  271,
+      266,  266,  266,  266,  266,  269,  269,  269,  269,  269,
+      269,  269,  269,  269,  269,  266,  269,  269,  269,  269,
+      269,  269,  269,  269,  269,  269,  269,  269,  269,  269,
+      269,  269,  269,  266,  266,  266,  269,  269,  269,  269,
+      269,  269,  269,  269,  269,  269,  266,  269,  269,  269,
+      269,  269,  269,  269,  269,  269,  269,  269,  269,  269,
+      269,  269,  269,  269,  269,  269,  269,  269,  269,  269,
+      269,  269,  266,  269,  269,  269,  266,  269,  269,  269,
+      269,  269,  269,  269,  269,  269,  269,  269,  269,  269,
 
-      268,  268,  265,  268,  268,  265,  268,  268,  268,  265,
-      268,  268,  268,  268,  268,  268,  268,  268,  265,  268,
-      265,  268,  268,  268,  265,  268,  268,  268,  268,  268,
-      268,  265,  268,  268,  268,  265,  268,  268,  268,  268,
-      265,  268,  268,  268,  265,  265,  268,  268,  265,  265,
-      268,  268,  265,  265,  268,  265,  265,  268,  265,  265,
-      268,  265,  265,  265,    0,  265,  265,  265,  265,  265
+      269,  269,  269,  266,  269,  269,  266,  269,  269,  269,
+      266,  269,  269,  269,  269,  269,  269,  269,  269,  266,
+      269,  266,  269,  269,  269,  266,  269,  269,  269,  269,
+      269,  269,  266,  269,  269,  269,  266,  269,  269,  269,
+      269,  266,  269,  269,  269,  266,  266,  269,  269,  266,
+      266,  269,  269,  266,  266,  269,  266,  266,  269,  266,
+      266,  269,  266,  266,  266,    0,  266,  266,  266,  266,
+      266
     } ;
 
-static yyconst flex_uint16_t yy_nxt[384] =
+static yyconst flex_uint16_t yy_nxt[385] =
     {   0,
         4,    5,    6,    7,    8,    9,   10,   11,   12,   13,
        14,   15,   16,   17,   18,   19,    4,   20,   21,   21,
@@ -557,45 +559,45 @@ static yyconst flex_uint16_t yy_nxt[384] =
        27,   27,   28,   29,   30,   31,   32,   33,   34,   35,
        36,   27,   37,   38,   39,   27,   27,   40,   27,   41,
        27,   42,   43,   44,   27,   45,   46,   27,   47,    4,
-        4,   49,   55,   62,   57,   72,   68,   65,   56,   66,
-       66,   66,   66,   66,   66,   66,   70,   63,   73,   91,
-       50,   75,  100,   71,   74,   76,  101,  139,  117,   92,
-       77,  264,   95,  140,  125,   96,  119,   58,  118,   97,
+        4,   49,   55,   62,   57,   73,   69,   65,   56,   66,
+       66,   66,   66,   66,   66,   66,   71,   63,   74,   92,
+       50,   76,  101,   72,   75,   77,  102,  140,  118,   93,
+       78,  265,   96,  141,  126,   97,  120,   58,  119,   98,
 
-       98,   59,   80,   81,   82,   83,   84,   85,   99,  120,
-      263,   51,  262,   52,   60,  114,  114,  114,  114,  114,
-      114,  114,   86,   65,  261,   66,   66,   66,   66,   66,
-       66,   66,  126,  148,  260,  259,   87,  114,  114,  114,
-      114,  114,  114,  114,  258,  257,  256,  255,  254,  253,
-      252,  149,   53,   53,   53,   53,   53,   61,   61,   61,
-      251,   61,  108,  250,  108,  108,  108,  109,  109,  249,
-      109,  109,  248,  247,  246,  245,  244,  243,  242,  241,
-      240,  239,  238,  237,  236,  235,  234,  233,  232,  231,
-      230,  229,  228,  227,  226,  225,  224,  223,  222,  221,
+       99,   59,   81,   82,   83,   84,   85,   86,  100,  121,
+      264,   51,  263,   52,   60,  115,  115,  115,  115,  115,
+      115,  115,   87,   65,  262,   66,   66,   66,   66,   66,
+       66,   66,  127,  149,  261,  260,   88,  115,  115,  115,
+      115,  115,  115,  115,  259,  258,  257,  256,  255,  254,
+      253,  150,   53,   53,   53,   53,   53,   61,   61,   61,
+      252,   61,  109,  251,  109,  109,  109,  110,  110,  250,
+      110,  110,  249,  248,  247,  246,  245,  244,  243,  242,
+      241,  240,  239,  238,  237,  236,  235,  234,  233,  232,
+      231,  230,  229,  228,  227,  226,  225,  224,  223,  222,
 
-      220,  219,  218,  217,  216,  215,  214,  213,  212,  211,
-      210,  209,  208,  207,  206,  205,  204,  203,  202,  201,
-      200,  199,  198,  197,  196,  195,  194,  193,  192,  191,
-      190,  189,  188,  187,  186,  185,  184,  183,  182,  181,
-      180,  179,  178,  177,  176,  175,  174,  173,  172,  171,
-      170,  169,  168,  167,  166,  165,  164,  163,  162,  161,
-      160,  159,  158,  157,  156,  155,  154,  153,  152,  151,
-      150,  147,  146,  145,  144,  143,  110,  142,  141,  138,
-      137,  136,  135,  134,  133,  132,  131,  130,  129,  128,
-      127,  124,  123,  122,  121,  116,  115,  113,  112,  111,
+      221,  220,  219,  218,  217,  216,  215,  214,  213,  212,
+      211,  210,  209,  208,  207,  206,  205,  204,  203,  202,
+      201,  200,  199,  198,  197,  196,  195,  194,  193,  192,
+      191,  190,  189,  188,  187,  186,  185,  184,  183,  182,
+      181,  180,  179,  178,  177,  176,  175,  174,  173,  172,
+      171,  170,  169,  168,  167,  166,  165,  164,  163,  162,
+      161,  160,  159,  158,  157,  156,  155,  154,  153,  152,
+      151,  148,  147,  146,  145,  144,  111,  143,  142,  139,
+      138,  137,  136,  135,  134,  133,  132,  131,  130,  129,
+      128,  125,  124,  123,  122,  117,  116,  114,  113,  112,
 
-      110,   54,  107,  106,  105,  104,  103,  102,   94,   93,
-       90,   89,   88,   79,   78,   69,   67,   64,   54,   48,
-      265,    3,  265,  265,  265,  265,  265,  265,  265,  265,
-      265,  265,  265,  265,  265,  265,  265,  265,  265,  265,
-      265,  265,  265,  265,  265,  265,  265,  265,  265,  265,
-      265,  265,  265,  265,  265,  265,  265,  265,  265,  265,
-      265,  265,  265,  265,  265,  265,  265,  265,  265,  265,
-      265,  265,  265,  265,  265,  265,  265,  265,  265,  265,
-      265,  265,  265
+      111,   54,  108,  107,  106,  105,  104,  103,   95,   94,
+       91,   90,   89,   80,   79,   70,   68,   67,   64,   54,
+       48,  266,    3,  266,  266,  266,  266,  266,  266,  266,
+      266,  266,  266,  266,  266,  266,  266,  266,  266,  266,
+      266,  266,  266,  266,  266,  266,  266,  266,  266,  266,
+      266,  266,  266,  266,  266,  266,  266,  266,  266,  266,
+      266,  266,  266,  266,  266,  266,  266,  266,  266,  266,
+      266,  266,  266,  266,  266,  266,  266,  266,  266,  266,
+      266,  266,  266,  266
     } ;
 
-static yyconst flex_int16_t yy_chk[384] =
+static yyconst flex_int16_t yy_chk[385] =
     {   0,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
@@ -603,42 +605,42 @@ static yyconst flex_int16_t yy_chk[384] =
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    8,   10,   17,   12,   33,  268,   21,   10,   21,
+        1,    8,   10,   17,   12,   33,  269,   21,   10,   21,
        21,   21,   21,   21,   21,   21,   32,   17,   33,   41,
-        8,   34,   45,   32,   33,   34,   45,  100,   71,   41,
-       34,  263,   44,  100,   78,   44,   72,   12,   71,   44,
+        8,   34,   45,   32,   33,   34,   45,  101,   72,   41,
+       34,  264,   44,  101,   79,   44,   73,   12,   72,   44,
 
-       44,   12,   37,   37,   37,   37,   37,   37,   44,   72,
-      262,    8,  260,    8,   12,   65,   65,   65,   65,   65,
-       65,   65,   37,   66,  258,   66,   66,   66,   66,   66,
-       66,   66,   78,  117,  257,  256,   37,  114,  114,  114,
-      114,  114,  114,  114,  255,  254,  253,  252,  250,  249,
-      248,  117,  266,  266,  266,  266,  266,  267,  267,  267,
-      247,  267,  269,  246,  269,  269,  269,  270,  270,  245,
-      270,  270,  244,  243,  242,  239,  235,  234,  233,  232,
-      231,  230,  229,  226,  225,  224,  223,  222,  221,  220,
-      218,  217,  216,  212,  211,  210,  209,  208,  207,  206,
+       44,   12,   37,   37,   37,   37,   37,   37,   44,   73,
+      263,    8,  261,    8,   12,   65,   65,   65,   65,   65,
+       65,   65,   37,   66,  259,   66,   66,   66,   66,   66,
+       66,   66,   79,  118,  258,  257,   37,  115,  115,  115,
+      115,  115,  115,  115,  256,  255,  254,  253,  251,  250,
+      249,  118,  267,  267,  267,  267,  267,  268,  268,  268,
+      248,  268,  270,  247,  270,  270,  270,  271,  271,  246,
+      271,  271,  245,  244,  243,  240,  236,  235,  234,  233,
+      232,  231,  230,  227,  226,  225,  224,  223,  222,  221,
+      219,  218,  217,  213,  212,  211,  210,  209,  208,  207,
 
-      205,  203,  202,  201,  200,  198,  197,  196,  194,  193,
-      192,  191,  188,  187,  186,  185,  183,  182,  180,  179,
-      178,  177,  176,  174,  173,  172,  171,  170,  169,  168,
-      167,  166,  165,  163,  162,  161,  158,  157,  156,  155,
-      154,  153,  152,  151,  150,  148,  147,  146,  142,  141,
-      140,  139,  138,  137,  136,  135,  134,  133,  132,  131,
-      129,  128,  127,  126,  125,  124,  122,  121,  120,  119,
-      118,  116,  115,  112,  111,  110,  109,  102,  101,   99,
-       98,   95,   94,   93,   92,   91,   90,   89,   87,   86,
-       79,   77,   76,   74,   73,   70,   69,   61,   59,   58,
+      206,  204,  203,  202,  201,  199,  198,  197,  195,  194,
+      193,  192,  189,  188,  187,  186,  184,  183,  181,  180,
+      179,  178,  177,  175,  174,  173,  172,  171,  170,  169,
+      168,  167,  166,  164,  163,  162,  159,  158,  157,  156,
+      155,  154,  153,  152,  151,  149,  148,  147,  143,  142,
+      141,  140,  139,  138,  137,  136,  135,  134,  133,  132,
+      130,  129,  128,  127,  126,  125,  123,  122,  121,  120,
+      119,  117,  116,  113,  112,  111,  110,  103,  102,  100,
+       99,   96,   95,   94,   93,   92,   91,   90,   88,   87,
+       80,   78,   77,   75,   74,   71,   70,   61,   59,   58,
 
        56,   53,   52,   51,   49,   48,   47,   46,   43,   42,
-       40,   39,   38,   36,   35,   31,   24,   19,    9,    7,
-        3,  265,  265,  265,  265,  265,  265,  265,  265,  265,
-      265,  265,  265,  265,  265,  265,  265,  265,  265,  265,
-      265,  265,  265,  265,  265,  265,  265,  265,  265,  265,
-      265,  265,  265,  265,  265,  265,  265,  265,  265,  265,
-      265,  265,  265,  265,  265,  265,  265,  265,  265,  265,
-      265,  265,  265,  265,  265,  265,  265,  265,  265,  265,
-      265,  265,  265
+       40,   39,   38,   36,   35,   31,   26,   24,   19,    9,
+        7,    3,  266,  266,  266,  266,  266,  266,  266,  266,
+      266,  266,  266,  266,  266,  266,  266,  266,  266,  266,
+      266,  266,  266,  266,  266,  266,  266,  266,  266,  266,
+      266,  266,  266,  266,  266,  266,  266,  266,  266,  266,
+      266,  266,  266,  266,  266,  266,  266,  266,  266,  266,
+      266,  266,  266,  266,  266,  266,  266,  266,  266,  266,
+      266,  266,  266,  266
     } ;
 
 static yy_state_type yy_last_accepting_state;
@@ -662,15 +664,21 @@ char *jjtext;
 #include <QTextStream>
 #include <QString>
 #include <QListWidget>
+#include <QTextEdit>
 
 QListWidget *ventana;
 void SetVentana(QListWidget *vista){
     ventana = vista;
 }
 
+QTextEdit *editor_jslt;
+void setEdit_jslt(QTextEdit *edi){
+    editor_jslt = edi;
+}
+
 int columna_jslt=0;
 int fila_jslt = 1;
-#line 674 "scanner2.cpp"
+#line 682 "scanner2.cpp"
 
 #define INITIAL 0
 
@@ -888,9 +896,9 @@ YY_DECL
 		}
 
 	{
-#line 25 "Lexico_JSLT.l"
+#line 31 "Lexico_JSLT.l"
 
-#line 894 "scanner2.cpp"
+#line 902 "scanner2.cpp"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -917,13 +925,13 @@ yy_match:
 			while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 				{
 				yy_current_state = (int) yy_def[yy_current_state];
-				if ( yy_current_state >= 266 )
+				if ( yy_current_state >= 267 )
 					yy_c = yy_meta[(unsigned int) yy_c];
 				}
 			yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
 			++yy_cp;
 			}
-		while ( yy_base[yy_current_state] != 322 );
+		while ( yy_base[yy_current_state] != 323 );
 
 yy_find_action:
 		yy_act = yy_accept[yy_current_state];
@@ -949,460 +957,1210 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 26 "Lexico_JSLT.l"
+#line 32 "Lexico_JSLT.l"
 { columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return dospuntos; }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 27 "Lexico_JSLT.l"
+#line 33 "Lexico_JSLT.l"
 { columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return tok_html; }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 28 "Lexico_JSLT.l"
+#line 34 "Lexico_JSLT.l"
 { columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return tok_h1; }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 29 "Lexico_JSLT.l"
+#line 35 "Lexico_JSLT.l"
 { columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return tok_h2; }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 30 "Lexico_JSLT.l"
+#line 36 "Lexico_JSLT.l"
 { columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return tok_h3; }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 31 "Lexico_JSLT.l"
+#line 37 "Lexico_JSLT.l"
 { columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return tok_h4; }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 32 "Lexico_JSLT.l"
+#line 38 "Lexico_JSLT.l"
 { columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return tok_h5; }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 33 "Lexico_JSLT.l"
+#line 39 "Lexico_JSLT.l"
 { columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return tok_h6; }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 34 "Lexico_JSLT.l"
+#line 40 "Lexico_JSLT.l"
 { columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return tok_title; }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 35 "Lexico_JSLT.l"
+#line 41 "Lexico_JSLT.l"
 { columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return tok_body; }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 36 "Lexico_JSLT.l"
+#line 42 "Lexico_JSLT.l"
 { columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return tok_head; }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 37 "Lexico_JSLT.l"
+#line 43 "Lexico_JSLT.l"
 { columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return tok_table; }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 38 "Lexico_JSLT.l"
+#line 44 "Lexico_JSLT.l"
 { columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return tok_th; }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 39 "Lexico_JSLT.l"
+#line 45 "Lexico_JSLT.l"
 { columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return tok_tr; }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 40 "Lexico_JSLT.l"
+#line 46 "Lexico_JSLT.l"
 { columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return tok_td; }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 41 "Lexico_JSLT.l"
+#line 47 "Lexico_JSLT.l"
 { columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return tok_boder; }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 42 "Lexico_JSLT.l"
+#line 48 "Lexico_JSLT.l"
 { columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return tok_bgcolor; }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 43 "Lexico_JSLT.l"
+#line 49 "Lexico_JSLT.l"
 { columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return tok_width; }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 44 "Lexico_JSLT.l"
+#line 50 "Lexico_JSLT.l"
 { columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return tok_p; }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 45 "Lexico_JSLT.l"
+#line 51 "Lexico_JSLT.l"
 { columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return tok_b; }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 46 "Lexico_JSLT.l"
+#line 52 "Lexico_JSLT.l"
 { columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return tok_i; }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 47 "Lexico_JSLT.l"
-{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return jslt; }
+#line 54 "Lexico_JSLT.l"
+{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext);
+
+if(!editor_jslt->isReadOnly() && !editor_jslt->hasFocus())
+{
+    QColor color = QColor(255,128,0,255);
+    if(editor_jslt->find(jjtext)){
+        editor_jslt->setTextColor(color);
+        editor_jslt->insertPlainText((QString)jjtext);
+    }
+}
+
+return jslt; }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 48 "Lexico_JSLT.l"
-{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return transformacion; }
+#line 67 "Lexico_JSLT.l"
+{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext);
+
+if(!editor_jslt->isReadOnly() && !editor_jslt->hasFocus())
+{
+    QColor color = QColor(255,128,0,255);
+    if(editor_jslt->find(jjtext)){
+        editor_jslt->setTextColor(color);
+        editor_jslt->insertPlainText((QString)jjtext);
+    }
+}
+
+return transformacion; }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 49 "Lexico_JSLT.l"
-{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return ruta; }
+#line 80 "Lexico_JSLT.l"
+{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext);
+
+if(!editor_jslt->isReadOnly() && !editor_jslt->hasFocus())
+{
+    QColor color = QColor(255,128,0,255);
+    if(editor_jslt->find(jjtext)){
+        editor_jslt->setTextColor(color);
+        editor_jslt->insertPlainText((QString)jjtext);
+    }
+}
+
+return ruta; }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 50 "Lexico_JSLT.l"
-{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return version; }
+#line 93 "Lexico_JSLT.l"
+{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext);
+
+if(!editor_jslt->isReadOnly() && !editor_jslt->hasFocus())
+{
+    QColor color = QColor(255,128,0,255);
+    if(editor_jslt->find(jjtext)){
+        editor_jslt->setTextColor(color);
+        editor_jslt->insertPlainText((QString)jjtext);
+    }
+}
+
+return version; }
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 51 "Lexico_JSLT.l"
-{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return final; }
+#line 106 "Lexico_JSLT.l"
+{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext);
+
+if(!editor_jslt->isReadOnly() && !editor_jslt->hasFocus())
+{
+    QColor color = QColor(255,128,0,255);
+    if(editor_jslt->find(jjtext)){
+        editor_jslt->setTextColor(color);
+        editor_jslt->insertPlainText((QString)jjtext);
+    }
+}
+
+return final; }
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 52 "Lexico_JSLT.l"
-{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return break_a; }
+#line 119 "Lexico_JSLT.l"
+{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext);
+
+if(!editor_jslt->isReadOnly() && !editor_jslt->hasFocus())
+{
+    QColor color = QColor(Qt::black).lighter(130);
+
+    if(editor_jslt->find(jjtext)){
+        editor_jslt->setTextColor(color);
+        editor_jslt->insertPlainText((QString)jjtext);
+    }
+}
+
+return break_a; }
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 53 "Lexico_JSLT.l"
-{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return break_c; }
+#line 133 "Lexico_JSLT.l"
+{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext);
+
+if(!editor_jslt->isReadOnly() && !editor_jslt->hasFocus())
+{
+    QColor color = QColor(Qt::black).lighter(130);
+
+    if(editor_jslt->find(jjtext)){
+        editor_jslt->setTextColor(color);
+        editor_jslt->insertPlainText((QString)jjtext);
+    }
+}
+
+return break_c; }
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 54 "Lexico_JSLT.l"
-{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return slash; }
+#line 147 "Lexico_JSLT.l"
+{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext);
+
+if(!editor_jslt->isReadOnly() && !editor_jslt->hasFocus())
+{
+    QColor color = QColor(Qt::black).lighter(130);
+
+    if(editor_jslt->find(jjtext)){
+        editor_jslt->setTextColor(color);
+        editor_jslt->insertPlainText((QString)jjtext);
+    }
+}
+
+return slash; }
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 55 "Lexico_JSLT.l"
-{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return nombreobj; }
+#line 161 "Lexico_JSLT.l"
+{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext);
+
+if(!editor_jslt->isReadOnly() && !editor_jslt->hasFocus())
+{
+    QColor color = QColor(255,128,0,255);
+    if(editor_jslt->find(jjtext)){
+        editor_jslt->setTextColor(color);
+        editor_jslt->insertPlainText((QString)jjtext);
+    }
+}
+
+return nombreobj; }
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 56 "Lexico_JSLT.l"
-{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return asignar; }
+#line 175 "Lexico_JSLT.l"
+{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext);
+
+if(!editor_jslt->isReadOnly() && !editor_jslt->hasFocus())
+{
+    QColor color = QColor(255,128,0,255);
+    if(editor_jslt->find(jjtext)){
+        editor_jslt->setTextColor(color);
+        editor_jslt->insertPlainText((QString)jjtext);
+    }
+}
+
+return asignar; }
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 57 "Lexico_JSLT.l"
-{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return variable; }
+#line 188 "Lexico_JSLT.l"
+{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext);
+
+if(!editor_jslt->isReadOnly() && !editor_jslt->hasFocus())
+{
+    QColor color = QColor(255,128,0,255);
+    if(editor_jslt->find(jjtext)){
+        editor_jslt->setTextColor(color);
+        editor_jslt->insertPlainText((QString)jjtext);
+    }
+}
+
+return variable; }
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 58 "Lexico_JSLT.l"
-{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return valor; }
+#line 201 "Lexico_JSLT.l"
+{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext);
+
+if(!editor_jslt->isReadOnly() && !editor_jslt->hasFocus())
+{
+    QColor color = QColor(255,128,0,255);
+    if(editor_jslt->find(jjtext)){
+        editor_jslt->setTextColor(color);
+        editor_jslt->insertPlainText((QString)jjtext);
+    }
+}
+
+return valor; }
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 59 "Lexico_JSLT.l"
-{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return valor_de; }
+#line 214 "Lexico_JSLT.l"
+{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext);
+
+if(!editor_jslt->isReadOnly() && !editor_jslt->hasFocus())
+{
+    QColor color = QColor(255,128,0,255);
+    if(editor_jslt->find(jjtext)){
+        editor_jslt->setTextColor(color);
+        editor_jslt->insertPlainText((QString)jjtext);
+    }
+}
+
+return valor_de; }
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 60 "Lexico_JSLT.l"
-{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return paracada; }
+#line 227 "Lexico_JSLT.l"
+{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext);
+
+if(!editor_jslt->isReadOnly() && !editor_jslt->hasFocus())
+{
+    QColor color = QColor(255,128,0,255);
+    if(editor_jslt->find(jjtext)){
+        editor_jslt->setTextColor(color);
+        editor_jslt->insertPlainText((QString)jjtext);
+    }
+}
+
+return paracada; }
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 61 "Lexico_JSLT.l"
-{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return si; }
+#line 240 "Lexico_JSLT.l"
+{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext);
+
+if(!editor_jslt->isReadOnly() && !editor_jslt->hasFocus())
+{
+    QColor color = QColor(255,128,0,255);
+    if(editor_jslt->find(jjtext)){
+        editor_jslt->setTextColor(color);
+        editor_jslt->insertPlainText((QString)jjtext);
+    }
+}
+
+return si; }
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 62 "Lexico_JSLT.l"
-{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return encaso; }
+#line 253 "Lexico_JSLT.l"
+{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext);
+
+if(!editor_jslt->isReadOnly() && !editor_jslt->hasFocus())
+{
+    QColor color = QColor(255,128,0,255);
+    if(editor_jslt->find(jjtext)){
+        editor_jslt->setTextColor(color);
+        editor_jslt->insertPlainText((QString)jjtext);
+    }
+}
+
+return encaso; }
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 63 "Lexico_JSLT.l"
-{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return de; }
+#line 266 "Lexico_JSLT.l"
+{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext);
+
+if(!editor_jslt->isReadOnly() && !editor_jslt->hasFocus())
+{
+    QColor color = QColor(255,128,0,255);
+    if(editor_jslt->find(jjtext)){
+        editor_jslt->setTextColor(color);
+        editor_jslt->insertPlainText((QString)jjtext);
+    }
+}
+
+return de; }
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 64 "Lexico_JSLT.l"
-{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return cualquierotro; }
+#line 279 "Lexico_JSLT.l"
+{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext);
+
+if(!editor_jslt->isReadOnly() && !editor_jslt->hasFocus())
+{
+    QColor color = QColor(255,128,0,255);
+    if(editor_jslt->find(jjtext)){
+        editor_jslt->setTextColor(color);
+        editor_jslt->insertPlainText((QString)jjtext);
+    }
+}
+
+return cualquierotro; }
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 65 "Lexico_JSLT.l"
-{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return seleccionar; }
+#line 292 "Lexico_JSLT.l"
+{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext);
+
+if(!editor_jslt->isReadOnly() && !editor_jslt->hasFocus())
+{
+    QColor color = QColor(255,128,0,255);
+    if(editor_jslt->find(jjtext)){
+        editor_jslt->setTextColor(color);
+        editor_jslt->insertPlainText((QString)jjtext);
+    }
+}
+
+return seleccionar; }
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 66 "Lexico_JSLT.l"
-{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return plantilla; }
+#line 305 "Lexico_JSLT.l"
+{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext);
+
+if(!editor_jslt->isReadOnly() && !editor_jslt->hasFocus())
+{
+    QColor color = QColor(255,128,0,255);
+    if(editor_jslt->find(jjtext)){
+        editor_jslt->setTextColor(color);
+        editor_jslt->insertPlainText((QString)jjtext);
+    }
+}
+
+return plantilla; }
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 67 "Lexico_JSLT.l"
-{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return plantilla_aplicar; }
+#line 318 "Lexico_JSLT.l"
+{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext);
+
+if(!editor_jslt->isReadOnly() && !editor_jslt->hasFocus())
+{
+    QColor color = QColor(255,128,0,255);
+    if(editor_jslt->find(jjtext)){
+        editor_jslt->setTextColor(color);
+        editor_jslt->insertPlainText((QString)jjtext);
+    }
+}
+
+return plantilla_aplicar; }
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 68 "Lexico_JSLT.l"
-{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return condicion; }
+#line 331 "Lexico_JSLT.l"
+{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext);
+
+if(!editor_jslt->isReadOnly() && !editor_jslt->hasFocus())
+{
+    QColor color = QColor(255,128,0,255);
+    if(editor_jslt->find(jjtext)){
+        editor_jslt->setTextColor(color);
+        editor_jslt->insertPlainText((QString)jjtext);
+    }
+}
+
+return condicion; }
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 69 "Lexico_JSLT.l"
-{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return igual ; }
+#line 344 "Lexico_JSLT.l"
+{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext);
+
+if(!editor_jslt->isReadOnly() && !editor_jslt->hasFocus())
+{
+    QColor color = QColor(Qt::black).lighter(130);
+
+    if(editor_jslt->find(jjtext)){
+        editor_jslt->setTextColor(color);
+        editor_jslt->insertPlainText((QString)jjtext);
+    }
+}
+
+return igual ; }
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 70 "Lexico_JSLT.l"
-{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return igualigual; }
+#line 358 "Lexico_JSLT.l"
+{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext);
+
+if(!editor_jslt->isReadOnly() && !editor_jslt->hasFocus())
+{
+    QColor color = QColor(Qt::black).lighter(130);
+
+    if(editor_jslt->find(jjtext)){
+        editor_jslt->setTextColor(color);
+        editor_jslt->insertPlainText((QString)jjtext);
+    }
+}
+
+return igualigual; }
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
-#line 71 "Lexico_JSLT.l"
-{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return diferente; }
+#line 372 "Lexico_JSLT.l"
+{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext);
+
+if(!editor_jslt->isReadOnly() && !editor_jslt->hasFocus())
+{
+    QColor color = QColor(Qt::black).lighter(130);
+
+    if(editor_jslt->find(jjtext)){
+        editor_jslt->setTextColor(color);
+        editor_jslt->insertPlainText((QString)jjtext);
+    }
+}
+
+return diferente; }
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
-#line 72 "Lexico_JSLT.l"
-{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return menor_que; }
+#line 386 "Lexico_JSLT.l"
+{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext);
+
+if(!editor_jslt->isReadOnly() && !editor_jslt->hasFocus())
+{
+    QColor color = QColor(Qt::black).lighter(130);
+
+    if(editor_jslt->find(jjtext)){
+        editor_jslt->setTextColor(color);
+        editor_jslt->insertPlainText((QString)jjtext);
+    }
+}
+
+return menor_que; }
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
-#line 73 "Lexico_JSLT.l"
-{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return menor_igual; }
+#line 400 "Lexico_JSLT.l"
+{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext);
+
+if(!editor_jslt->isReadOnly() && !editor_jslt->hasFocus())
+{
+    QColor color = QColor(Qt::black).lighter(130);
+
+    if(editor_jslt->find(jjtext)){
+        editor_jslt->setTextColor(color);
+        editor_jslt->insertPlainText((QString)jjtext);
+    }
+}
+
+return menor_igual; }
 	YY_BREAK
 case 49:
 YY_RULE_SETUP
-#line 74 "Lexico_JSLT.l"
-{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return mayor_que; }
+#line 414 "Lexico_JSLT.l"
+{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext);
+
+if(!editor_jslt->isReadOnly() && !editor_jslt->hasFocus())
+{
+    QColor color = QColor(Qt::black).lighter(130);
+
+    if(editor_jslt->find(jjtext)){
+        editor_jslt->setTextColor(color);
+        editor_jslt->insertPlainText((QString)jjtext);
+    }
+}
+
+return mayor_que; }
 	YY_BREAK
 case 50:
 YY_RULE_SETUP
-#line 75 "Lexico_JSLT.l"
-{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return mayor_igual; }
+#line 428 "Lexico_JSLT.l"
+{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext);
+
+if(!editor_jslt->isReadOnly() && !editor_jslt->hasFocus())
+{
+    QColor color = QColor(Qt::black).lighter(130);
+
+    if(editor_jslt->find(jjtext)){
+        editor_jslt->setTextColor(color);
+        editor_jslt->insertPlainText((QString)jjtext);
+    }
+}
+
+return mayor_igual; }
 	YY_BREAK
 case 51:
 YY_RULE_SETUP
-#line 76 "Lexico_JSLT.l"
-{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return es_nulo; }
+#line 443 "Lexico_JSLT.l"
+{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext);
+
+if(!editor_jslt->isReadOnly() && !editor_jslt->hasFocus())
+{
+    QColor color = QColor(Qt::black).lighter(130);
+
+    if(editor_jslt->find(jjtext)){
+        editor_jslt->setTextColor(color);
+        editor_jslt->insertPlainText((QString)jjtext);
+    }
+}
+
+return es_nulo; }
 	YY_BREAK
 case 52:
 YY_RULE_SETUP
-#line 77 "Lexico_JSLT.l"
-{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return oor; }
+#line 457 "Lexico_JSLT.l"
+{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext);
+
+if(!editor_jslt->isReadOnly() && !editor_jslt->hasFocus())
+{
+    QColor color = QColor(Qt::black).lighter(130);
+
+    if(editor_jslt->find(jjtext)){
+        editor_jslt->setTextColor(color);
+        editor_jslt->insertPlainText((QString)jjtext);
+    }
+}
+
+return oor; }
 	YY_BREAK
 case 53:
 YY_RULE_SETUP
-#line 78 "Lexico_JSLT.l"
-{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return aand; }
+#line 471 "Lexico_JSLT.l"
+{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext);
+
+if(!editor_jslt->isReadOnly() && !editor_jslt->hasFocus())
+{
+    QColor color = QColor(Qt::black).lighter(130);
+
+    if(editor_jslt->find(jjtext)){
+        editor_jslt->setTextColor(color);
+        editor_jslt->insertPlainText((QString)jjtext);
+    }
+}
+
+return aand; }
 	YY_BREAK
 case 54:
 YY_RULE_SETUP
-#line 79 "Lexico_JSLT.l"
-{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return nand; }
+#line 485 "Lexico_JSLT.l"
+{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext);
+
+if(!editor_jslt->isReadOnly() && !editor_jslt->hasFocus())
+{
+    QColor color = QColor(Qt::black).lighter(130);
+
+    if(editor_jslt->find(jjtext)){
+        editor_jslt->setTextColor(color);
+        editor_jslt->insertPlainText((QString)jjtext);
+    }
+}
+
+return nand; }
 	YY_BREAK
 case 55:
 YY_RULE_SETUP
-#line 80 "Lexico_JSLT.l"
-{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return nor; }
+#line 499 "Lexico_JSLT.l"
+{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext);
+
+if(!editor_jslt->isReadOnly() && !editor_jslt->hasFocus())
+{
+    QColor color = QColor(Qt::black).lighter(130);
+
+    if(editor_jslt->find(jjtext)){
+        editor_jslt->setTextColor(color);
+        editor_jslt->insertPlainText((QString)jjtext);
+    }
+}
+
+return nor; }
 	YY_BREAK
 case 56:
 YY_RULE_SETUP
-#line 81 "Lexico_JSLT.l"
-{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return xxor; }
+#line 513 "Lexico_JSLT.l"
+{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext);
+
+if(!editor_jslt->isReadOnly() && !editor_jslt->hasFocus())
+{
+    QColor color = QColor(Qt::black).lighter(130);
+
+    if(editor_jslt->find(jjtext)){
+        editor_jslt->setTextColor(color);
+        editor_jslt->insertPlainText((QString)jjtext);
+    }
+}
+
+return xxor; }
 	YY_BREAK
 case 57:
 YY_RULE_SETUP
-#line 82 "Lexico_JSLT.l"
-{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return nnot; }
+#line 527 "Lexico_JSLT.l"
+{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext);
+
+if(!editor_jslt->isReadOnly() && !editor_jslt->hasFocus())
+{
+    QColor color = QColor(Qt::black).lighter(130);
+
+    if(editor_jslt->find(jjtext)){
+        editor_jslt->setTextColor(color);
+        editor_jslt->insertPlainText((QString)jjtext);
+    }
+}
+
+return nnot; }
 	YY_BREAK
 case 58:
 YY_RULE_SETUP
-#line 83 "Lexico_JSLT.l"
-{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return mas; }
+#line 541 "Lexico_JSLT.l"
+{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext);
+
+if(!editor_jslt->isReadOnly() && !editor_jslt->hasFocus())
+{
+    QColor color = QColor(Qt::black).lighter(130);
+
+    if(editor_jslt->find(jjtext)){
+        editor_jslt->setTextColor(color);
+        editor_jslt->insertPlainText((QString)jjtext);
+    }
+}
+
+return mas; }
 	YY_BREAK
 case 59:
 YY_RULE_SETUP
-#line 84 "Lexico_JSLT.l"
-{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return menos; }
+#line 555 "Lexico_JSLT.l"
+{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext);
+if(!editor_jslt->isReadOnly() && !editor_jslt->hasFocus())
+{
+    QColor color = QColor(Qt::black).lighter(130);
+
+    if(editor_jslt->find(jjtext)){
+        editor_jslt->setTextColor(color);
+        editor_jslt->insertPlainText((QString)jjtext);
+    }
+}
+
+return menos; }
 	YY_BREAK
 case 60:
 YY_RULE_SETUP
-#line 85 "Lexico_JSLT.l"
-{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return por; }
+#line 569 "Lexico_JSLT.l"
+{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext);
+
+if(!editor_jslt->isReadOnly() && !editor_jslt->hasFocus())
+{
+    QColor color = QColor(Qt::black).lighter(130);
+
+    if(editor_jslt->find(jjtext)){
+        editor_jslt->setTextColor(color);
+        editor_jslt->insertPlainText((QString)jjtext);
+    }
+}
+
+return por; }
 	YY_BREAK
 case 61:
 YY_RULE_SETUP
-#line 86 "Lexico_JSLT.l"
-{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return division; }
+#line 583 "Lexico_JSLT.l"
+{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext);
+
+if(!editor_jslt->isReadOnly() && !editor_jslt->hasFocus())
+{
+    QColor color = QColor(Qt::black).lighter(130);
+
+    if(editor_jslt->find(jjtext)){
+        editor_jslt->setTextColor(color);
+        editor_jslt->insertPlainText((QString)jjtext);
+    }
+}
+
+return division; }
 	YY_BREAK
 case 62:
 YY_RULE_SETUP
-#line 87 "Lexico_JSLT.l"
-{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return modulo; }
+#line 597 "Lexico_JSLT.l"
+{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext);
+
+if(!editor_jslt->isReadOnly() && !editor_jslt->hasFocus())
+{
+    QColor color = QColor(Qt::black).lighter(130);
+
+    if(editor_jslt->find(jjtext)){
+        editor_jslt->setTextColor(color);
+        editor_jslt->insertPlainText((QString)jjtext);
+    }
+}
+
+return modulo; }
 	YY_BREAK
 case 63:
 YY_RULE_SETUP
-#line 88 "Lexico_JSLT.l"
-{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return potencia; }
+#line 611 "Lexico_JSLT.l"
+{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext);
+
+if(!editor_jslt->isReadOnly() && !editor_jslt->hasFocus())
+{
+    QColor color = QColor(Qt::black).lighter(130);
+
+    if(editor_jslt->find(jjtext)){
+        editor_jslt->setTextColor(color);
+        editor_jslt->insertPlainText((QString)jjtext);
+    }
+}
+
+return potencia; }
 	YY_BREAK
 case 64:
 YY_RULE_SETUP
-#line 89 "Lexico_JSLT.l"
-{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return incremento; }
+#line 625 "Lexico_JSLT.l"
+{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext);
+
+if(!editor_jslt->isReadOnly() && !editor_jslt->hasFocus())
+{
+    QColor color = QColor(Qt::black).lighter(130);
+
+    if(editor_jslt->find(jjtext)){
+        editor_jslt->setTextColor(color);
+        editor_jslt->insertPlainText((QString)jjtext);
+    }
+}
+
+return incremento; }
 	YY_BREAK
 case 65:
 YY_RULE_SETUP
-#line 90 "Lexico_JSLT.l"
-{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return arroba; }
+#line 639 "Lexico_JSLT.l"
+{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext);
+
+if(!editor_jslt->isReadOnly() && !editor_jslt->hasFocus())
+{
+    QColor color = QColor(Qt::black).lighter(130);
+
+    if(editor_jslt->find(jjtext)){
+        editor_jslt->setTextColor(color);
+        editor_jslt->insertPlainText((QString)jjtext);
+    }
+}
+return arroba; }
 	YY_BREAK
 case 66:
 YY_RULE_SETUP
-#line 91 "Lexico_JSLT.l"
-{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return decremento; }
+#line 652 "Lexico_JSLT.l"
+{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext);
+
+if(!editor_jslt->isReadOnly() && !editor_jslt->hasFocus())
+{
+    QColor color = QColor(Qt::black).lighter(130);
+
+    if(editor_jslt->find(jjtext)){
+        editor_jslt->setTextColor(color);
+        editor_jslt->insertPlainText((QString)jjtext);
+    }
+}
+
+return arroba_doble; }
 	YY_BREAK
 case 67:
 YY_RULE_SETUP
-#line 92 "Lexico_JSLT.l"
-{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return suma_igual; }
+#line 666 "Lexico_JSLT.l"
+{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext);
+
+if(!editor_jslt->isReadOnly() && !editor_jslt->hasFocus())
+{
+    QColor color = QColor(Qt::black).lighter(130);
+
+    if(editor_jslt->find(jjtext)){
+        editor_jslt->setTextColor(color);
+        editor_jslt->insertPlainText((QString)jjtext);
+    }
+}
+
+return decremento; }
 	YY_BREAK
 case 68:
 YY_RULE_SETUP
-#line 93 "Lexico_JSLT.l"
-{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return tipo_entero; }
+#line 680 "Lexico_JSLT.l"
+{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext);
+
+if(!editor_jslt->isReadOnly() && !editor_jslt->hasFocus())
+{
+    QColor color = QColor(Qt::black).lighter(130);
+
+    if(editor_jslt->find(jjtext)){
+        editor_jslt->setTextColor(color);
+        editor_jslt->insertPlainText((QString)jjtext);
+    }
+}
+
+return suma_igual; }
 	YY_BREAK
 case 69:
 YY_RULE_SETUP
-#line 94 "Lexico_JSLT.l"
-{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return tipo_cadena; }
+#line 694 "Lexico_JSLT.l"
+{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext);
+
+if(!editor_jslt->isReadOnly() && !editor_jslt->hasFocus())
+{
+    QColor color = QColor(255,128,0,255);
+    if(editor_jslt->find(jjtext)){
+        editor_jslt->setTextColor(color);
+        editor_jslt->insertPlainText((QString)jjtext);
+    }
+}
+
+return tipo_entero; }
 	YY_BREAK
 case 70:
 YY_RULE_SETUP
-#line 95 "Lexico_JSLT.l"
-{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return tipo_doble; }
+#line 707 "Lexico_JSLT.l"
+{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext);
+
+if(!editor_jslt->isReadOnly() && !editor_jslt->hasFocus())
+{
+    QColor color = QColor(255,128,0,255);
+    if(editor_jslt->find(jjtext)){
+        editor_jslt->setTextColor(color);
+        editor_jslt->insertPlainText((QString)jjtext);
+    }
+}
+
+return tipo_cadena; }
 	YY_BREAK
 case 71:
 YY_RULE_SETUP
-#line 96 "Lexico_JSLT.l"
-{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return tipo_bool; }
+#line 720 "Lexico_JSLT.l"
+{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext);
+if(!editor_jslt->isReadOnly() && !editor_jslt->hasFocus())
+{
+    QColor color = QColor(255,128,0,255);
+    if(editor_jslt->find(jjtext)){
+        editor_jslt->setTextColor(color);
+        editor_jslt->insertPlainText((QString)jjtext);
+    }
+}
+
+return tipo_doble; }
 	YY_BREAK
 case 72:
 YY_RULE_SETUP
-#line 97 "Lexico_JSLT.l"
-{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return tipo_char; }
+#line 732 "Lexico_JSLT.l"
+{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext);
+
+if(!editor_jslt->isReadOnly() && !editor_jslt->hasFocus())
+{
+    QColor color = QColor(255,128,0,255);
+    if(editor_jslt->find(jjtext)){
+        editor_jslt->setTextColor(color);
+        editor_jslt->insertPlainText((QString)jjtext);
+    }
+}
+
+return tipo_bool; }
 	YY_BREAK
 case 73:
 YY_RULE_SETUP
-#line 98 "Lexico_JSLT.l"
-{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return para; }
+#line 745 "Lexico_JSLT.l"
+{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext);
+
+if(!editor_jslt->isReadOnly() && !editor_jslt->hasFocus())
+{
+    QColor color = QColor(255,128,0,255);
+    if(editor_jslt->find(jjtext)){
+        editor_jslt->setTextColor(color);
+        editor_jslt->insertPlainText((QString)jjtext);
+    }
+}
+
+return tipo_char; }
 	YY_BREAK
 case 74:
 YY_RULE_SETUP
-#line 99 "Lexico_JSLT.l"
-{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return parc; }
+#line 758 "Lexico_JSLT.l"
+{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext);
+
+if(!editor_jslt->isReadOnly() && !editor_jslt->hasFocus())
+{
+    QColor color = QColor(Qt::black).lighter(130);
+
+    if(editor_jslt->find(jjtext)){
+        editor_jslt->setTextColor(color);
+        editor_jslt->insertPlainText((QString)jjtext);
+    }
+}
+
+return para; }
 	YY_BREAK
 case 75:
-/* rule 75 can match eol */
 YY_RULE_SETUP
-#line 100 "Lexico_JSLT.l"
-{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return caracter; }
+#line 772 "Lexico_JSLT.l"
+{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext);
+
+if(!editor_jslt->isReadOnly() && !editor_jslt->hasFocus())
+{
+    QColor color = QColor(Qt::black).lighter(130);
+
+    if(editor_jslt->find(jjtext)){
+        editor_jslt->setTextColor(color);
+        editor_jslt->insertPlainText((QString)jjtext);
+    }
+}
+
+return parc; }
 	YY_BREAK
 case 76:
+/* rule 76 can match eol */
 YY_RULE_SETUP
-#line 101 "Lexico_JSLT.l"
-{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return cora; }
+#line 786 "Lexico_JSLT.l"
+{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext);
+
+if(!editor_jslt->isReadOnly() && !editor_jslt->hasFocus())
+{
+    QColor color = QColor(Qt::yellow);
+    if(editor_jslt->find(jjtext)){
+        editor_jslt->setTextColor(color);
+        editor_jslt->insertPlainText((QString)jjtext);
+    }
+}
+
+return caracter; }
 	YY_BREAK
 case 77:
 YY_RULE_SETUP
-#line 102 "Lexico_JSLT.l"
-{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return corc; }
+#line 799 "Lexico_JSLT.l"
+{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext);
+
+if(!editor_jslt->isReadOnly() && !editor_jslt->hasFocus())
+{
+    QColor color = QColor(Qt::black).lighter(130);
+
+    if(editor_jslt->find(jjtext)){
+        editor_jslt->setTextColor(color);
+        editor_jslt->insertPlainText((QString)jjtext);
+    }
+}
+
+return cora; }
 	YY_BREAK
 case 78:
 YY_RULE_SETUP
-#line 103 "Lexico_JSLT.l"
-{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return coma; }
+#line 813 "Lexico_JSLT.l"
+{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext);
+
+if(!editor_jslt->isReadOnly() && !editor_jslt->hasFocus())
+{
+    QColor color = QColor(Qt::black).lighter(130);
+
+    if(editor_jslt->find(jjtext)){
+        editor_jslt->setTextColor(color);
+        editor_jslt->insertPlainText((QString)jjtext);
+    }
+}
+
+return corc; }
 	YY_BREAK
 case 79:
 YY_RULE_SETUP
-#line 104 "Lexico_JSLT.l"
-{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return entero; }
+#line 827 "Lexico_JSLT.l"
+{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext);
+
+if(!editor_jslt->isReadOnly() && !editor_jslt->hasFocus())
+{
+    QColor color = QColor(Qt::black).lighter(130);
+
+    if(editor_jslt->find(jjtext)){
+        editor_jslt->setTextColor(color);
+        editor_jslt->insertPlainText((QString)jjtext);
+    }
+}
+
+return coma; }
 	YY_BREAK
 case 80:
 YY_RULE_SETUP
-#line 105 "Lexico_JSLT.l"
-{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return decimal; }
+#line 841 "Lexico_JSLT.l"
+{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext);
+
+if(!editor_jslt->isReadOnly() && !editor_jslt->hasFocus())
+{
+    QColor color = QColor(153,0,153,255);
+    if(editor_jslt->find(jjtext)){
+        editor_jslt->setTextColor(color);
+        editor_jslt->insertPlainText((QString)jjtext);
+    }
+}
+
+return entero; }
 	YY_BREAK
 case 81:
-/* rule 81 can match eol */
 YY_RULE_SETUP
-#line 106 "Lexico_JSLT.l"
-{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return cadena; }
+#line 854 "Lexico_JSLT.l"
+{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext);
+
+if(!editor_jslt->isReadOnly() && !editor_jslt->hasFocus())
+{
+    QColor color = QColor(153,0,153,255);
+    if(editor_jslt->find(jjtext)){
+        editor_jslt->setTextColor(color);
+        editor_jslt->insertPlainText((QString)jjtext);
+    }
+}
+
+return decimal; }
 	YY_BREAK
 case 82:
+/* rule 82 can match eol */
 YY_RULE_SETUP
-#line 107 "Lexico_JSLT.l"
-{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); return identificador; }
+#line 866 "Lexico_JSLT.l"
+{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext);
+
+if(!editor_jslt->isReadOnly() && !editor_jslt->hasFocus())
+{
+    QColor color = QColor(Qt::yellow);
+    if(editor_jslt->find(jjtext)){
+        editor_jslt->setTextColor(color);
+        editor_jslt->insertPlainText((QString)jjtext);
+    }
+}
+
+return cadena; }
 	YY_BREAK
 case 83:
 YY_RULE_SETUP
-#line 108 "Lexico_JSLT.l"
-{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); }
+#line 879 "Lexico_JSLT.l"
+{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext);
+
+if(!editor_jslt->isReadOnly() && !editor_jslt->hasFocus())
+{
+    QColor color = QColor(Qt::green);
+    if(editor_jslt->find(jjtext)){
+        editor_jslt->setTextColor(color);
+        editor_jslt->insertPlainText((QString)jjtext);
+    }
+}
+
+return identificador; }
 	YY_BREAK
 case 84:
-/* rule 84 can match eol */
 YY_RULE_SETUP
-#line 109 "Lexico_JSLT.l"
-{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext); }
+#line 892 "Lexico_JSLT.l"
+{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext);
+
+if(!editor_jslt->isReadOnly() && !editor_jslt->hasFocus())
+{
+    QColor color = QColor(Qt::gray);
+    if(editor_jslt->find(jjtext)){
+        editor_jslt->setTextColor(color);
+        editor_jslt->insertPlainText((QString)jjtext);
+    }
+}
+
+}
 	YY_BREAK
 case 85:
 /* rule 85 can match eol */
 YY_RULE_SETUP
-#line 110 "Lexico_JSLT.l"
-{ columna_jslt = 1;fila_jslt = fila_jslt + 1; }
+#line 905 "Lexico_JSLT.l"
+{ columna_jslt=columna_jslt+strlen(jjlval.TEXT); strcpy(jjlval.TEXT, jjtext);
+
+if(!editor_jslt->isReadOnly() && !editor_jslt->hasFocus())
+{
+    QColor color = QColor(Qt::gray);
+    if(editor_jslt->find(jjtext)){
+        editor_jslt->setTextColor(color);
+        editor_jslt->insertPlainText((QString)jjtext);
+    }
+}
+
+
+}
 	YY_BREAK
 case 86:
+/* rule 86 can match eol */
 YY_RULE_SETUP
-#line 111 "Lexico_JSLT.l"
-{ columna_jslt = columna_jslt + 1; }
+#line 918 "Lexico_JSLT.l"
+{ columna_jslt = 1;fila_jslt = fila_jslt + 1; }
 	YY_BREAK
 case 87:
 YY_RULE_SETUP
-#line 112 "Lexico_JSLT.l"
-{columna_jslt = columna_jslt + 1; }
+#line 919 "Lexico_JSLT.l"
+{ columna_jslt = columna_jslt + 1; }
 	YY_BREAK
 case 88:
 YY_RULE_SETUP
-#line 113 "Lexico_JSLT.l"
+#line 920 "Lexico_JSLT.l"
 {columna_jslt = columna_jslt + 1; }
 	YY_BREAK
 case 89:
 YY_RULE_SETUP
-#line 114 "Lexico_JSLT.l"
-{QString aux = "Error Lexico : " + (QString)jjtext + " fila : " + QString::number(fila_jslt) + " columna : " + QString::number(columna_jslt);
-                             ventana->addItem(aux);}
+#line 921 "Lexico_JSLT.l"
+{columna_jslt = columna_jslt + 1; }
 	YY_BREAK
 case 90:
 YY_RULE_SETUP
-#line 116 "Lexico_JSLT.l"
+#line 923 "Lexico_JSLT.l"
+{QString aux = "Error Lexico : " + (QString)jjtext + " fila : " + QString::number(fila_jslt) + " columna : " + QString::number(columna_jslt);
+                             ventana->addItem(aux);
+
+                             if(!editor_jslt->isReadOnly() && !editor_jslt->hasFocus())
+                             {
+                                 QColor color = QColor(Qt::red);
+                                 if(editor_jslt->find(jjtext)){
+                                     editor_jslt->setTextColor(color);
+                                     editor_jslt->insertPlainText((QString)jjtext);
+                                 }
+                             }
+                             }
+	YY_BREAK
+case 91:
+YY_RULE_SETUP
+#line 935 "Lexico_JSLT.l"
 ECHO;
 	YY_BREAK
-#line 1406 "scanner2.cpp"
+#line 2164 "scanner2.cpp"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1695,7 +2453,7 @@ static int yy_get_next_buffer (void)
 		while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 			{
 			yy_current_state = (int) yy_def[yy_current_state];
-			if ( yy_current_state >= 266 )
+			if ( yy_current_state >= 267 )
 				yy_c = yy_meta[(unsigned int) yy_c];
 			}
 		yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
@@ -1723,11 +2481,11 @@ static int yy_get_next_buffer (void)
 	while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 		{
 		yy_current_state = (int) yy_def[yy_current_state];
-		if ( yy_current_state >= 266 )
+		if ( yy_current_state >= 267 )
 			yy_c = yy_meta[(unsigned int) yy_c];
 		}
 	yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
-	yy_is_jam = (yy_current_state == 265);
+	yy_is_jam = (yy_current_state == 266);
 
 		return yy_is_jam ? 0 : yy_current_state;
 }
@@ -2403,7 +3161,7 @@ void jjfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 116 "Lexico_JSLT.l"
+#line 935 "Lexico_JSLT.l"
 
 
 

@@ -27,29 +27,174 @@ entero \"{digito}+\"
 identificador [a-z][a-z0-9]*
 letra ["][^\"]*["]
 %%
-"}"                     { columna=columna+strlen(yylval.TEXT); strcpy(yylval.TEXT, yytext); return llavec; }
-"{"                     { columna=columna+strlen(yylval.TEXT); strcpy(yylval.TEXT, yytext); return llavea; }
-":"                     { columna=columna+strlen(yylval.TEXT); strcpy(yylval.TEXT, yytext); return dospuntos; }
-\""falso"\"             { columna=columna+strlen(yylval.TEXT); strcpy(yylval.TEXT, yytext); return falso; }
-\""verdadero"\"         { columna=columna+strlen(yylval.TEXT); strcpy(yylval.TEXT, yytext); return verdadero; }
-"["                     { columna=columna+strlen(yylval.TEXT); strcpy(yylval.TEXT, yytext); return cora; }
-"]"                     { columna=columna+strlen(yylval.TEXT); strcpy(yylval.TEXT, yytext); return corc; }
-","                     { columna=columna+strlen(yylval.TEXT); strcpy(yylval.TEXT, yytext); return coma; }
-["]                     { columna=columna+strlen(yylval.TEXT); strcpy(yylval.TEXT, yytext); return comilla; }
-{entero}                { columna=columna+strlen(yylval.TEXT); strcpy(yylval.TEXT, yytext); return entero; }
-{dec}                   { columna=columna+strlen(yylval.TEXT); strcpy(yylval.TEXT, yytext); return decimal; }
+"}"                     { columna=columna+strlen(yylval.TEXT); strcpy(yylval.TEXT, yytext);
+
+                          if(!editor->isReadOnly() && !editor->hasFocus())
+                          {
+                              QColor color = QColor(Qt::black).lighter(130);
+
+                              if(editor->find(yytext)){
+                                  editor->setTextColor(color);
+                                  editor->insertPlainText((QString)yytext);
+                              }
+                          }
+
+                          return llavec; }
+
+"{"                     { columna=columna+strlen(yylval.TEXT); strcpy(yylval.TEXT, yytext);
+
+if(!editor->isReadOnly() && !editor->hasFocus())
+{
+    QColor color = QColor(Qt::black).lighter(130);
+
+    if(editor->find(yytext)){
+        editor->setTextColor(color);
+        editor->insertPlainText((QString)yytext);
+    }
+}
+
+return llavea; }
+
+":"                     { columna=columna+strlen(yylval.TEXT); strcpy(yylval.TEXT, yytext);
+
+if(!editor->isReadOnly() && !editor->hasFocus())
+{
+    QColor color = QColor(Qt::black).lighter(130);
+
+    if(editor->find(yytext)){
+        editor->setTextColor(color);
+        editor->insertPlainText((QString)yytext);
+    }
+}
+
+return dospuntos; }
+
+\""falso"\"             { columna=columna+strlen(yylval.TEXT); strcpy(yylval.TEXT, yytext);
+if(!editor->isReadOnly() && !editor->hasFocus())
+{
+    QColor color = QColor(Qt::yellow).lighter(130);
+
+    if(editor->find(yytext)){
+        editor->setTextColor(color);
+        editor->insertPlainText((QString)yytext);
+    }
+}
+return falso; }
+
+\""verdadero"\"         { columna=columna+strlen(yylval.TEXT); strcpy(yylval.TEXT, yytext);
+if(!editor->isReadOnly() && !editor->hasFocus())
+{
+    QColor color = QColor(Qt::yellow).lighter(130);
+    //QTextEdit::ExtraSelection extra;
+
+    if(editor->find(yytext)){
+        editor->setTextColor(color);
+        editor->insertPlainText((QString)yytext);
+        //extra.cursor = editor->textCursor();
+        //extraSelections.append(extra);
+    }
+}
+
+return verdadero; }
+
+"["                     { columna=columna+strlen(yylval.TEXT); strcpy(yylval.TEXT, yytext);
+
+if(!editor->isReadOnly() && !editor->hasFocus())
+{
+    QColor color = QColor(Qt::black).lighter(130);
+
+    if(editor->find(yytext)){
+        editor->setTextColor(color);
+        editor->insertPlainText((QString)yytext);
+    }
+}
+
+return cora; }
+
+"]"                     { columna=columna+strlen(yylval.TEXT); strcpy(yylval.TEXT, yytext);
+
+if(!editor->isReadOnly() && !editor->hasFocus())
+{
+    QColor color = QColor(Qt::black).lighter(130);
+
+    if(editor->find(yytext)){
+        editor->setTextColor(color);
+        editor->insertPlainText((QString)yytext);
+    }
+}
+
+return corc; }
+
+","                     { columna=columna+strlen(yylval.TEXT); strcpy(yylval.TEXT, yytext);
+
+if(!editor->isReadOnly() && !editor->hasFocus())
+{
+    QColor color = QColor(Qt::black).lighter(130);
+
+    if(editor->find(yytext)){
+        editor->setTextColor(color);
+        editor->insertPlainText((QString)yytext);
+    }
+}
+
+return coma; }
+
+["]                     { columna=columna+strlen(yylval.TEXT); strcpy(yylval.TEXT, yytext);
+
+if(!editor->isReadOnly() && !editor->hasFocus())
+{
+    QColor color = QColor(Qt::black).lighter(130);
+
+    if(editor->find(yytext)){
+        editor->setTextColor(color);
+        editor->insertPlainText((QString)yytext);
+    }
+}
+
+return comilla; }
+
+{entero}                { columna=columna+strlen(yylval.TEXT); strcpy(yylval.TEXT, yytext);
+if(!editor->isReadOnly() && !editor->hasFocus())
+{
+    QColor color = QColor(Qt::yellow).lighter(130);
+    //QTextEdit::ExtraSelection extra;
+
+    if(editor->find(yytext)){
+        editor->setTextColor(color);
+        editor->insertPlainText((QString)yytext);
+        //extra.cursor = editor->textCursor();
+        //extraSelections.append(extra);
+    }
+}
+
+return entero; }
+
+{dec}                   { columna=columna+strlen(yylval.TEXT); strcpy(yylval.TEXT, yytext);
+
+if(!editor->isReadOnly() && !editor->hasFocus())
+{
+    QColor color = QColor(Qt::yellow).lighter(130);
+    //QTextEdit::ExtraSelection extra;
+
+    if(editor->find(yytext)){
+        editor->setTextColor(color);
+        editor->insertPlainText((QString)yytext);
+        //extra.cursor = editor->textCursor();
+        //extraSelections.append(extra);
+    }
+}
+return decimal; }
 {letra}                 { columna=columna+strlen(yylval.TEXT); strcpy(yylval.TEXT, yytext);
                           //QList<QTextEdit::ExtraSelection> extraSelections;
 
-    if(!editor->isReadOnly())
+    if(!editor->isReadOnly() && !editor->hasFocus())
     {
         QColor color = QColor(Qt::yellow).lighter(130);
         //QTextEdit::ExtraSelection extra;
 
         if(editor->find(yytext)){
             editor->setTextColor(color);
-            QString nuevo = editor->toPlainText().insert(0,"hola");
-            editor->insertPlainText(nuevo);
+            editor->insertPlainText((QString)yytext);
             //extra.cursor = editor->textCursor();
             //extraSelections.append(extra);
         }
