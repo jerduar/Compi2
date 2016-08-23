@@ -1,5 +1,9 @@
 package proyecto_lienzo;
 
+import java.awt.Image;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -17,6 +21,7 @@ public class LienzoEdit extends javax.swing.JFrame {
      */
     public LienzoEdit() {
         initComponents();
+        setearIconoBotones();
     }
 
     /**
@@ -28,22 +33,161 @@ public class LienzoEdit extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+        bt_play = new javax.swing.JButton();
+        bt_debbug = new javax.swing.JButton();
+        bt_error = new javax.swing.JButton();
+        jSlider2 = new javax.swing.JSlider();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jSeparator1 = new javax.swing.JPopupMenu.Separator();
+        jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuItem5 = new javax.swing.JMenuItem();
+        jSeparator2 = new javax.swing.JPopupMenu.Separator();
+        Salir_menuItem = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
+        jMenuItem6 = new javax.swing.JMenuItem();
+        jMenuItem8 = new javax.swing.JMenuItem();
+        jMenuItem9 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
+        jMenuItem7 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Lienzo Edit");
         setName("LienzoEdit"); // NOI18N
 
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        bt_play.setContentAreaFilled(false);
+        bt_play.setSelected(true);
+        bt_play.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_playActionPerformed(evt);
+            }
+        });
+
+        bt_debbug.setContentAreaFilled(false);
+        bt_debbug.setSelected(true);
+        bt_debbug.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_debbugActionPerformed(evt);
+            }
+        });
+
+        bt_error.setContentAreaFilled(false);
+        bt_error.setSelected(true);
+
+        jLabel1.setText("Ejecutar");
+
+        jLabel2.setText("Debugger");
+
+        jLabel3.setText("Velocidad Debugger");
+
+        jLabel4.setText("Reporte de Errores");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(bt_play, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addComponent(jLabel1)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(bt_debbug, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jSlider2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(46, 46, 46)
+                        .addComponent(jLabel3)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(25, 25, 25)
+                        .addComponent(bt_error, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(204, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(bt_debbug, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(bt_play, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(bt_error, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jSlider2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel4)))
+        );
+
         jMenu1.setText("Archivo");
+
+        jMenuItem1.setText("Nuevo Archivo");
+        jMenu1.add(jMenuItem1);
+
+        jMenuItem2.setText("Nueva Pestaña");
+        jMenu1.add(jMenuItem2);
+
+        jMenuItem3.setText("Abrir");
+        jMenu1.add(jMenuItem3);
+        jMenu1.add(jSeparator1);
+
+        jMenuItem4.setText("Guardar");
+        jMenu1.add(jMenuItem4);
+
+        jMenuItem5.setText("Guardar Como");
+        jMenu1.add(jMenuItem5);
+        jMenu1.add(jSeparator2);
+
+        Salir_menuItem.setText("Salir");
+        Salir_menuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Salir_menuItemActionPerformed(evt);
+            }
+        });
+        jMenu1.add(Salir_menuItem);
+
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Herramientas");
+
+        jMenuItem6.setText("Ejecutar");
+        jMenu2.add(jMenuItem6);
+
+        jMenuItem8.setText("Debugger");
+        jMenu2.add(jMenuItem8);
+
+        jMenuItem9.setText("Tabla de Símbolos");
+        jMenu2.add(jMenuItem9);
+
         jMenuBar1.add(jMenu2);
 
         jMenu3.setText("Errores");
+
+        jMenuItem7.setText("Mostrar Errores");
+        jMenu3.add(jMenuItem7);
+
         jMenuBar1.add(jMenu3);
 
         setJMenuBar(jMenuBar1);
@@ -52,16 +196,53 @@ public class LienzoEdit extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 719, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTabbedPane1)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 434, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(37, 37, 37)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 360, Short.MAX_VALUE)
+                .addGap(24, 24, 24))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void Salir_menuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Salir_menuItemActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_Salir_menuItemActionPerformed
+
+    private void bt_playActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_playActionPerformed
+        
+    }//GEN-LAST:event_bt_playActionPerformed
+
+    private void bt_debbugActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_debbugActionPerformed
+        
+    }//GEN-LAST:event_bt_debbugActionPerformed
+
+    //MÉTODOS
+    void setearIconoBotones(){
+        ImageIcon fot = new ImageIcon("boton_play.png");
+        ImageIcon fot2 = new ImageIcon("debbug.png");
+        ImageIcon fot3 = new ImageIcon("error.png");
+        
+        Icon icono = new ImageIcon(fot.getImage().getScaledInstance(bt_play.getWidth(), bt_play.getHeight(), Image.SCALE_DEFAULT));
+        Icon icono2 = new ImageIcon(fot2.getImage().getScaledInstance(bt_debbug.getWidth(), bt_debbug.getHeight(), Image.SCALE_DEFAULT));
+        Icon icono3 = new ImageIcon(fot3.getImage().getScaledInstance(bt_error.getWidth(), bt_error.getHeight(), Image.SCALE_DEFAULT));
+        
+        bt_play.setIcon(icono);
+        bt_debbug.setIcon(icono2);
+        bt_error.setIcon(icono3);
+        
+        this.repaint();
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -98,9 +279,31 @@ public class LienzoEdit extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem Salir_menuItem;
+    private javax.swing.JButton bt_debbug;
+    private javax.swing.JButton bt_error;
+    private javax.swing.JButton bt_play;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
+    private javax.swing.JMenuItem jMenuItem8;
+    private javax.swing.JMenuItem jMenuItem9;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPopupMenu.Separator jSeparator1;
+    private javax.swing.JPopupMenu.Separator jSeparator2;
+    private javax.swing.JSlider jSlider2;
+    private javax.swing.JTabbedPane jTabbedPane1;
     // End of variables declaration//GEN-END:variables
 }
