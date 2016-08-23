@@ -15,7 +15,9 @@ public class Proyecto_Lienzo {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        LienzoEdit nuevo = new LienzoEdit();
+        nuevo.setVisible(true);
+        nuevo.setLocationRelativeTo(null);
     }
     
 }
