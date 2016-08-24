@@ -1,15 +1,27 @@
 package proyecto_lienzo;
 
+import java.awt.Component;
 import java.awt.Image;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.JTextArea;
+import javax.swing.event.CaretEvent;
+import javax.swing.event.CaretListener;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author jerduar
@@ -22,6 +34,12 @@ public class LienzoEdit extends javax.swing.JFrame {
     public LienzoEdit() {
         initComponents();
         setearIconoBotones();
+        
+        //INICIALIZANDO EL ADMINISTRADOR DE ARCHIVOS
+        jFileChooser1 = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("archivos LZ", "lz");
+        jFileChooser1.setFileFilter(filter);
+        
     }
 
     /**
@@ -33,6 +51,7 @@ public class LienzoEdit extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jFileChooser1 = new javax.swing.JFileChooser();
         jPanel1 = new javax.swing.JPanel();
         bt_play = new javax.swing.JButton();
         bt_debbug = new javax.swing.JButton();
@@ -42,12 +61,13 @@ public class LienzoEdit extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jTabbedPane1 = new javax.swing.JTabbedPane();
+        panel_tab = new javax.swing.JTabbedPane();
+        lb_fila_columna = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
+        nueva_pestaña_menuItem = new javax.swing.JMenuItem();
+        Abrir_menuItem = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
@@ -110,30 +130,30 @@ public class LienzoEdit extends javax.swing.JFrame {
                     .addComponent(jLabel2))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jSlider2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(46, 46, 46)
-                        .addComponent(jLabel3)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel3))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jSlider2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(14, 14, 14)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(25, 25, 25)
                         .addComponent(bt_error, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(204, Short.MAX_VALUE))
+                .addContainerGap(202, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(bt_debbug, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(bt_play, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(bt_error, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jSlider2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jSlider2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jLabel2)
@@ -146,11 +166,21 @@ public class LienzoEdit extends javax.swing.JFrame {
         jMenuItem1.setText("Nuevo Archivo");
         jMenu1.add(jMenuItem1);
 
-        jMenuItem2.setText("Nueva Pestaña");
-        jMenu1.add(jMenuItem2);
+        nueva_pestaña_menuItem.setText("Nueva Pestaña");
+        nueva_pestaña_menuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nueva_pestaña_menuItemActionPerformed(evt);
+            }
+        });
+        jMenu1.add(nueva_pestaña_menuItem);
 
-        jMenuItem3.setText("Abrir");
-        jMenu1.add(jMenuItem3);
+        Abrir_menuItem.setText("Abrir");
+        Abrir_menuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Abrir_menuItemActionPerformed(evt);
+            }
+        });
+        jMenu1.add(Abrir_menuItem);
         jMenu1.add(jSeparator1);
 
         jMenuItem4.setText("Guardar");
@@ -199,7 +229,11 @@ public class LienzoEdit extends javax.swing.JFrame {
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(panel_tab)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lb_fila_columna, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -207,8 +241,10 @@ public class LienzoEdit extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(37, 37, 37)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 360, Short.MAX_VALUE)
-                .addGap(24, 24, 24))
+                .addComponent(panel_tab, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lb_fila_columna)
+                .addContainerGap(35, Short.MAX_VALUE))
         );
 
         pack();
@@ -219,30 +255,90 @@ public class LienzoEdit extends javax.swing.JFrame {
     }//GEN-LAST:event_Salir_menuItemActionPerformed
 
     private void bt_playActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_playActionPerformed
-        
+
     }//GEN-LAST:event_bt_playActionPerformed
 
     private void bt_debbugActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_debbugActionPerformed
-        
+
     }//GEN-LAST:event_bt_debbugActionPerformed
 
-    //MÉTODOS
-    void setearIconoBotones(){
+    private void nueva_pestaña_menuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nueva_pestaña_menuItemActionPerformed
+        panel_tab.insertTab("Nueva", null, new JTextArea(), "Text", 0);
+        PosicionCursor();
+    }//GEN-LAST:event_nueva_pestaña_menuItemActionPerformed
+
+    private void Abrir_menuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Abrir_menuItemActionPerformed
+        try {
+            AbrirArchivo();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(LienzoEdit.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(LienzoEdit.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_Abrir_menuItemActionPerformed
+
+    //MÉTODO PARA ABRIR ARCHIVO
+    void AbrirArchivo() throws FileNotFoundException, IOException {
+        jFileChooser1.showOpenDialog(this);
+        File archivo = jFileChooser1.getSelectedFile();
+        String texto = "";
+        
+        if(archivo != null){
+            FileReader file = new FileReader(archivo);
+            BufferedReader buffer = new BufferedReader(file);
+            String aux;
+            while((aux = buffer.readLine()) != null){
+                texto += aux + "\n";
+            }
+            
+            JTextArea nueva = new JTextArea(texto);
+            panel_tab.add(archivo.getName(), nueva);
+            PosicionCursor();
+            buffer.close();
+        }
+    }
+
+    //MÉTODO PARA SETER ÍCONOS A LOS BOTONES
+    void setearIconoBotones() {
         ImageIcon fot = new ImageIcon("boton_play.png");
         ImageIcon fot2 = new ImageIcon("debbug.png");
         ImageIcon fot3 = new ImageIcon("error.png");
-        
+
         Icon icono = new ImageIcon(fot.getImage().getScaledInstance(bt_play.getWidth(), bt_play.getHeight(), Image.SCALE_DEFAULT));
         Icon icono2 = new ImageIcon(fot2.getImage().getScaledInstance(bt_debbug.getWidth(), bt_debbug.getHeight(), Image.SCALE_DEFAULT));
         Icon icono3 = new ImageIcon(fot3.getImage().getScaledInstance(bt_error.getWidth(), bt_error.getHeight(), Image.SCALE_DEFAULT));
-        
+
         bt_play.setIcon(icono);
         bt_debbug.setIcon(icono2);
         bt_error.setIcon(icono3);
-        
+
         this.repaint();
     }
-    
+
+    //MÉTODO PARA LA POSICIÓN DEL CURSOR
+    public void PosicionCursor() {
+        JTextArea textarea = (JTextArea) panel_tab.getComponentAt(0);
+        textarea.addCaretListener(new CaretListener() {
+            @Override
+            public void caretUpdate(CaretEvent e) {
+                int linea = 1;
+                int columna = 1;
+
+                try {
+                    int caretpos = textarea.getCaretPosition();
+                    linea = textarea.getLineOfOffset(caretpos);
+                    columna = caretpos - textarea.getLineStartOffset(linea);
+
+                    linea += 1;
+                    lb_fila_columna.setText("Fila: " + linea + " Columna: " + columna);
+                } catch (Exception ex) {
+                    System.err.println(ex.toString());
+                }
+            }
+
+        });
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -279,10 +375,12 @@ public class LienzoEdit extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem Abrir_menuItem;
     private javax.swing.JMenuItem Salir_menuItem;
     private javax.swing.JButton bt_debbug;
     private javax.swing.JButton bt_error;
     private javax.swing.JButton bt_play;
+    private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -292,8 +390,6 @@ public class LienzoEdit extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
@@ -304,6 +400,8 @@ public class LienzoEdit extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JSlider jSlider2;
-    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JLabel lb_fila_columna;
+    private javax.swing.JMenuItem nueva_pestaña_menuItem;
+    private javax.swing.JTabbedPane panel_tab;
     // End of variables declaration//GEN-END:variables
 }
