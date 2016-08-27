@@ -6,6 +6,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -34,12 +35,12 @@ public class LienzoEdit extends javax.swing.JFrame {
     public LienzoEdit() {
         initComponents();
         setearIconoBotones();
-        
+
         //INICIALIZANDO EL ADMINISTRADOR DE ARCHIVOS
         jFileChooser1 = new JFileChooser();
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("archivos LZ", "lz");
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Archivos LZ", "lz");
         jFileChooser1.setFileFilter(filter);
-        
+
     }
 
     /**
@@ -69,8 +70,8 @@ public class LienzoEdit extends javax.swing.JFrame {
         nueva_pestaña_menuItem = new javax.swing.JMenuItem();
         Abrir_menuItem = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
-        jMenuItem4 = new javax.swing.JMenuItem();
-        jMenuItem5 = new javax.swing.JMenuItem();
+        guardar_menuItem = new javax.swing.JMenuItem();
+        guardar_como_menuItem = new javax.swing.JMenuItem();
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
         Salir_menuItem = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
@@ -183,11 +184,21 @@ public class LienzoEdit extends javax.swing.JFrame {
         jMenu1.add(Abrir_menuItem);
         jMenu1.add(jSeparator1);
 
-        jMenuItem4.setText("Guardar");
-        jMenu1.add(jMenuItem4);
+        guardar_menuItem.setText("Guardar");
+        guardar_menuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                guardar_menuItemActionPerformed(evt);
+            }
+        });
+        jMenu1.add(guardar_menuItem);
 
-        jMenuItem5.setText("Guardar Como");
-        jMenu1.add(jMenuItem5);
+        guardar_como_menuItem.setText("Guardar Como");
+        guardar_como_menuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                guardar_como_menuItemActionPerformed(evt);
+            }
+        });
+        jMenu1.add(guardar_como_menuItem);
         jMenu1.add(jSeparator2);
 
         Salir_menuItem.setText("Salir");
@@ -263,8 +274,8 @@ public class LienzoEdit extends javax.swing.JFrame {
     }//GEN-LAST:event_bt_debbugActionPerformed
 
     private void nueva_pestaña_menuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nueva_pestaña_menuItemActionPerformed
-        panel_tab.insertTab("Nueva", null, new JTextArea(), "Text", 0);
-        PosicionCursor();
+        Component comp = panel_tab.add("Nuevo", new JTextArea());
+        PosicionCursor((JTextArea)comp);
     }//GEN-LAST:event_nueva_pestaña_menuItemActionPerformed
 
     private void Abrir_menuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Abrir_menuItemActionPerformed
@@ -277,29 +288,74 @@ public class LienzoEdit extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_Abrir_menuItemActionPerformed
 
+    private void guardar_como_menuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardar_como_menuItemActionPerformed
+        try {
+            GuardarComo();
+        } catch (IOException ex) {
+            Logger.getLogger(LienzoEdit.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_guardar_como_menuItemActionPerformed
+
+    private void guardar_menuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardar_menuItemActionPerformed
+        try {
+            Guardar();
+        } catch (IOException ex) {
+            Logger.getLogger(LienzoEdit.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_guardar_menuItemActionPerformed
+
     //MÉTODO PARA ABRIR ARCHIVO
-    void AbrirArchivo() throws FileNotFoundException, IOException {
+    private void AbrirArchivo() throws FileNotFoundException, IOException {
         jFileChooser1.showOpenDialog(this);
         File archivo = jFileChooser1.getSelectedFile();
         String texto = "";
-        
-        if(archivo != null){
+
+        if (archivo != null) {
             FileReader file = new FileReader(archivo);
-            BufferedReader buffer = new BufferedReader(file);
-            String aux;
-            while((aux = buffer.readLine()) != null){
-                texto += aux + "\n";
+            try (BufferedReader buffer = new BufferedReader(file)) {
+                String aux;
+                while ((aux = buffer.readLine()) != null) {
+                    texto += aux + "\n";
+                }
+                
+                JTextArea nueva = new JTextArea(texto);
+                panel_tab.add(archivo.getName(), nueva);
+                panel_tab.getSelectedComponent().setName(archivo.getAbsolutePath());
+                PosicionCursor(nueva);
             }
-            
-            JTextArea nueva = new JTextArea(texto);
-            panel_tab.add(archivo.getName(), nueva);
-            PosicionCursor();
-            buffer.close();
+        }
+    }
+    
+    //MÉTODO PARA GUARDAR
+    private void Guardar() throws IOException{
+        if(panel_tab.getSelectedComponent() != null){
+            String path = panel_tab.getSelectedComponent().getName();
+            String texto = ((JTextArea)panel_tab.getSelectedComponent()).getText();
+            try (FileWriter file = new FileWriter(path)) {
+                file.write(texto);
+            }
+        }
+    }
+
+    //MÉTODO PARA GUARDAR COMO
+    private void GuardarComo() throws IOException {
+        JTextArea doc = (JTextArea) panel_tab.getSelectedComponent();
+        if (doc != null) {
+            jFileChooser1.showSaveDialog(this);
+            File file = jFileChooser1.getSelectedFile();
+            panel_tab.setTitleAt(panel_tab.getSelectedIndex(), file.getName());
+            panel_tab.getSelectedComponent().setName(file.getAbsolutePath());
+
+            if (file != null) {
+                try (FileWriter archivo = new FileWriter(file + ".lz")) {
+                    archivo.write(doc.getText());
+                }
+            }
         }
     }
 
     //MÉTODO PARA SETER ÍCONOS A LOS BOTONES
-    void setearIconoBotones() {
+    private void setearIconoBotones() {
         ImageIcon fot = new ImageIcon("boton_play.png");
         ImageIcon fot2 = new ImageIcon("debbug.png");
         ImageIcon fot3 = new ImageIcon("error.png");
@@ -314,10 +370,17 @@ public class LienzoEdit extends javax.swing.JFrame {
 
         this.repaint();
     }
+    
+    //METODO PARA CONTADOR DE LINEAS
+    private void LineNumberTest(JTextArea textarea){
+        /*LineNumberComponent lineNumberComponent;
+        
+        JScrollPane scroller = new JScrollPane(textarea);
+        scroller.setRowHeader(rowHeader);*/
+    }
 
     //MÉTODO PARA LA POSICIÓN DEL CURSOR
-    public void PosicionCursor() {
-        JTextArea textarea = (JTextArea) panel_tab.getComponentAt(0);
+    private void PosicionCursor(JTextArea textarea) {
         textarea.addCaretListener(new CaretListener() {
             @Override
             public void caretUpdate(CaretEvent e) {
@@ -380,6 +443,8 @@ public class LienzoEdit extends javax.swing.JFrame {
     private javax.swing.JButton bt_debbug;
     private javax.swing.JButton bt_error;
     private javax.swing.JButton bt_play;
+    private javax.swing.JMenuItem guardar_como_menuItem;
+    private javax.swing.JMenuItem guardar_menuItem;
     private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -390,8 +455,6 @@ public class LienzoEdit extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
