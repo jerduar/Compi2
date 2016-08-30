@@ -1,0 +1,63 @@
+
+options { 
+MULTI=true;
+STATIC = false;
+OUTPUT_DIRECTORY="/home/jerduar/COMPI2/Proyecto1/Proyecto_Lienzo/src/AnalizadorCC/";
+}
+
+PARSER_BEGIN(Analizador_Lienzo)
+package AnalizadorCC;
+
+public class Analizador_Lienzo {
+ public static void main(String args[]) throws ParseException {
+    Analizador_Lienzo parser = new Analizador_Lienzo(new java.io.StringReader("56+9+5"));
+    parser.S();
+    System.out.println("Exito!!");
+  }
+}
+PARSER_END(Analizador_Lienzo)
+
+SKIP: {" "|"\n"|"\t"|"\r"}
+TOKEN: {<#DIGIT: ["0"-"9"]>}
+TOKEN: {<NUM: (["0"-"9"])+>}
+
+//PALABRAS RESERVADAS
+TOKEN:{
+
+<LIENZO : "Lienzo">
+|<CIERRE : "?">
+|<ABRE : "¿">
+|<PUBLICO :"publico">
+|<PRIVADOR : "privado">
+|<PROTEGIDO : "protegido">
+
+}
+
+//IDENTIFICADOR
+TOKEN : {
+
+<IDENTIFICADOR: <LETTER>(<LETTER>|<DIGIT>)*(["$"])?>
+|  <#LETTER: (["a"-"z","A"-"Z"])>
+
+}
+
+nodo S():{nodo e1; }
+{
+        Ambito() <LIENZO> <IDENTIFICADOR> <ABRE> <CIERRE> <EOF>{
+                nodo n1 = new nodo();
+                return n1;
+            }
+         
+}
+
+nodo Ambito() : {Token e1; Token e2; Token e4; }
+{
+    e1 = <PUBLICO>{
+        nodo nodo1 = new nodo();
+        nodo1.setEtiqueta("AMBITO");
+        nodo1.setValor(e1.image);
+        nodo1.setColumna(e1.beginColumn);
+        nodo1.setLinea(e1.beginLine);
+        return nodo1;
+    }
+}
