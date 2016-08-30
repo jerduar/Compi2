@@ -2,6 +2,8 @@ package proyecto_lienzo;
 
 import java.awt.Component;
 import java.awt.Image;
+import java.awt.event.ComponentListener;
+import java.awt.event.KeyListener;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -12,6 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JTextArea;
 import javax.swing.event.CaretEvent;
@@ -105,6 +108,8 @@ public class LienzoEdit extends javax.swing.JFrame {
 
         bt_error.setContentAreaFilled(false);
         bt_error.setSelected(true);
+
+        jSlider2.setValue(0);
 
         jLabel1.setText("Ejecutar");
 
