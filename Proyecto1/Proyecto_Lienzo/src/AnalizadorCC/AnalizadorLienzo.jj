@@ -11,7 +11,7 @@ package AnalizadorCC;
 public class Analizador_Lienzo {
  public static void main(String args[]) throws ParseException {
     Analizador_Lienzo parser = new Analizador_Lienzo(new java.io.StringReader("56+9+5"));
-    parser.S();
+    parser.INICIO();
     System.out.println("Exito!!");
   }
 }
@@ -19,7 +19,12 @@ PARSER_END(Analizador_Lienzo)
 
 SKIP: {" "|"\n"|"\t"|"\r"}
 TOKEN: {<#DIGIT: ["0"-"9"]>}
-TOKEN: {<NUM: (["0"-"9"])+>}
+TOKEN: {<ENTERO: (["0"-"9"])+>}
+TOKEN: {<DECIMAL:(["0"-"9"])+(".")(["0"-"9"])+>}
+TOKEN : {<CADENA: "\"" (~["\""])* "\"">}
+TOKEN : {<CARACTER: "'" (~["'"])* "'">}
+TOKEN : {<SI : "si">}
+TOKEN : {<SINO: "sino">}
 
 //PALABRAS RESERVADAS
 TOKEN:{
@@ -28,29 +33,239 @@ TOKEN:{
 |<CIERRE : "?">
 |<ABRE : "¿">
 |<PUBLICO :"publico">
-|<PRIVADOR : "privado">
+|<PRIVADO : "privado">
 |<PROTEGIDO : "protegido">
+|<EXTIENDE : "extiende">
+|<VAR : "var">
+|<TENTERO : "entero">
+|<TCADENA : "cadena">
+|<TBOOLEAN : "boolean">
+|<TDOBLE : "doble">
+|<TCARACTER : "caracter">
+|<CONSERVAR : "conservar">
+|<VOID : "void">
 
 }
 
 //IDENTIFICADOR
-TOKEN : {
+TOKEN : {<IDENTIFICADOR: ["a"-"z","A"-"Z"](["a"-"z","A"-"Z"]|<DIGIT>)*>}
 
-<IDENTIFICADOR: <LETTER>(<LETTER>|<DIGIT>)*(["$"])?>
-|  <#LETTER: (["a"-"z","A"-"Z"])>
-
-}
-
-nodo S():{nodo e1; }
+nodo INICIO(): {nodo e1;}
 {
-        Ambito() <LIENZO> <IDENTIFICADOR> <ABRE> <CIERRE> <EOF>{
-                nodo n1 = new nodo();
-                return n1;
-            }
-         
+    e1 = S()<EOF>{
+        nodo n1 = new nodo();
+        n1.setEtiqueta("INICIO");
+        nodo ini =  (nodo) e1;
+        n1.AddHijos(ini);
+        return n1;
+    }
 }
 
-nodo Ambito() : {Token e1; Token e2; Token e4; }
+nodo S():{nodo e1; nodo e2, retorno = new nodo(); Token tok1,tok2,tok3,tok4,tok5; }
+{
+        e1 = Ambito() tok1 = <LIENZO> tok2 = <IDENTIFICADOR> e2 = P(){
+                retorno.setEtiqueta("S");
+                retorno.AddHijos(e1);
+                retorno.AddHijos(tok1.image);
+                retorno.AddHijos(tok2.image);
+                retorno.AddHijos(e2);
+                return retorno;
+            }
+       |tok1 = <LIENZO> tok2 = <IDENTIFICADOR> e2 = P(){
+                retorno.setEtiqueta("S");
+                retorno.AddHijos(tok1.image);
+                retorno.AddHijos(e2);
+                return retorno;
+            }
+        
+}
+
+nodo P() : {nodo nodo1,nodo2; Token tok1; Token tok2; Token tok3; nodo auxiliar;}
+{
+    tok1 = <EXTIENDE> auxiliar = ListaIds() tok2 = <ABRE> nodo2 = ListaSentencias() tok3 = <CIERRE>{
+        nodo1 = new nodo();
+        nodo1.setEtiqueta("P");
+        nodo1.AddHijos(tok1.image);
+        nodo1.AddHijos(auxiliar);
+        nodo1.AddHijos(tok2.image);
+        nodo1.AddHijos(nodo2);
+        nodo1.AddHijos(tok3.image);
+        return nodo1;
+    }
+
+    | tok1 = <ABRE> nodo2 = ListaSentencias() tok2 = <CIERRE> {
+        nodo1 = new nodo();
+        nodo1.setEtiqueta("P");
+        nodo1.AddHijos(tok1.image);
+        nodo1.AddHijos(nodo2);
+        nodo1.AddHijos(tok2.image);
+        return nodo1;
+    }
+}
+
+nodo ListaSentencias(): {nodo retorno = new nodo(); nodo n1,n2; retorno.setEtiqueta("ListaSentencias");}
+{
+    n1 = Sentencia() {
+        retorno.AddHijos(n1);
+    } ( n2 = Sentencia() {
+        retorno.AddHijos(n2);
+    })*
+    {return retorno;}
+}
+
+nodo Sentencia():{nodo retorno; nodo aux = null;}
+{
+    LOOKAHEAD(2) (<CONSERVAR>{aux = new nodo(); aux.setEtiqueta("CONSERVAR");})?(
+    retorno = DecAsig() "$"{
+    if(aux!= null)retorno.hijos.add(0,aux);
+    }
+    
+    |retorno = Funcion(){
+    if(aux!=null)retorno.hijos.add(0,aux);
+    }
+
+    |retorno = Procedimiento(){
+    if(aux != null)retorno.hijos.add(0,aux);
+    }
+
+    ){
+        return retorno;
+    }
+
+    
+    | retorno = Asig() "$"{
+        return retorno;
+    }
+}
+
+nodo Dimensiones():{nodo retorno = new nodo();nodo e1; retorno.setEtiqueta("DIMENSIONES"); Token tok, tok1;}
+{
+    
+    ("["  e1 = EA1() "]"{
+        nodo aux = new nodo();
+        aux.setEtiqueta("DIM");
+        aux.AddHijos("[");
+        aux.AddHijos(e1);
+        aux.AddHijos("]");
+        retorno.AddHijos(aux);
+    })+
+    {return retorno;}
+    
+}
+
+nodo DecAsig() : {nodo retorno = new nodo(); Token tok, tok1;nodo e1,e2,e3; e3 = null;}
+{
+        tok = <VAR> e2 = Tipo()  e1 = ListaIds(){
+            retorno.AddHijos(tok.image);
+            retorno.AddHijos(e2);
+            retorno.AddHijos(e1);
+        }(
+        ( e3 = Dimensiones(){
+            retorno.setEtiqueta("DECA");
+            retorno.AddHijos(e3);
+        } ("=" "{" e3 = ValArreglo() "}" {
+            retorno.AddHijos(e3);
+            retorno.setEtiqueta("DECAGASIGA");
+        })?
+        )
+
+        |("=" e3 = EL1(){retorno.AddHijos("=");retorno.AddHijos(e3);retorno.setEtiqueta("DECASIG");})
+        )?
+        
+        
+{return retorno;}
+    
+}
+
+nodo ValArreglo(): {nodo e1, e2,retorno;retorno = new nodo();retorno.setEtiqueta("LISTAVAL"); e2 = null;}
+{
+    e1 = EL1(){retorno.AddHijos(e1);} ("," e2 = EL1(){
+        retorno.AddHijos(e2);
+    })*
+    {return retorno;}
+    | "{" e1 = ValArreglo() "}" ("," "{" e2 = ValArreglo() "}"
+        {
+            nodo ret = new nodo();
+            ret.setEtiqueta("VALORARREGLO");
+            ret.AddHijos(e1);
+            ret.AddHijos(e2);
+            e1 = (nodo)ret;  }
+    )+
+    {return e1;}
+}
+
+nodo Tipo() : {nodo retorno = new nodo(); retorno.setEtiqueta("TIPO"); Token tok;}
+{
+    tok = <TENTERO>{
+        retorno.setValor(tok.image);
+        return retorno;
+    }
+    |tok = <TCADENA>{
+        retorno.setValor(tok.image);
+        return retorno;
+    }
+    |tok = <TBOOLEAN>{
+        retorno.setValor(tok.image);
+        return retorno;
+    }
+    |tok = <TDOBLE>{
+        retorno.setValor(tok.image);
+        return retorno;
+    }
+    |tok = <TCARACTER>{
+        retorno.setValor(tok.image);
+        return retorno;
+    }
+}
+
+nodo Asig():{nodo e1; Token tok;}
+{
+    tok = <IDENTIFICADOR> "=" e1 = EA1(){
+        nodo aux = new nodo();
+        aux.setEtiqueta("ASIG");
+        
+        nodo aux2 = new nodo();
+        aux2.setEtiqueta("IDENTIFICADOR");
+        aux2.setValor(tok.image);
+        aux.AddHijos(aux2);
+        aux.AddHijos("=");
+        aux.AddHijos(e1);
+
+        return aux;
+    }
+}
+
+nodo F():{nodo e1 = new nodo(); e1.setEtiqueta("F"); Token tok;}
+{
+    tok = <CADENA>{
+        String aux = tok.image;
+        aux = aux.replaceAll("\"","");
+        e1.AddHijos("CADENA",aux);
+        return e1;
+    }
+    | tok = <ENTERO>{
+        e1.AddHijos("ENTERO",tok.image);
+        return e1;
+    }
+    | tok = <DECIMAL>{
+        e1.AddHijos("DECIMAL",tok.image);
+        return e1;
+    }
+    | tok = <CARACTER>{
+        e1.AddHijos("CARACTER",tok.image);
+        return e1;
+    }
+    | tok = <IDENTIFICADOR>{
+        e1.AddHijos("IDENTIFICADOR",tok.image);
+        return e1;
+    }
+    | "(" e1 = EA1() ")"{
+        return e1;
+    }
+
+}
+
+nodo Ambito() : {Token e1; Token e2; Token e3; }
 {
     e1 = <PUBLICO>{
         nodo nodo1 = new nodo();
@@ -59,5 +274,283 @@ nodo Ambito() : {Token e1; Token e2; Token e4; }
         nodo1.setColumna(e1.beginColumn);
         nodo1.setLinea(e1.beginLine);
         return nodo1;
+    }
+    | e2 = <PRIVADO>{
+        nodo nodo2 = new nodo();
+        nodo2.setEtiqueta("AMBITO");
+        nodo2.setValor(e2.image);
+        nodo2.setColumna(e2.beginColumn);
+        nodo2.setLinea(e2.beginLine);
+        return nodo2;
+    }
+
+    | e3 = <PROTEGIDO>{
+        nodo nodo3 = new nodo();
+        nodo3.setEtiqueta("AMBITO");
+        nodo3.setValor(e3.image);
+        nodo3.setColumna(e3.beginColumn);
+        nodo3.setLinea(e3.beginLine);
+        return nodo3;
+    }
+}
+
+nodo ListaIds(): {Token tok; nodo n1 = new nodo(); n1.setEtiqueta("ListaIds"); Token tok2;}
+{
+    tok2=<IDENTIFICADOR> {nodo n2 = new nodo(); n2.setValor(tok2.image);n2.setEtiqueta("IDENTIFICADOR");n1.AddHijos(n2);}( "," tok=<IDENTIFICADOR>{
+        nodo nuevo = new nodo();
+        nuevo.setValor(tok.image);
+        nuevo.setEtiqueta("IDENTIFICADOR");
+        n1.AddHijos(nuevo);})*
+    {return n1;}
+}
+
+//EXPRESIONES ARITMETICAS
+nodo EA1() : {nodo e1; nodo e2; nodo retorno;}
+{
+    e1=EA2() ("+" e2=EA2(){
+            nodo n1 = new nodo();
+            n1.setEtiqueta("EA1");
+            nodo izq = (nodo) e1;
+            nodo der = (nodo) e2;
+            n1.AddHijos(izq);
+            n1.AddHijos("+");
+            n1.AddHijos(der);
+            e1= (nodo) n1;
+
+        }
+        |"-" e2=EA2(){
+            nodo n2 = new nodo();
+            n2.setEtiqueta("EA1");
+            nodo izq1 = (nodo) e1;
+            nodo der1 = (nodo) e2;
+            n2.AddHijos(izq1);
+            n2.AddHijos("-");
+            n2.AddHijos(der1);
+            e1= (nodo) n2;
+        })*{retorno = new nodo(); retorno.setEtiqueta("EA1");retorno.AddHijos(e1);return retorno;}
+}
+
+nodo EA3():{nodo e1; nodo e2; nodo retorno;}
+{
+    e1 = F()("^" e2 = F(){
+        nodo n1 = new nodo();
+        n1.setEtiqueta("EA3");
+        n1.AddHijos((nodo)e1);
+        n1.AddHijos("^");
+        n1.AddHijos((nodo)e2);
+        e1 = (nodo)n1;
+    })*{retorno = new nodo(); retorno.setEtiqueta("EA3"); retorno.AddHijos(e1);return retorno;}
+}
+
+nodo EA2():{nodo e1; nodo e2; nodo retorno;}
+{
+            e1=EA3()("*" e2=EA3(){
+            nodo n1 = new nodo();
+            n1.setEtiqueta("EA2");
+            nodo izq = (nodo) e1;
+            nodo der = (nodo) e2;
+            n1.AddHijos(izq);
+            n1.AddHijos("*");
+            n1.AddHijos(der);
+            e1= (nodo) n1;
+        }
+        |"/" e2=EA3(){
+            nodo n2 = new nodo();
+            n2.setEtiqueta("EA2");
+            nodo izq1 = (nodo) e1;
+            nodo der1 = (nodo) e2;
+            n2.AddHijos(izq1);
+            n2.AddHijos("/");
+            n2.AddHijos(der1);
+            e1= (nodo) n2;
+        })*
+        {retorno = e1; retorno.setEtiqueta("EA2");return retorno;}
+}
+
+//EXPRESIONES RELACIONALES
+
+nodo ER1(): {nodo e1; nodo e2;}
+{
+    e1 = EA1() (
+    "==" e2 = EA1(){
+        nodo nuevo = new nodo();
+        nuevo.setEtiqueta("ER1");
+        nuevo.AddHijos((nodo)e1);
+        nuevo.AddHijos("==");
+        nuevo.AddHijos((nodo)e2);
+        e1 = (nodo)nuevo;
+    }
+    | "<" e2 = EA1(){
+        nodo nuevo2 = new nodo();
+        nuevo2.setEtiqueta("ER1");
+        nuevo2.AddHijos((nodo)e1);
+        nuevo2.AddHijos("<");
+        nuevo2.AddHijos((nodo)e2);
+        e1 = (nodo)nuevo2;
+    }
+    | "<=" e2 = EA1(){
+        nodo nuevo3 = new nodo();
+        nuevo3.setEtiqueta("ER1");
+        nuevo3.AddHijos((nodo)e1);
+        nuevo3.AddHijos("<=");
+        nuevo3.AddHijos((nodo)e2);
+        e1 = (nodo)nuevo3;
+    }
+    | ">" e2 = EA1(){
+        nodo nuevo4 = new nodo();
+        nuevo4.setEtiqueta("ER1");
+        nuevo4.AddHijos((nodo)e1);
+        nuevo4.AddHijos(">");
+        nuevo4.AddHijos((nodo)e2);
+        e1 = (nodo)nuevo4;
+    }
+    | ">=" e2 = EA1(){
+        nodo nuevo5 = new nodo();
+        nuevo5.setEtiqueta("ER1");
+        nuevo5.AddHijos((nodo)e1);
+        nuevo5.AddHijos(">=");
+        nuevo5.AddHijos((nodo)e2);
+        e1 = (nodo)nuevo5;
+    }
+    | "!=" e2 = EA1(){
+        nodo nuevo6 = new nodo();
+        nuevo6.setEtiqueta("ER1");
+        nuevo6.AddHijos((nodo)e1);
+        nuevo6.AddHijos("!=");
+        nuevo6.AddHijos((nodo)e2);
+        e1 = (nodo)nuevo6;
+    }
+    | "!&¡" e2 = EA1(){
+        nodo nuevo7 = new nodo();
+        nuevo7.setEtiqueta("ER1");
+        nuevo7.AddHijos((nodo)e1);
+        nuevo7.AddHijos("!&¡");
+        nuevo7.AddHijos((nodo)e2);
+        e1 = (nodo)nuevo7;
+    }
+    )?
+    {return e1;}
+}
+
+//EXPRESIONES LOGICAS
+
+nodo EL1():{nodo e1,e2;}
+{
+    e1 = EL2()(
+    "||" e2 = EL2(){
+        nodo nuevo = new nodo();
+        nuevo.setEtiqueta("EL1");
+        nuevo.AddHijos((nodo)e1);
+        nuevo.AddHijos("||");
+        nuevo.AddHijos((nodo)e2);
+        e1 = (nodo)nuevo;
+    }
+    |"!||" e2 = EL2(){
+        nodo nuevo2 = new nodo();
+        nuevo2.setEtiqueta("EL1");
+        nuevo2.AddHijos(e1);
+        nuevo2.AddHijos("!||");
+        nuevo2.AddHijos(e2);
+        e1 = (nodo)nuevo2;
+    }
+    |"&|" e2 = EL2(){
+        nodo nuevo3 = new nodo();
+        nuevo3.setEtiqueta("EL1");
+        nuevo3.AddHijos(e1);
+        nuevo3.AddHijos("&|");
+        nuevo3.AddHijos(e2);
+        e1 = (nodo)nuevo3;
+    }
+    )*
+    {return e1;}
+}
+
+nodo EL2(): {nodo e1,e2;}
+{
+    e1 = ER1() (
+    "&&" e2 = ER1(){
+        nodo nuevo = new nodo();
+        nuevo.setEtiqueta("EL2");
+        nuevo.AddHijos(e1);
+        nuevo.AddHijos("&&");
+        nuevo.AddHijos(e2);
+        e1 = (nodo)nuevo;
+    }
+    |"!&&" e2 = ER1(){
+        nodo nuevo1 = new nodo();
+        nuevo1.setEtiqueta("EL2");
+        nuevo1.AddHijos(e1);
+        nuevo1.AddHijos("!&&");
+        nuevo1.AddHijos(e2);
+        e1 = (nodo)nuevo1;
+    }
+    )*
+    {return e1;}
+}
+
+
+//FUNCIONES Y PROCEDIMIENTOS
+
+    //FUNCIONES
+nodo Funcion():{nodo e1 = new nodo();e1.setEtiqueta("FUNCION");nodo e2; Token tok, tok2;}
+{
+    
+    //FUNCION CONSERVAR
+    e2 = Tipo()
+    tok = <IDENTIFICADOR>{e1.AddHijos(e2); nodo aux = new nodo(); aux.setValor(tok.image); aux.setEtiqueta("IDENTIFICADOR");e1.AddHijos(aux);}
+    "("(e2 = ListaParam(){e1.AddHijos("(");e1.AddHijos(e2); e1.AddHijos(")");})? ")"
+    tok = <ABRE> e2 = ListaSentencias() tok2 = <CIERRE>{e1.AddHijos(tok.image);e1.AddHijos(e2);e1.AddHijos(tok2.image); return e1;}   
+}
+
+nodo Procedimiento() : {nodo e1,retorno,e2; retorno = new nodo(); retorno.setEtiqueta("PROCEDIMIENTO"); Token tok, tok2;}
+{
+    (tok = <VOID>{retorno.AddHijos(tok.image);})? 
+    tok = <IDENTIFICADOR>{
+        nodo aux = new nodo();
+        aux.setEtiqueta("IDENTIFICADOR");
+        aux.setValor(tok.image);
+        retorno.AddHijos(aux);
+    }
+     "(" (e1 = ListaParam(){retorno.AddHijos("(");retorno.AddHijos(e1); retorno.AddHijos(")");})? ")" 
+    tok = <ABRE> e1 = ListaSentencias() tok2 = <CIERRE>
+    {   
+        retorno.AddHijos(tok.image);
+        retorno.AddHijos(e1);
+        retorno.AddHijos(tok2.image);
+    }
+    {return retorno;}
+}
+
+nodo ListaParam():{nodo e1, e2; Token tok, tok2; nodo retorno = new nodo(); retorno.setEtiqueta("LISTAPARAM");}
+{
+    e1 = Tipo() tok = <IDENTIFICADOR>{
+        nodo aux = new nodo();
+        aux.setEtiqueta("PARAM");
+        aux.AddHijos(e1);
+        nodo aux2 = new nodo();
+        aux2.setValor(tok.image);
+        aux2.setEtiqueta("IDENTIFICADOR");
+        aux.AddHijos(aux2);
+        retorno.AddHijos(aux);
+        
+    } ("," e2 = Tipo() tok2 = <IDENTIFICADOR>{
+        nodo aux3 = new nodo();
+        aux3.setEtiqueta("PARAM");
+        aux3.AddHijos(e2);
+        nodo aux4 = new nodo();
+        aux4.setValor(tok2.image);
+        aux4.setEtiqueta("IDENTIFICADOR");
+        aux3.AddHijos(aux4);
+        retorno.AddHijos(aux3);
+    })*
+    {return retorno;}
+}
+
+//SETENCIA IF
+
+nodo Si() : {Token tok,tok1,tok2; nodo e1,e2,e3;}
+{
+    <SI> "(" ER1() ")" <ABRE> <CIERRE>{
+        
     }
 }

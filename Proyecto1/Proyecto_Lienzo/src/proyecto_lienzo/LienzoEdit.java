@@ -1,20 +1,24 @@
 package proyecto_lienzo;
 
+import AnalizadorCC.ParseException;
+import AnalizadorCC.Simple1;
+import AnalizadorCC.Analizador_Lienzo;
+import AnalizadorCC.TokenMgrError;
+import AnalizadorCC.nodo;
 import java.awt.Component;
 import java.awt.Image;
-import java.awt.event.ComponentListener;
-import java.awt.event.KeyListener;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringReader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JTextArea;
 import javax.swing.event.CaretEvent;
@@ -257,10 +261,10 @@ public class LienzoEdit extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(37, 37, 37)
-                .addComponent(panel_tab, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(panel_tab, javax.swing.GroupLayout.PREFERRED_SIZE, 389, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lb_fila_columna)
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -271,7 +275,20 @@ public class LienzoEdit extends javax.swing.JFrame {
     }//GEN-LAST:event_Salir_menuItemActionPerformed
 
     private void bt_playActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_playActionPerformed
+        try {
+            JTextArea text = (JTextArea) panel_tab.getSelectedComponent();
 
+            if (text != null) {
+                Analizador_Lienzo analizador = new Analizador_Lienzo(new StringReader(text.getText()));
+                nodo raiz = analizador.INICIO();
+                Graficar(recorrido(raiz,0),"MiAST"); //Es necesario tener instalado graphviz para llamar al metodo
+                //Ejecutar eje = new Ejecutar();
+                //Integer Resulta = eje.Recorrido(raiz);
+                //System.out.println("El resultado es:" + Resulta.toString());
+            }
+        } catch (ParseException | TokenMgrError ex) {
+            System.err.println(ex.getMessage());
+        }
     }//GEN-LAST:event_bt_playActionPerformed
 
     private void bt_debbugActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_debbugActionPerformed
@@ -280,7 +297,7 @@ public class LienzoEdit extends javax.swing.JFrame {
 
     private void nueva_pestaña_menuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nueva_pestaña_menuItemActionPerformed
         Component comp = panel_tab.add("Nuevo", new JTextArea());
-        PosicionCursor((JTextArea)comp);
+        PosicionCursor((JTextArea) comp);
     }//GEN-LAST:event_nueva_pestaña_menuItemActionPerformed
 
     private void Abrir_menuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Abrir_menuItemActionPerformed
@@ -322,7 +339,7 @@ public class LienzoEdit extends javax.swing.JFrame {
                 while ((aux = buffer.readLine()) != null) {
                     texto += aux + "\n";
                 }
-                
+
                 JTextArea nueva = new JTextArea(texto);
                 panel_tab.add(archivo.getName(), nueva);
                 panel_tab.getSelectedComponent().setName(archivo.getAbsolutePath());
@@ -330,12 +347,12 @@ public class LienzoEdit extends javax.swing.JFrame {
             }
         }
     }
-    
+
     //MÉTODO PARA GUARDAR
-    private void Guardar() throws IOException{
-        if(panel_tab.getSelectedComponent() != null){
+    private void Guardar() throws IOException {
+        if (panel_tab.getSelectedComponent() != null) {
             String path = panel_tab.getSelectedComponent().getName();
-            String texto = ((JTextArea)panel_tab.getSelectedComponent()).getText();
+            String texto = ((JTextArea) panel_tab.getSelectedComponent()).getText();
             try (FileWriter file = new FileWriter(path)) {
                 file.write(texto);
             }
@@ -375,13 +392,58 @@ public class LienzoEdit extends javax.swing.JFrame {
 
         this.repaint();
     }
-    
+
     //METODO PARA CONTADOR DE LINEAS
-    private void LineNumberTest(JTextArea textarea){
+    private void LineNumberTest(JTextArea textarea) {
         /*LineNumberComponent lineNumberComponent;
         
         JScrollPane scroller = new JScrollPane(textarea);
         scroller.setRowHeader(rowHeader);*/
+    }
+    
+    int aux = 1;
+    int incremento()
+    {
+        return aux++;
+    }
+    
+    String recorrido(nodo raiz,int id){//recorrido para graficar el arbol
+            int var;
+            String cuerpo="";
+            
+            for (nodo hijos : raiz.hijos) { 
+                var = incremento();
+                if(hijos.getEtiqueta().equals("numero")){
+                    cuerpo += "\""+id+"_" + raiz.getEtiqueta() + "\"->\""+var+"_"+hijos.getEtiqueta()+"="+hijos.getValor()+"\"";
+                }else{
+                    cuerpo += "\""+id+"_" + raiz.getEtiqueta() + "_" + raiz.getValor() + "\"->\""+var+"_"+hijos.getEtiqueta() + "_" + hijos.getValor() +"\"";
+                }
+                cuerpo += recorrido(hijos, var);
+            }
+          return cuerpo; 
+    }
+    
+    public void Graficar(String cadena,String cad){
+        FileWriter fichero = null;
+        PrintWriter pw = null;
+        String nombre=cad;
+        String archivo=nombre+".dot";
+        try {
+            fichero = new FileWriter(archivo);
+            pw = new PrintWriter(fichero);
+            pw.println("digraph G {node[shape=box, style=filled, color=Gray95]; edge[color=blue];rankdir=UD \n");
+            pw.println(cadena);
+            pw.println("\n}");
+            fichero.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        } 
+        try {
+            String cmd = "dot -Tpng "+nombre+".dot -o AST.png"; //Comando de apagado en linux
+            Runtime.getRuntime().exec(cmd); 
+        } catch (IOException ioe) {
+                System.out.println (ioe);
+        }
     }
 
     //MÉTODO PARA LA POSICIÓN DEL CURSOR

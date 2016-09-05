@@ -16,9 +16,8 @@ public class Proyecto_Lienzo {
      */
     public static void main(String[] args) {
         LienzoEdit nuevo = new LienzoEdit();
-        nuevo.setSize(900, 700);
+        nuevo.setSize(900, 615);
         nuevo.setVisible(true);
-        nuevo.setLocationRelativeTo(null);
     }
     
 }

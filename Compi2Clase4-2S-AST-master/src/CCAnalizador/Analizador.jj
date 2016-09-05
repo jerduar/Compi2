@@ -2,7 +2,7 @@
 options {
 MULTI=true;
 STATIC = false;
-OUTPUT_DIRECTORY="C:\\Users\\Jordy Gonzalez\\Desktop\\AuxCompi\\Parte practica\\PruebasJavacc\\ASTJavaCC\\src\\CCAnalizador\\";
+OUTPUT_DIRECTORY="/home/jerduar/";
 }
 
 PARSER_BEGIN(Simple1)
