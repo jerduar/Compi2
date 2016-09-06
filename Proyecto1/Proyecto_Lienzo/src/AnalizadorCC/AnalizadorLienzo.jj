@@ -1,6 +1,5 @@
 
 options { 
-MULTI=true;
 STATIC = false;
 OUTPUT_DIRECTORY="/home/jerduar/COMPI2/Proyecto1/Proyecto_Lienzo/src/AnalizadorCC/";
 }
@@ -25,6 +24,12 @@ TOKEN : {<CADENA: "\"" (~["\""])* "\"">}
 TOKEN : {<CARACTER: "'" (~["'"])* "'">}
 TOKEN : {<SI : "si">}
 TOKEN : {<SINO: "sino">}
+TOKEN : {<COMPROBAR : "comprobar">}
+TOKEN : {<CASO : "caso">}
+TOKEN : {<SALIR : "salir">}
+TOKEN : {<DEFECTO : "defecto">}
+TOKEN : {<HACER : "hacer">}
+TOKEN : {<PARA : "para">}
 
 //PALABRAS RESERVADAS
 TOKEN:{
@@ -44,7 +49,7 @@ TOKEN:{
 |<TCARACTER : "caracter">
 |<CONSERVAR : "conservar">
 |<VOID : "void">
-
+|<MIENTRAS : "mientras">
 }
 
 //IDENTIFICADOR
@@ -133,7 +138,27 @@ nodo Sentencia():{nodo retorno; nodo aux = null;}
     }
 
     
-    | retorno = Asig() "$"{
+    |LOOKAHEAD(2) retorno = Asig() "$"{
+        return retorno;
+    }
+
+    | retorno = Si(){
+        return retorno;
+    }
+
+    | retorno = Comprobar(){
+        return retorno;
+    }
+
+    | retorno = inc_dec()"$"{
+        return retorno;
+    }
+
+    | retorno = hacer_mientras(){
+        return retorno;
+    }
+
+    | retorno = mientras(){
         return retorno;
     }
 }
@@ -548,9 +573,124 @@ nodo ListaParam():{nodo e1, e2; Token tok, tok2; nodo retorno = new nodo(); reto
 
 //SETENCIA IF
 
-nodo Si() : {Token tok,tok1,tok2; nodo e1,e2,e3;}
+nodo Si() : {Token tok,tok1,tok2; nodo e1,e2;}
 {
-    <SI> "(" ER1() ")" <ABRE> <CIERRE>{
-        
+    tok = <SI> "(" e1 = ER1() ")" tok1 = <ABRE> e2 = ListaSentencias() tok2 = <CIERRE>{
+        nodo retorno = new nodo();
+        retorno.setEtiqueta("SI");
+        retorno.AddHijos(tok.image);
+        retorno.AddHijos("(");
+        retorno.AddHijos(e1);
+        retorno.AddHijos(")");
+        retorno.AddHijos(tok1.image);
+        retorno.AddHijos(e2);
+        retorno.AddHijos(tok2.image);
     }
+    (tok = <SINO> tok1 = <ABRE> e1 = ListaSentencias() tok2 = <CIERRE>{
+        nodo aux = new nodo();
+        aux.setEtiqueta("SINO");
+        aux.AddHijos(tok.image);
+        aux.AddHijos(tok1.image);
+        aux.AddHijos(e1);
+        aux.AddHijos(tok2.image);
+        retorno.AddHijos(aux);
+    })?{return retorno;}
+}
+
+//SENTENCIA COMPROBAR
+
+nodo Comprobar():{nodo e1,e2,e4,e3,def;e3 = new nodo();def = null;e3.setEtiqueta("LISTACASOS"); Token tok, tok1, tok2, tok3,tok4;}
+{
+    tok = <COMPROBAR> "(" tok1 = <IDENTIFICADOR> ")" tok2 = <ABRE> 
+    (tok3 = <CASO> e1 = ER1() ":" e2 = ListaSentencias(){
+        nodo nuevo = new nodo();
+        nuevo.setEtiqueta("CASO");
+        nuevo.AddHijos(tok3.image);
+        nuevo.AddHijos(e1);
+        nuevo.AddHijos(e2);
+    } (tok4 = <SALIR>"$"{
+        nuevo.AddHijos(tok4.image);
+    })?{
+        e3.AddHijos(nuevo);
+    } )+
+    ( <DEFECTO> ":" e4 = ListaSentencias(){
+        def = new nodo();
+        def.setEtiqueta("DEFAULT");
+        def.AddHijos("defecto");
+        def.AddHijos(e4);
+    } (<SALIR>"$")?{
+        def.AddHijos("salir");
+    })?
+     tok3 = <CIERRE>
+    {
+        nodo retorno = new nodo();
+        retorno.setEtiqueta("COMPROBAR");
+        retorno.AddHijos(tok.image);
+        retorno.AddHijos(")");
+        retorno.AddHijos("IDENTFICADOR", tok1.image);
+        retorno.AddHijos(")");
+        retorno.AddHijos(tok2.image);
+        retorno.AddHijos(e3);
+        if(def != null){retorno.AddHijos(def);}
+        retorno.AddHijos(tok3.image);
+        return retorno;
+    }
+}
+
+//INCREMENTO/DECREMENTO
+nodo inc_dec():{nodo n2;Token tok;}
+{
+    tok = <IDENTIFICADOR> ("--"{
+        n2 = new nodo();
+        n2.setEtiqueta("DECR");
+        n2.AddHijos("IDENTIFICADOR",tok.image);
+    }
+    |"++"{
+        n2 = new nodo();
+        n2.setEtiqueta("INCR");
+        n2.AddHijos("IDENTIFICADOR",tok.image);
+    })
+    {return n2;}
+}
+
+//MIENTRAS
+
+nodo mientras() : {nodo e1,e2; Token tok1,tok2,tok3;}
+{
+    tok1 = <MIENTRAS> "(" e1 = EL1() ")" tok2 = <ABRE> e2 = ListaSentencias() tok3 = <CIERRE>{
+        nodo retorno = new nodo();
+        retorno.setEtiqueta("MIENTRAS");
+        retorno.AddHijos(tok1.image);
+        retorno.AddHijos("(");
+        retorno.AddHijos(e1);
+        retorno.AddHijos(")");
+        retorno.AddHijos(tok2.image);
+        retorno.AddHijos(e2);
+        retorno.AddHijos(tok3.image);
+        return retorno;
+    }
+}
+
+nodo hacer_mientras() : {nodo e1,e2;}
+{
+    <HACER> <ABRE> e1 = ListaSentencias() <CIERRE> <MIENTRAS> "(" e2 = EL1() ")" "$"{
+        nodo retorno = new nodo();
+        retorno.setEtiqueta("HACER_MIENTRAS");
+        retorno.AddHijos("hacer");
+        retorno.AddHijos("¿");
+        retorno.AddHijos(e1);
+        retorno.AddHijos("?");
+        retorno.AddHijos("mientras");
+        retorno.AddHijos("(");
+        retorno.AddHijos(e2);
+        retorno.AddHijos(")");
+        return retorno;
+    }
+}
+
+//SENTENCIA PARA
+
+nodo para() : {}
+{
+    
 }
