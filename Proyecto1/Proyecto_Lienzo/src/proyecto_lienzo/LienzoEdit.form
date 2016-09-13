@@ -276,6 +276,9 @@
       </SubComponents>
     </Container>
     <Container class="javax.swing.JTabbedPane" name="panel_tab">
+      <Properties>
+        <Property name="autoscrolls" type="boolean" value="true"/>
+      </Properties>
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
     </Container>

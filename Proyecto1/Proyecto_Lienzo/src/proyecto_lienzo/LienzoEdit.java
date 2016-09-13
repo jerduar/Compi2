@@ -1,11 +1,9 @@
 package proyecto_lienzo;
 
 import AnalizadorCC.ParseException;
-import AnalizadorCC.Simple1;
 import AnalizadorCC.Analizador_Lienzo;
 import AnalizadorCC.TokenMgrError;
 import AnalizadorCC.nodo;
-import java.awt.Component;
 import java.awt.Image;
 import java.io.BufferedReader;
 import java.io.File;
@@ -25,6 +23,9 @@ import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+//IMPORTANDO EL LIENZO
+import Lienzo.Lienzo;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -39,6 +40,8 @@ public class LienzoEdit extends javax.swing.JFrame {
     /**
      * Creates new form LienzoEdit
      */
+    
+    Lienzo lienzo;
     public LienzoEdit() {
         initComponents();
         setearIconoBotones();
@@ -47,6 +50,10 @@ public class LienzoEdit extends javax.swing.JFrame {
         jFileChooser1 = new JFileChooser();
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Archivos LZ", "lz");
         jFileChooser1.setFileFilter(filter);
+        
+        //INICIALIZANDO EL LIENZO
+        lienzo = new Lienzo();
+        lienzo.setVisible(true);
 
     }
 
@@ -171,6 +178,8 @@ public class LienzoEdit extends javax.swing.JFrame {
                     .addComponent(jLabel4)))
         );
 
+        panel_tab.setAutoscrolls(true);
+
         jMenu1.setText("Archivo");
 
         jMenuItem1.setText("Nuevo Archivo");
@@ -276,14 +285,28 @@ public class LienzoEdit extends javax.swing.JFrame {
 
     private void bt_playActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_playActionPerformed
         try {
-            JTextArea text = (JTextArea) panel_tab.getSelectedComponent();
-
+            TextEdit t = (TextEdit) panel_tab.getSelectedComponent();
+            JTextArea text = t.getNueva();
+            
             if (text != null) {
                 Analizador_Lienzo analizador = new Analizador_Lienzo(new StringReader(text.getText()));
                 nodo raiz = analizador.INICIO();
                 Graficar(recorrido(raiz,0),"MiAST"); //Es necesario tener instalado graphviz para llamar al metodo
-                //Ejecutar eje = new Ejecutar();
-                //Integer Resulta = eje.Recorrido(raiz);
+                
+                raiz = raiz.hijos.get(0).hijos.get(1);
+                
+                if(raiz.hijos.size() == 5){
+                    raiz = raiz.hijos.get(3);
+                }else{
+                    raiz = raiz.hijos.get(1);
+                }
+                Ejecutar eje = new Ejecutar();
+                raiz = eje.Busqueda_main(raiz);
+                
+                if(raiz != null){
+                    //eje.Recorrido(principal);
+                    //System.out.println(raiz.getEtiqueta());
+                }
                 //System.out.println("El resultado es:" + Resulta.toString());
             }
         } catch (ParseException | TokenMgrError ex) {
@@ -296,8 +319,8 @@ public class LienzoEdit extends javax.swing.JFrame {
     }//GEN-LAST:event_bt_debbugActionPerformed
 
     private void nueva_pestaña_menuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nueva_pestaña_menuItemActionPerformed
-        Component comp = panel_tab.add("Nuevo", new JTextArea());
-        PosicionCursor((JTextArea) comp);
+        TextEdit comp = (TextEdit) panel_tab.add("Nuevo", new TextEdit(""));
+        PosicionCursor(comp.getNueva());
     }//GEN-LAST:event_nueva_pestaña_menuItemActionPerformed
 
     private void Abrir_menuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Abrir_menuItemActionPerformed
@@ -340,10 +363,10 @@ public class LienzoEdit extends javax.swing.JFrame {
                     texto += aux + "\n";
                 }
 
-                JTextArea nueva = new JTextArea(texto);
+                TextEdit nueva = new TextEdit(texto);
                 panel_tab.add(archivo.getName(), nueva);
                 panel_tab.getSelectedComponent().setName(archivo.getAbsolutePath());
-                PosicionCursor(nueva);
+                PosicionCursor(nueva.getNueva());
             }
         }
     }
@@ -352,7 +375,7 @@ public class LienzoEdit extends javax.swing.JFrame {
     private void Guardar() throws IOException {
         if (panel_tab.getSelectedComponent() != null) {
             String path = panel_tab.getSelectedComponent().getName();
-            String texto = ((JTextArea) panel_tab.getSelectedComponent()).getText();
+            String texto = ((TextEdit) panel_tab.getSelectedComponent()).getNueva().getText();
             try (FileWriter file = new FileWriter(path)) {
                 file.write(texto);
             }
@@ -480,27 +503,21 @@ public class LienzoEdit extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Metal".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(LienzoEdit.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(LienzoEdit.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(LienzoEdit.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(LienzoEdit.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        
+        //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new LienzoEdit().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new LienzoEdit().setVisible(true);
         });
     }
 

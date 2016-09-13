@@ -21,37 +21,65 @@ public interface Analizador_LienzoConstants {
   /** RegularExpression Id. */
   int CARACTER = 9;
   /** RegularExpression Id. */
-  int LIENZO = 10;
+  int SI = 10;
   /** RegularExpression Id. */
-  int CIERRE = 11;
+  int SINO = 11;
   /** RegularExpression Id. */
-  int ABRE = 12;
+  int COMPROBAR = 12;
   /** RegularExpression Id. */
-  int PUBLICO = 13;
+  int CASO = 13;
   /** RegularExpression Id. */
-  int PRIVADO = 14;
+  int SALIR = 14;
   /** RegularExpression Id. */
-  int PROTEGIDO = 15;
+  int DEFECTO = 15;
   /** RegularExpression Id. */
-  int EXTIENDE = 16;
+  int HACER = 16;
   /** RegularExpression Id. */
-  int VAR = 17;
+  int PARA = 17;
   /** RegularExpression Id. */
-  int TENTERO = 18;
+  int LIENZO = 18;
   /** RegularExpression Id. */
-  int TCADENA = 19;
+  int CIERRE = 19;
   /** RegularExpression Id. */
-  int TBOOLEAN = 20;
+  int ABRE = 20;
   /** RegularExpression Id. */
-  int TDOBLE = 21;
+  int PUBLICO = 21;
   /** RegularExpression Id. */
-  int TCARACTER = 22;
+  int PRIVADO = 22;
   /** RegularExpression Id. */
-  int CONSERVAR = 23;
+  int PROTEGIDO = 23;
   /** RegularExpression Id. */
-  int VOID = 24;
+  int EXTIENDE = 24;
   /** RegularExpression Id. */
-  int IDENTIFICADOR = 25;
+  int VAR = 25;
+  /** RegularExpression Id. */
+  int TENTERO = 26;
+  /** RegularExpression Id. */
+  int TCADENA = 27;
+  /** RegularExpression Id. */
+  int TBOOLEAN = 28;
+  /** RegularExpression Id. */
+  int TDOBLE = 29;
+  /** RegularExpression Id. */
+  int TCARACTER = 30;
+  /** RegularExpression Id. */
+  int CONSERVAR = 31;
+  /** RegularExpression Id. */
+  int VOID = 32;
+  /** RegularExpression Id. */
+  int MIENTRAS = 33;
+  /** RegularExpression Id. */
+  int CONTINUAR = 34;
+  /** RegularExpression Id. */
+  int PRINCIPAL = 35;
+  /** RegularExpression Id. */
+  int PINTARS = 36;
+  /** RegularExpression Id. */
+  int PINTAR_P = 37;
+  /** RegularExpression Id. */
+  int PINTAR_OR = 38;
+  /** RegularExpression Id. */
+  int IDENTIFICADOR = 39;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -68,6 +96,14 @@ public interface Analizador_LienzoConstants {
     "<DECIMAL>",
     "<CADENA>",
     "<CARACTER>",
+    "\"si\"",
+    "\"sino\"",
+    "\"comprobar\"",
+    "\"caso\"",
+    "\"salir\"",
+    "\"defecto\"",
+    "\"hacer\"",
+    "\"para\"",
     "\"Lienzo\"",
     "\"?\"",
     "\"\\u00bf\"",
@@ -78,11 +114,17 @@ public interface Analizador_LienzoConstants {
     "\"var\"",
     "\"entero\"",
     "\"cadena\"",
-    "\"boolean\"",
+    "\"booleano\"",
     "\"doble\"",
     "\"caracter\"",
     "\"conservar\"",
     "\"void\"",
+    "\"mientras\"",
+    "\"Continuar\"",
+    "\"Principal\"",
+    "\"Pintar_S\"",
+    "\"Pintar_P\"",
+    "\"Pintar_OR\"",
     "<IDENTIFICADOR>",
     "\"$\"",
     "\"[\"",
@@ -110,6 +152,10 @@ public interface Analizador_LienzoConstants {
     "\"&|\"",
     "\"&&\"",
     "\"!&&\"",
+    "\":\"",
+    "\"--\"",
+    "\"++\"",
+    "\";\"",
   };
 
 }
