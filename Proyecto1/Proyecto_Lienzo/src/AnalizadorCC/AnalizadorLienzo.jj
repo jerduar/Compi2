@@ -18,10 +18,12 @@ PARSER_END(Analizador_Lienzo)
 
 SKIP: {" "|"\n"|"\t"|"\r"}
 TOKEN: {<#DIGIT: ["0"-"9"]>}
-TOKEN: {<ENTERO: (["0"-"9"])+>}
-TOKEN: {<DECIMAL:(["0"-"9"])+(".")(["0"-"9"])+>}
+TOKEN: {<ENTERO: ("-")?(["0"-"9"])+>}
+TOKEN: {<DECIMAL:("-")?(["0"-"9"])+(".")(["0"-"9"])+>}
 TOKEN : {<CADENA: "\"" (~["\""])* "\"">}
-TOKEN : {<CARACTER: "'" (~["'"])* "'">}
+TOKEN : {<CARACTER: "'" (~["'"] | "^n" | "^t" | "^^")? "'">}
+TOKEN : {<FALSE : "false">}
+TOKEN : {<TRUE : "true">}
 TOKEN : {<SI : "si">}
 TOKEN : {<SINO: "sino">}
 TOKEN : {<COMPROBAR : "comprobar">}
@@ -31,9 +33,9 @@ TOKEN : {<DEFECTO : "defecto">}
 TOKEN : {<HACER : "hacer">}
 TOKEN : {<PARA : "para">}
 
+
 //PALABRAS RESERVADAS
 TOKEN:{
-
 <LIENZO : "Lienzo">
 |<CIERRE : "?">
 |<ABRE : "¿">
@@ -55,10 +57,15 @@ TOKEN:{
 |<PINTARS : "Pintar_S">
 |<PINTAR_P : "Pintar_P">
 |<PINTAR_OR : "Pintar_OR">
+|<ARREGLO : "arreglo">
+|<RETORNO : "return">
+|<IGUAL : "=">
+|<LLAVEA : "[">
+|<LLAVEC : "]">
 }
 
 //IDENTIFICADOR
-TOKEN : {<IDENTIFICADOR: ["a"-"z","A"-"Z"](["a"-"z","A"-"Z"]|<DIGIT>)*>}
+TOKEN : {<IDENTIFICADOR: (["a"-"z","A"-"Z"]|"_")(["a"-"z","A"-"Z"]|"_"|<DIGIT>)*>}
 
 nodo INICIO(): {nodo e1;}
 {
@@ -77,13 +84,14 @@ nodo S():{nodo e1; nodo e2, retorno = new nodo(); Token tok1,tok2,tok3,tok4,tok5
                 retorno.setEtiqueta("S");
                 retorno.AddHijos(e1);
                 retorno.AddHijos(tok1.image);
-                retorno.AddHijos(tok2.image);
+                retorno.AddHijos("IDENTIFICADOR",tok2.image);
                 retorno.AddHijos(e2);
                 return retorno;
             }
        |tok1 = <LIENZO> tok2 = <IDENTIFICADOR> e2 = P(){
                 retorno.setEtiqueta("S");
                 retorno.AddHijos(tok1.image);
+                retorno.AddHijos("IDENTIFICADOR",tok2.image);
                 retorno.AddHijos(e2);
                 return retorno;
             }
@@ -125,18 +133,27 @@ nodo ListaSentencias(): {nodo retorno = new nodo(); nodo n1,n2; retorno.setEtiqu
 
 
 
-nodo Sentencia():{nodo retorno; nodo aux = null;}
+nodo Sentencia():{nodo retorno,a=null; nodo aux = null; nodo aux2 = null; Token tok;}
 {
-    LOOKAHEAD(2) (<CONSERVAR>{aux = new nodo(); aux.setEtiqueta("CONSERVAR");})?(
+    LOOKAHEAD(2) (<CONSERVAR>{aux = new nodo(); aux.setEtiqueta("CONSERVAR");})?
+    (a = Ambito())?
+    (
+    
     retorno = DecAsig() "$"{
+    if(a!=null)retorno.hijos.add(0,a);
+    if(aux2!=null)retorno.hijos.add(0,aux2);
     if(aux!= null)retorno.hijos.add(0,aux);
     }
     
     |retorno = Funcion(){
+    if(a!=null)retorno.hijos.add(0,a);
+    if(aux2!=null)retorno.hijos.add(0,aux2);
     if(aux!=null)retorno.hijos.add(0,aux);
     }
 
     |retorno = Procedimiento(){
+    if(a!=null)retorno.hijos.add(0,a);
+    if(aux2!=null)retorno.hijos.add(0,aux2);
     if(aux != null)retorno.hijos.add(0,aux);
     }
 
@@ -144,9 +161,22 @@ nodo Sentencia():{nodo retorno; nodo aux = null;}
         return retorno;
     }
 
-    
     |LOOKAHEAD(2) retorno = Asig() "$"{
         return retorno;
+    }
+
+    |LOOKAHEAD(2) aux2 = F() "+=" aux = F(){
+        retorno = new nodo();
+        retorno.setEtiqueta("MASIGUAL");
+        retorno.AddHijos(aux2);
+        retorno.AddHijos(aux);
+    }
+
+    |LOOKAHEAD(2) aux2 = F() "-=" aux = F(){
+        retorno = new nodo();
+        retorno.setEtiqueta("MENOSIGUAL");
+        retorno.AddHijos(aux2);
+        retorno.AddHijos(aux);
     }
 
     | retorno = Si(){
@@ -179,19 +209,23 @@ nodo Sentencia():{nodo retorno; nodo aux = null;}
 
 }
 
-nodo Sentencia2():{nodo retorno; nodo aux = null;}
+nodo Sentencia2():{nodo retorno; nodo aux = null; Token tok;}
 {
-    LOOKAHEAD(2) (<CONSERVAR>{aux = new nodo(); aux.setEtiqueta("CONSERVAR");})?(
+    LOOKAHEAD(3) retorno = llamadaFP()"$"{
+        return retorno;
+    }
+    |LOOKAHEAD(2) (<CONSERVAR>{aux = new nodo(); aux.setEtiqueta("CONSERVAR");})?(
     retorno = DecAsig() "$"{
     if(aux!= null)retorno.hijos.add(0,aux);
     }){
         return retorno;
     }
 
-    
-    |LOOKAHEAD(2) retorno = Asig() "$"{
+    |LOOKAHEAD(3) retorno = Asig() "$"{
         return retorno;
     }
+
+    |LOOKAHEAD(2) retorno = menos_mas()"$"{return retorno;}
 
     | retorno = Si(){
         return retorno;
@@ -217,10 +251,6 @@ nodo Sentencia2():{nodo retorno; nodo aux = null;}
         return retorno;
     }
 
-    | retorno = llamadaFP()"$"{
-        return retorno;
-    }
-
     | <CONTINUAR> "$" {
        retorno = new nodo();
        retorno.setEtiqueta("CONTINUAR");
@@ -234,6 +264,32 @@ nodo Sentencia2():{nodo retorno; nodo aux = null;}
         return retorno;
     }
     | retorno = POR() "$"{
+        return retorno;
+    }
+
+    | tok = <RETORNO> aux = EL1() "$"{
+        retorno = new nodo();
+        retorno.setEtiqueta("RETORNO");
+        retorno.AddHijos(aux);
+        return retorno;
+    }
+}
+
+nodo menos_mas():{nodo retorno,aux,aux2; Token tok;}
+{
+    LOOKAHEAD(2) aux2 = F() "+=" aux = EL1(){
+        retorno = new nodo();
+        retorno.setEtiqueta("MASIGUAL");
+        retorno.AddHijos(aux2);
+        retorno.AddHijos(aux);
+        return retorno;
+    }
+
+    |LOOKAHEAD(2) aux2 = F() "-=" aux = EL1(){
+        retorno = new nodo();
+        retorno.setEtiqueta("MENOSIGUAL");
+        retorno.AddHijos(aux2);
+        retorno.AddHijos(aux);
         return retorno;
     }
 }
@@ -251,39 +307,59 @@ nodo ListaSentencias2(): {nodo retorno = new nodo(); nodo n1,n2; retorno.setEtiq
 nodo Dimensiones():{nodo retorno = new nodo();nodo e1; retorno.setEtiqueta("DIMENSIONES"); Token tok, tok1;}
 {
     
-    ("["  e1 = EA1() "]"{
+    <LLAVEA>  e1 = EA1() <LLAVEC>{
+        nodo u = new nodo();
+        u.setEtiqueta("DIM");
+        u.AddHijos("[");
+        u.AddHijos(e1);
+        u.AddHijos("]");
+        retorno.AddHijos(u);
+    }
+        (<LLAVEA>  e1 = EA1() <LLAVEC>{
         nodo aux = new nodo();
         aux.setEtiqueta("DIM");
         aux.AddHijos("[");
         aux.AddHijos(e1);
         aux.AddHijos("]");
         retorno.AddHijos(aux);
-    })+
+    })*
     {return retorno;}
     
 }
 
 nodo DecAsig() : {nodo retorno = new nodo(); Token tok, tok1;nodo e1,e2,e3; e3 = null;}
 {
-        tok = <VAR> e2 = Tipo()  e1 = ListaIds(){
+        LOOKAHEAD(3) tok = <VAR> e2 = Tipo()  e1 = ListaIds(){
             retorno.AddHijos(tok.image);
             retorno.AddHijos(e2);
             retorno.AddHijos(e1);
+            retorno.setColumna(tok.beginColumn);//si no obtiene la posicion exacta intentar con e2.next.beginColumn
+            retorno.setLinea(tok.beginLine);    //si no obtiene la posicion exacta intentar con e2.next.beginLine
             retorno.setEtiqueta("DEC");
-        }(
-        ( e3 = Dimensiones(){
-            retorno.setEtiqueta("DECA");
-            retorno.AddHijos(e3);
-        } ("=" "{" e3 = ValArreglo() "}" {
-            retorno.AddHijos(e3);
-            retorno.setEtiqueta("DECAGASIGA");
-        })?
-        )
-
-        |("=" e3 = EL1(){retorno.AddHijos("=");retorno.AddHijos(e3);retorno.setEtiqueta("DECASIG");})
-        )?
+        }(("=" e3 = EL1(){retorno.AddHijos("=");retorno.AddHijos(e3);retorno.setEtiqueta("DECASIG");}))?
         {return retorno;}
-    
+
+        | tok = <VAR> e2 = Tipo() tok1 = <ARREGLO>  e1 = ListaIds() e3 = Dimensiones(){
+            retorno.AddHijos(tok.image);
+            retorno.AddHijos(e2);
+            retorno.AddHijos(tok1.image);
+            retorno.setColumna(tok.beginColumn);//si no obtiene la posicion exacta intentar con e2.next.beginColumn
+            retorno.setLinea(tok.beginLine);    //si no obtiene la posicion exacta intentar con e2.next.beginLine
+            retorno.AddHijos(e1);
+            retorno.AddHijos(e3);
+            retorno.setEtiqueta("DECARRAY");
+        }(LOOKAHEAD(2) "=" "{" e3 = ValArreglo() "}" {
+            retorno.AddHijos(e3);
+            retorno.setEtiqueta("DECASIGA");
+        }
+
+        | "=" e3 =  llamadaFP(){retorno.AddHijos(e3); retorno.setEtiqueta("DECASIGA");} 
+
+        | e3 = F(){retorno.AddHijos(e3); retorno.setEtiqueta("DECASIGA");})?
+        {
+         retorno.setColumna(tok.beginColumn);//si no obtiene la posicion exacta intentar con e2.next.beginColumn
+         retorno.setLinea(tok.beginLine);
+         return retorno;}    //si no obtiene la posicion exacta intentar con e2.next.beginLine
 }
 
 nodo ValArreglo(): {nodo e1, e2,retorno;retorno = new nodo();retorno.setEtiqueta("LISTAVAL"); e2 = null;}
@@ -327,54 +403,128 @@ nodo Tipo() : {nodo retorno = new nodo(); retorno.setEtiqueta("TIPO"); Token tok
     }
 }
 
-nodo Asig():{nodo e1; Token tok;}
+nodo Asig():{nodo e1,e2 = null; nodo retorno; Token tok;}
 {
-    tok = <IDENTIFICADOR> "=" e1 = EA1(){
+
+        tok = <IDENTIFICADOR> (
+
+        e2 = Dimensiones() <IGUAL> e1 = EL1(){
         nodo aux = new nodo();
         aux.setEtiqueta("ASIG");
-        
         nodo aux2 = new nodo();
-        aux2.setEtiqueta("IDENTIFICADOR");
-        aux2.setValor(tok.image);
+        aux2.AddHijos("IDENTIFICADOR",tok.image);
+        aux2.setEtiqueta("POSARRAY");
+        if(e2!=null){aux2.AddHijos(e2); aux.setEtiqueta("ASIGARRAY");}
+        aux.setColumna(tok.beginColumn);//si no obtiene la posicion exacta intentar con e2.next.beginColumn
+        aux.setLinea(tok.beginLine);    //si no obtiene la posicion exacta intentar con e2.next.beginLine
+        aux2.setColumna(tok.beginColumn);//si no obtiene la posicion exacta intentar con e2.next.beginColumn
+        aux2.setLinea(tok.beginLine);    //si no obtiene la posicion exacta intentar con e2.next.beginLine
         aux.AddHijos(aux2);
         aux.AddHijos("=");
         aux.AddHijos(e1);
+        retorno = aux;
+        }
 
-        return aux;
-    }
+        |<IGUAL> e1 = EL1(){
+        nodo auxx = new nodo();
+        auxx.setEtiqueta("ASIG");
+        nodo aux22 = new nodo();
+        aux22.setEtiqueta("IDENTIFICADOR");
+        aux22.setValor(tok.image);
+        auxx.AddHijos(aux22);
+        auxx.AddHijos("=");
+        auxx.AddHijos(e1);
+        retorno = auxx;
+        })    
+        {return retorno;}
+    
+
+    /*|    tok = <IDENTIFICADOR> <IGUAL> e2 = EL1(){
+        nodo n1 = new nodo();
+        nodo n2 = new nodo();
+        n1.setEtiqueta("ASIG");
+        n2.setEtiqueta("IDENTIFICADOR");
+        n2.setValor(tok.image);
+        n1.AddHijos(n2);
+        n1.AddHijos("=");
+        n1.AddHijos(e2);
+
+        return n1;
+    }*/
+
 }
 
-nodo F():{nodo e1 = new nodo(); e1.setEtiqueta("F"); Token tok;}
+nodo F():{nodo e1 = new nodo(); nodo aux2; e1.setEtiqueta("F"); Token tok;}
 {
     tok = <CADENA>{
         String aux = tok.image;
         aux = aux.replaceAll("\"","");
+        e1.setColumna(tok.beginColumn);//si no obtiene la posicion exacta intentar con e2.next.beginColumn
+        e1.setLinea(tok.beginLine);    //si no obtiene la posicion exacta intentar con e2.next.beginLine
         e1.AddHijos("CADENA",aux);
         return e1;
     }
     | tok = <ENTERO>{
+        e1.setColumna(tok.beginColumn);//si no obtiene la posicion exacta intentar con e2.next.beginColumn
+        e1.setLinea(tok.beginLine);    //si no obtiene la posicion exacta intentar con e2.next.beginLine
         e1.AddHijos("ENTERO",tok.image);
         return e1;
     }
     | tok = <DECIMAL>{
-        e1.AddHijos("DECIMAL",tok.image);
+        e1.setColumna(tok.beginColumn);//si no obtiene la posicion exacta intentar con e2.next.beginColumn
+        e1.setLinea(tok.beginLine);    //si no obtiene la posicion exacta intentar con e2.next.beginLine
+        e1.AddHijos("DOBLE",tok.image);
         return e1;
     }
     | tok = <CARACTER>{
+        e1.setColumna(tok.beginColumn);//si no obtiene la posicion exacta intentar con e2.next.beginColumn
+        e1.setLinea(tok.beginLine);    //si no obtiene la posicion exacta intentar con e2.next.beginLine
         e1.AddHijos("CARACTER",tok.image);
         return e1;
     }
-    |LOOKAHEAD(2) e1 = llamadaFP(){
-        return e1;
-    }
-    | tok = <IDENTIFICADOR>{
-        e1.AddHijos("IDENTIFICADOR",tok.image);
-        return e1;
-    }
-    | "(" e1 = EA1() ")"{
+    |LOOKAHEAD(2) aux2 = llamadaFP(){
+        e1.AddHijos(aux2);
         return e1;
     }
 
+    /*|LOOKAHEAD(5) tok = <IDENTIFICADOR> e1 = Dimensiones(){
+        nodo n = new nodo();
+        n.setEtiqueta("POSARRAY");
+        
+        nodo n2 = new nodo();
+        n2.setEtiqueta(tok.image);
+        n2.setValor(tok.image);
+
+        n.AddHijos(n2);
+        n.AddHijos(e1);
+        return n;
+    }*/
+    
+    |tok = <IDENTIFICADOR>{
+        nodo f = new nodo();f.setEtiqueta("IDENTIFICADOR");f.setValor(tok.image);
+        e1.setColumna(tok.beginColumn);//si no obtiene la posicion exacta intentar con e2.next.beginColumn
+        e1.setLinea(tok.beginLine);    //si no obtiene la posicion exacta intentar con e2.next.beginLine
+    }(aux2 = Dimensiones(){
+        nodo r = (nodo)f;
+        f = new nodo();f.setEtiqueta("POSARRAY");
+        f.AddHijos(r); f.AddHijos(aux2);
+    })?{e1.AddHijos(f);return e1;}
+    
+    | "(" e1 = EA1() ")"{
+        return e1;
+    }
+    | tok = <TRUE>{
+        e1.setColumna(tok.beginColumn);//si no obtiene la posicion exacta intentar con e2.next.beginColumn
+        e1.setLinea(tok.beginLine);    //si no obtiene la posicion exacta intentar con e2.next.beginLine
+        e1.AddHijos("BOOLEANO",tok.image);
+        return e1;
+    }
+    | tok = <FALSE>{
+        e1.AddHijos("BOOLEANO",tok.image);
+        e1.setColumna(tok.beginColumn);//si no obtiene la posicion exacta intentar con e2.next.beginColumn
+        e1.setLinea(tok.beginLine);    //si no obtiene la posicion exacta intentar con e2.next.beginLine
+        return e1;
+    }
 
 }
 
@@ -409,9 +559,12 @@ nodo Ambito() : {Token e1; Token e2; Token e3; }
 
 nodo ListaIds(): {Token tok; nodo n1 = new nodo(); n1.setEtiqueta("ListaIds"); Token tok2;}
 {
-    tok2=<IDENTIFICADOR> {nodo n2 = new nodo(); n2.setValor(tok2.image);n2.setEtiqueta("IDENTIFICADOR");n1.AddHijos(n2);}( "," tok=<IDENTIFICADOR>{
+    tok2=<IDENTIFICADOR> {nodo n2 = new nodo(); n2.setValor(tok2.image);n2.setEtiqueta("IDENTIFICADOR");n1.AddHijos(n2);n2.setColumna(tok2.beginColumn);
+        n2.setLinea(tok2.beginLine);}( "," tok=<IDENTIFICADOR>{
         nodo nuevo = new nodo();
         nuevo.setValor(tok.image);
+        nuevo.setColumna(tok2.beginColumn);
+        nuevo.setLinea(tok2.beginLine);
         nuevo.setEtiqueta("IDENTIFICADOR");
         n1.AddHijos(nuevo);})*
     {return n1;}
@@ -580,8 +733,8 @@ nodo EL1():{nodo e1,e2;}
 
 nodo EL2(): {nodo e1,e2;}
 {
-    e1 = ER1() (
-    "&&" e2 = ER1(){
+    e1 = EL3() (
+    "&&" e2 = EL3(){
         nodo nuevo = new nodo();
         nuevo.setEtiqueta("EL2");
         nuevo.AddHijos(e1);
@@ -589,7 +742,7 @@ nodo EL2(): {nodo e1,e2;}
         nuevo.AddHijos(e2);
         e1 = (nodo)nuevo;
     }
-    |"!&&" e2 = ER1(){
+    |"!&&" e2 = EL3(){
         nodo nuevo1 = new nodo();
         nuevo1.setEtiqueta("EL2");
         nuevo1.AddHijos(e1);
@@ -599,6 +752,20 @@ nodo EL2(): {nodo e1,e2;}
     }
     )*
     {return e1;}
+}
+
+nodo EL3() : {nodo e1;}
+{
+    "!" e1 = ER1() {
+        nodo nuevo = new nodo();
+        nuevo.setEtiqueta("EL3");
+        nuevo.AddHijos("!");
+        nuevo.AddHijos(e1);
+        return nuevo;
+    }
+    |LOOKAHEAD(3) e1 = ER1(){return e1;}
+    |LOOKAHEAD(3) "(" e1 = EL1() ")" {return e1;}
+    | e1 = EA1(){return e1;}
 }
 
 
@@ -663,34 +830,31 @@ nodo ListaParam():{nodo e1, e2; Token tok, tok2; nodo retorno = new nodo(); reto
 
 nodo Si() : {Token tok,tok1,tok2; nodo e1,e2;}
 {
-    tok = <SI> "(" e1 = ER1() ")" tok1 = <ABRE> e2 = ListaSentencias() tok2 = <CIERRE>{
+    tok = <SI> "(" e1 = ER1() ")" tok1 = <ABRE> e2 = ListaSentencias2() tok2 = <CIERRE>{
         nodo retorno = new nodo();
         retorno.setEtiqueta("SI");
         retorno.AddHijos(tok.image);
         retorno.AddHijos("(");
         retorno.AddHijos(e1);
         retorno.AddHijos(")");
+        retorno.setColumna(tok.beginColumn);//si no obtiene la posicion exacta intentar con e2.next.beginColumn
+        retorno.setLinea(tok.beginLine);    //si no obtiene la posicion exacta intentar con e2.next.beginLine
         retorno.AddHijos(tok1.image);
         retorno.AddHijos(e2);
         retorno.AddHijos(tok2.image);
     }
-    (tok = <SINO> tok1 = <ABRE> e1 = ListaSentencias() tok2 = <CIERRE>{
-        nodo aux = new nodo();
-        aux.setEtiqueta("SINO");
-        aux.AddHijos(tok.image);
-        aux.AddHijos(tok1.image);
-        aux.AddHijos(e1);
-        aux.AddHijos(tok2.image);
-        retorno.AddHijos(aux);
+    (tok = <SINO> tok1 = <ABRE> e1 = ListaSentencias2() tok2 = <CIERRE>{
+        retorno.setEtiqueta("SINO");
+        retorno.AddHijos(e1);
     })?{return retorno;}
 }
 
 //SENTENCIA COMPROBAR
 
-nodo Comprobar():{nodo e1,e2,e4,e3,def;e3 = new nodo();def = null;e3.setEtiqueta("LISTACASOS"); Token tok, tok1, tok2, tok3,tok4;}
+nodo Comprobar():{nodo e1,e2,e4,e3,def,e; e3 = new nodo();def = null;e3.setEtiqueta("LISTACASOS"); Token tok, tok1, tok2, tok3,tok4;}
 {
-    tok = <COMPROBAR> "(" tok1 = <IDENTIFICADOR> ")" tok2 = <ABRE> 
-    (tok3 = <CASO> e1 = ER1() ":" e2 = ListaSentencias(){
+    tok = <COMPROBAR> "(" e = F() ")" tok2 = <ABRE> 
+    (tok3 = <CASO> e1 = EL1() ":" e2 = ListaSentencias2(){
         nodo nuevo = new nodo();
         nuevo.setEtiqueta("CASO");
         nuevo.AddHijos(tok3.image);
@@ -701,22 +865,19 @@ nodo Comprobar():{nodo e1,e2,e4,e3,def;e3 = new nodo();def = null;e3.setEtiqueta
     })?{
         e3.AddHijos(nuevo);
     } )+
-    ( <DEFECTO> ":" e4 = ListaSentencias(){
+    ( <DEFECTO> ":" e4 = ListaSentencias2(){
         def = new nodo();
         def.setEtiqueta("DEFAULT");
-        def.AddHijos("defecto");
         def.AddHijos(e4);
-    } (<SALIR>"$")?{
+    } (<SALIR>"$"{
         def.AddHijos("salir");
-    })?
+    })?)?
      tok3 = <CIERRE>
     {
         nodo retorno = new nodo();
         retorno.setEtiqueta("COMPROBAR");
         retorno.AddHijos(tok.image);
-        retorno.AddHijos(")");
-        retorno.AddHijos("IDENTFICADOR", tok1.image);
-        retorno.AddHijos(")");
+        retorno.AddHijos(e);
         retorno.AddHijos(tok2.image);
         retorno.AddHijos(e3);
         if(def != null){retorno.AddHijos(def);}
@@ -726,17 +887,17 @@ nodo Comprobar():{nodo e1,e2,e4,e3,def;e3 = new nodo();def = null;e3.setEtiqueta
 }
 
 //INCREMENTO/DECREMENTO
-nodo inc_dec():{nodo n2;Token tok;}
+nodo inc_dec():{nodo n2,n1;Token tok;}
 {
-    tok = <IDENTIFICADOR> ("--"{
+    n1 = F() ("--"{
         n2 = new nodo();
         n2.setEtiqueta("DECR");
-        n2.AddHijos("IDENTIFICADOR",tok.image);
+        n2.AddHijos(n1);
     }
     |"++"{
         n2 = new nodo();
         n2.setEtiqueta("INCR");
-        n2.AddHijos("IDENTIFICADOR",tok.image);
+        n2.AddHijos(n1);
     })
     {return n2;}
 }
@@ -750,6 +911,8 @@ nodo mientras() : {nodo e1,e2; Token tok1,tok2,tok3;}
         retorno.setEtiqueta("MIENTRAS");
         retorno.AddHijos(tok1.image);
         retorno.AddHijos("(");
+        retorno.setColumna(tok1.beginColumn);//si no obtiene la posicion exacta intentar con e2.next.beginColumn
+        retorno.setLinea(tok1.beginLine);    //si no obtiene la posicion exacta intentar con e2.next.beginLine
         retorno.AddHijos(e1);
         retorno.AddHijos(")");
         retorno.AddHijos(tok2.image);
@@ -759,15 +922,17 @@ nodo mientras() : {nodo e1,e2; Token tok1,tok2,tok3;}
     }
 }
 
-nodo hacer_mientras() : {nodo e1,e2;}
+nodo hacer_mientras() : {nodo e1,e2;Token tok;}
 {
-    <HACER> <ABRE> e1 = ListaSentencias2() <CIERRE> <MIENTRAS> "(" e2 = EL1() ")" "$"{
+    tok = <HACER> <ABRE> e1 = ListaSentencias2() <CIERRE> <MIENTRAS> "(" e2 = EL1() ")" "$"{
         nodo retorno = new nodo();
         retorno.setEtiqueta("HACER_MIENTRAS");
         retorno.AddHijos("hacer");
         retorno.AddHijos("¿");
         retorno.AddHijos(e1);
         retorno.AddHijos("?");
+        retorno.setColumna(tok.beginColumn);//si no obtiene la posicion exacta intentar con e2.next.beginColumn
+        retorno.setLinea(tok.beginLine);    //si no obtiene la posicion exacta intentar con e2.next.beginLine
         retorno.AddHijos("mientras");
         retorno.AddHijos("(");
         retorno.AddHijos(e2);
@@ -778,13 +943,17 @@ nodo hacer_mientras() : {nodo e1,e2;}
 
 //SENTENCIA PARA
 
-nodo para() : {nodo e1,e2,e3,e4;}
+nodo para() : {nodo e1,e2,e3,e4; Token tok;}
 {
-    <PARA> "(" (e1 = DecAsig() | e1 = Asig()) ";"
-    e3 = EL1() ";" ( LOOKAHEAD(2) e2 = inc_dec() | e2 = Asig()) ")" <ABRE> e4 = ListaSentencias2() <CIERRE>
+    tok = <PARA> "(" (e1 = DecAsig() | e1 = Asig()) ";"
+    e3 = EL1() ";" ( LOOKAHEAD(2) e2 = inc_dec() 
+                    | LOOKAHEAD(2) e2 = Asig() 
+                    | e2 = menos_mas()) ")" <ABRE> e4 = ListaSentencias2() <CIERRE>
     {
         nodo retorno = new nodo();
         retorno.setEtiqueta("PARA");
+        retorno.setColumna(tok.beginColumn);//si no obtiene la posicion exacta intentar con e2.next.beginColumn
+        retorno.setLinea(tok.beginLine);    //si no obtiene la posicion exacta intentar con e2.next.beginLine
         retorno.AddHijos(e1);
         retorno.AddHijos(e3);
         retorno.AddHijos(e2);
@@ -802,6 +971,8 @@ nodo llamadaFP():{nodo e2 = null; Token tok;}
         retorno.setEtiqueta("LLAMADO");
         retorno.AddHijos("IDENTIFICADOR",tok.image);
         if(e2 != null){retorno.AddHijos(e2);}
+        retorno.setColumna(tok.beginColumn);//si no obtiene la posicion exacta intentar con e2.next.beginColumn
+        retorno.setLinea(tok.beginLine);    //si no obtiene la posicion exacta intentar con e2.next.beginLine
         return retorno;
     }
 }
@@ -816,25 +987,30 @@ nodo LP():{nodo e1; nodo retorno = new nodo(); retorno.setEtiqueta("LP");}
 
 //FUNCION PINTAR CADENA
 
-nodo PS():{nodo e1,e2,e3;}
+nodo PS():{nodo e1,e2,e3,e4; Token tok;}
 {
-    <PINTARS> "(" e1 = EL1() "," e2 = EL1() "," e3 = EL1() ")"
+    tok = <PINTARS> "(" e1 = EL1() "," e2 = EL1() "," e3 = EL1() "," e4 = EL1() ")"
     {
         nodo retorno = new nodo();
         retorno.setEtiqueta("PS");
         retorno.AddHijos(e1);
+        retorno.setColumna(tok.beginColumn);//si no obtiene la posicion exacta intentar con e2.next.beginColumn
+        retorno.setLinea(tok.beginLine);    //si no obtiene la posicion exacta intentar con e2.next.beginLine
         retorno.AddHijos(e2);
         retorno.AddHijos(e3);
+        retorno.AddHijos(e4);
         return retorno;
     }
 }
 
 //PINTAR PUNTO
 
-nodo PP():{nodo e1,e2,e3,e4;}
+nodo PP():{nodo e1,e2,e3,e4; Token tok;}
 {
-    <PINTAR_P> "(" e1 = EL1() "," e2 = EL1() "," e3 = EL1() "," e4 = EL1() ")"{
+    tok = <PINTAR_P> "(" e1 = EL1() "," e2 = EL1() "," e3 = EL1() "," e4 = EL1() ")"{
         nodo retorno = new nodo();
+        retorno.setColumna(tok.beginColumn);//si no obtiene la posicion exacta intentar con e2.next.beginColumn
+        retorno.setLinea(tok.beginLine);    //si no obtiene la posicion exacta intentar con e2.next.beginLine
         retorno.setEtiqueta("PP");
         retorno.AddHijos(e1);
         retorno.AddHijos(e2);
@@ -846,11 +1022,13 @@ nodo PP():{nodo e1,e2,e3,e4;}
 
 //PINTAR OVALO/RECTANGULO
 
-nodo POR():{nodo e1,e2,e3,e4,e5,e6;}
+nodo POR():{nodo e1,e2,e3,e4,e5,e6; Token tok;}
 {
-    <PINTAR_OR> "(" e1 = EL1() "," e2 = EL1() "," e3 = EL1() "," e4 = EL1() "," e5 = EL1() "," e6 = EL1() ")"{
+    tok = <PINTAR_OR> "(" e1 = EL1() "," e2 = EL1() "," e3 = EL1() "," e4 = EL1() "," e5 = EL1() "," e6 = EL1() ")"{
         nodo retorno = new nodo();
         retorno.setEtiqueta("POR");
+        retorno.setColumna(tok.beginColumn);//si no obtiene la posicion exacta intentar con e2.next.beginColumn
+        retorno.setLinea(tok.beginLine);    //si no obtiene la posicion exacta intentar con e2.next.beginLine
         retorno.AddHijos(e1);
         retorno.AddHijos(e2);
         retorno.AddHijos(e3);

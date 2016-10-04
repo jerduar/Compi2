@@ -33,7 +33,7 @@ public class Analizador_Lienzo implements Analizador_LienzoConstants {
                 retorno.setEtiqueta("S");
                 retorno.AddHijos(e1);
                 retorno.AddHijos(tok1.image);
-                retorno.AddHijos(tok2.image);
+                retorno.AddHijos("IDENTIFICADOR",tok2.image);
                 retorno.AddHijos(e2);
                 {if (true) return retorno;}
       break;
@@ -43,6 +43,7 @@ public class Analizador_Lienzo implements Analizador_LienzoConstants {
       e2 = P();
                 retorno.setEtiqueta("S");
                 retorno.AddHijos(tok1.image);
+                retorno.AddHijos("IDENTIFICADOR",tok2.image);
                 retorno.AddHijos(e2);
                 {if (true) return retorno;}
       break;
@@ -98,10 +99,19 @@ public class Analizador_Lienzo implements Analizador_LienzoConstants {
     label_1:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case ENTERO:
+      case DECIMAL:
+      case CADENA:
+      case CARACTER:
+      case FALSE:
+      case TRUE:
       case SI:
       case COMPROBAR:
       case HACER:
       case PARA:
+      case PUBLICO:
+      case PRIVADO:
+      case PROTEGIDO:
       case VAR:
       case TENTERO:
       case TCADENA:
@@ -113,6 +123,7 @@ public class Analizador_Lienzo implements Analizador_LienzoConstants {
       case MIENTRAS:
       case PRINCIPAL:
       case IDENTIFICADOR:
+      case 53:
         ;
         break;
       default:
@@ -127,7 +138,7 @@ public class Analizador_Lienzo implements Analizador_LienzoConstants {
   }
 
   final public nodo Sentencia() throws ParseException {
-                  nodo retorno; nodo aux = null;
+                  nodo retorno,a=null; nodo aux = null; nodo aux2 = null; Token tok;
     if (jj_2_1(2)) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case CONSERVAR:
@@ -139,9 +150,21 @@ public class Analizador_Lienzo implements Analizador_LienzoConstants {
         ;
       }
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case PUBLICO:
+      case PRIVADO:
+      case PROTEGIDO:
+        a = Ambito();
+        break;
+      default:
+        jj_la1[4] = jj_gen;
+        ;
+      }
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case VAR:
         retorno = DecAsig();
-        jj_consume_token(40);
+        jj_consume_token(47);
+    if(a!=null)retorno.hijos.add(0,a);
+    if(aux2!=null)retorno.hijos.add(0,aux2);
     if(aux!= null)retorno.hijos.add(0,aux);
         break;
       case TENTERO:
@@ -150,23 +173,43 @@ public class Analizador_Lienzo implements Analizador_LienzoConstants {
       case TDOBLE:
       case TCARACTER:
         retorno = Funcion();
+    if(a!=null)retorno.hijos.add(0,a);
+    if(aux2!=null)retorno.hijos.add(0,aux2);
     if(aux!=null)retorno.hijos.add(0,aux);
         break;
       case VOID:
       case IDENTIFICADOR:
         retorno = Procedimiento();
+    if(a!=null)retorno.hijos.add(0,a);
+    if(aux2!=null)retorno.hijos.add(0,aux2);
     if(aux != null)retorno.hijos.add(0,aux);
         break;
       default:
-        jj_la1[4] = jj_gen;
+        jj_la1[5] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
         {if (true) return retorno;}
     } else if (jj_2_2(2)) {
       retorno = Asig();
-      jj_consume_token(40);
+      jj_consume_token(47);
         {if (true) return retorno;}
+    } else if (jj_2_3(2)) {
+      aux2 = F();
+      jj_consume_token(48);
+      aux = F();
+        retorno = new nodo();
+        retorno.setEtiqueta("MASIGUAL");
+        retorno.AddHijos(aux2);
+        retorno.AddHijos(aux);
+    } else if (jj_2_4(2)) {
+      aux2 = F();
+      jj_consume_token(49);
+      aux = F();
+        retorno = new nodo();
+        retorno.setEtiqueta("MENOSIGUAL");
+        retorno.AddHijos(aux2);
+        retorno.AddHijos(aux);
     } else {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case SI:
@@ -178,10 +221,10 @@ public class Analizador_Lienzo implements Analizador_LienzoConstants {
         {if (true) return retorno;}
         break;
       default:
-        jj_la1[5] = jj_gen;
-        if (jj_2_3(2)) {
+        jj_la1[6] = jj_gen;
+        if (jj_2_5(2)) {
           retorno = inc_dec();
-          jj_consume_token(40);
+          jj_consume_token(47);
         {if (true) return retorno;}
         } else {
           switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -202,7 +245,7 @@ public class Analizador_Lienzo implements Analizador_LienzoConstants {
         {if (true) return retorno;}
             break;
           default:
-            jj_la1[6] = jj_gen;
+            jj_la1[7] = jj_gen;
             jj_consume_token(-1);
             throw new ParseException();
           }
@@ -213,25 +256,33 @@ public class Analizador_Lienzo implements Analizador_LienzoConstants {
   }
 
   final public nodo Sentencia2() throws ParseException {
-                   nodo retorno; nodo aux = null;
-    if (jj_2_4(2)) {
+                   nodo retorno; nodo aux = null; Token tok;
+    if (jj_2_6(3)) {
+      retorno = llamadaFP();
+      jj_consume_token(47);
+        {if (true) return retorno;}
+    } else if (jj_2_7(2)) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case CONSERVAR:
         jj_consume_token(CONSERVAR);
-                              aux = new nodo(); aux.setEtiqueta("CONSERVAR");
+                               aux = new nodo(); aux.setEtiqueta("CONSERVAR");
         break;
       default:
-        jj_la1[7] = jj_gen;
+        jj_la1[8] = jj_gen;
         ;
       }
       retorno = DecAsig();
-      jj_consume_token(40);
+      jj_consume_token(47);
     if(aux!= null)retorno.hijos.add(0,aux);
         {if (true) return retorno;}
-    } else if (jj_2_5(2)) {
+    } else if (jj_2_8(3)) {
       retorno = Asig();
-      jj_consume_token(40);
+      jj_consume_token(47);
         {if (true) return retorno;}
+    } else if (jj_2_9(2)) {
+      retorno = menos_mas();
+      jj_consume_token(47);
+                                           {if (true) return retorno;}
     } else {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case SI:
@@ -243,10 +294,10 @@ public class Analizador_Lienzo implements Analizador_LienzoConstants {
         {if (true) return retorno;}
         break;
       default:
-        jj_la1[8] = jj_gen;
-        if (jj_2_6(2)) {
+        jj_la1[9] = jj_gen;
+        if (jj_2_10(2)) {
           retorno = inc_dec();
-          jj_consume_token(40);
+          jj_consume_token(47);
         {if (true) return retorno;}
         } else {
           switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -262,39 +313,70 @@ public class Analizador_Lienzo implements Analizador_LienzoConstants {
             retorno = para();
         {if (true) return retorno;}
             break;
-          case IDENTIFICADOR:
-            retorno = llamadaFP();
-            jj_consume_token(40);
-        {if (true) return retorno;}
-            break;
           case CONTINUAR:
             jj_consume_token(CONTINUAR);
-            jj_consume_token(40);
+            jj_consume_token(47);
        retorno = new nodo();
        retorno.setEtiqueta("CONTINUAR");
             break;
           case PINTARS:
             retorno = PS();
-            jj_consume_token(40);
+            jj_consume_token(47);
         {if (true) return retorno;}
             break;
           case PINTAR_P:
             retorno = PP();
-            jj_consume_token(40);
+            jj_consume_token(47);
         {if (true) return retorno;}
             break;
           case PINTAR_OR:
             retorno = POR();
-            jj_consume_token(40);
+            jj_consume_token(47);
+        {if (true) return retorno;}
+            break;
+          case RETORNO:
+            tok = jj_consume_token(RETORNO);
+            aux = EL1();
+            jj_consume_token(47);
+        retorno = new nodo();
+        retorno.setEtiqueta("RETORNO");
+        retorno.AddHijos(aux);
         {if (true) return retorno;}
             break;
           default:
-            jj_la1[9] = jj_gen;
+            jj_la1[10] = jj_gen;
             jj_consume_token(-1);
             throw new ParseException();
           }
         }
       }
+    }
+    throw new Error("Missing return statement in function");
+  }
+
+  final public nodo menos_mas() throws ParseException {
+                  nodo retorno,aux,aux2; Token tok;
+    if (jj_2_11(2)) {
+      aux2 = F();
+      jj_consume_token(48);
+      aux = EL1();
+        retorno = new nodo();
+        retorno.setEtiqueta("MASIGUAL");
+        retorno.AddHijos(aux2);
+        retorno.AddHijos(aux);
+        {if (true) return retorno;}
+    } else if (jj_2_12(2)) {
+      aux2 = F();
+      jj_consume_token(49);
+      aux = EL1();
+        retorno = new nodo();
+        retorno.setEtiqueta("MENOSIGUAL");
+        retorno.AddHijos(aux2);
+        retorno.AddHijos(aux);
+        {if (true) return retorno;}
+    } else {
+      jj_consume_token(-1);
+      throw new ParseException();
     }
     throw new Error("Missing return statement in function");
   }
@@ -306,6 +388,12 @@ public class Analizador_Lienzo implements Analizador_LienzoConstants {
     label_2:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case ENTERO:
+      case DECIMAL:
+      case CADENA:
+      case CARACTER:
+      case FALSE:
+      case TRUE:
       case SI:
       case COMPROBAR:
       case HACER:
@@ -317,11 +405,13 @@ public class Analizador_Lienzo implements Analizador_LienzoConstants {
       case PINTARS:
       case PINTAR_P:
       case PINTAR_OR:
+      case RETORNO:
       case IDENTIFICADOR:
+      case 53:
         ;
         break;
       default:
-        jj_la1[10] = jj_gen;
+        jj_la1[11] = jj_gen;
         break label_2;
       }
       n2 = Sentencia2();
@@ -333,25 +423,34 @@ public class Analizador_Lienzo implements Analizador_LienzoConstants {
 
   final public nodo Dimensiones() throws ParseException {
                     nodo retorno = new nodo();nodo e1; retorno.setEtiqueta("DIMENSIONES"); Token tok, tok1;
+    jj_consume_token(LLAVEA);
+    e1 = EA1();
+    jj_consume_token(LLAVEC);
+        nodo u = new nodo();
+        u.setEtiqueta("DIM");
+        u.AddHijos("[");
+        u.AddHijos(e1);
+        u.AddHijos("]");
+        retorno.AddHijos(u);
     label_3:
     while (true) {
-      jj_consume_token(41);
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case LLAVEA:
+        ;
+        break;
+      default:
+        jj_la1[12] = jj_gen;
+        break label_3;
+      }
+      jj_consume_token(LLAVEA);
       e1 = EA1();
-      jj_consume_token(42);
+      jj_consume_token(LLAVEC);
         nodo aux = new nodo();
         aux.setEtiqueta("DIM");
         aux.AddHijos("[");
         aux.AddHijos(e1);
         aux.AddHijos("]");
         retorno.AddHijos(aux);
-      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case 41:
-        ;
-        break;
-      default:
-        jj_la1[11] = jj_gen;
-        break label_3;
-      }
     }
      {if (true) return retorno;}
     throw new Error("Missing return statement in function");
@@ -359,51 +458,99 @@ public class Analizador_Lienzo implements Analizador_LienzoConstants {
 
   final public nodo DecAsig() throws ParseException {
                   nodo retorno = new nodo(); Token tok, tok1;nodo e1,e2,e3; e3 = null;
-    tok = jj_consume_token(VAR);
-    e2 = Tipo();
-    e1 = ListaIds();
+    if (jj_2_14(3)) {
+      tok = jj_consume_token(VAR);
+      e2 = Tipo();
+      e1 = ListaIds();
             retorno.AddHijos(tok.image);
             retorno.AddHijos(e2);
             retorno.AddHijos(e1);
+            retorno.setColumna(tok.beginColumn);//si no obtiene la posicion exacta intentar con e2.next.beginColumn
+            retorno.setLinea(tok.beginLine);    //si no obtiene la posicion exacta intentar con e2.next.beginLine
             retorno.setEtiqueta("DEC");
-    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-    case 41:
-    case 43:
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case 41:
-        e3 = Dimensiones();
-            retorno.setEtiqueta("DECA");
-            retorno.AddHijos(e3);
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case 43:
-          jj_consume_token(43);
-          jj_consume_token(44);
-          e3 = ValArreglo();
-          jj_consume_token(45);
-            retorno.AddHijos(e3);
-            retorno.setEtiqueta("DECAGASIGA");
-          break;
-        default:
-          jj_la1[12] = jj_gen;
-          ;
-        }
-        break;
-      case 43:
-        jj_consume_token(43);
+      case IGUAL:
+        jj_consume_token(IGUAL);
         e3 = EL1();
-                         retorno.AddHijos("=");retorno.AddHijos(e3);retorno.setEtiqueta("DECASIG");
+                          retorno.AddHijos("=");retorno.AddHijos(e3);retorno.setEtiqueta("DECASIG");
         break;
       default:
         jj_la1[13] = jj_gen;
+        ;
+      }
+         {if (true) return retorno;}
+    } else {
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case VAR:
+        tok = jj_consume_token(VAR);
+        e2 = Tipo();
+        tok1 = jj_consume_token(ARREGLO);
+        e1 = ListaIds();
+        e3 = Dimensiones();
+            retorno.AddHijos(tok.image);
+            retorno.AddHijos(e2);
+            retorno.AddHijos(tok1.image);
+            retorno.setColumna(tok.beginColumn);//si no obtiene la posicion exacta intentar con e2.next.beginColumn
+            retorno.setLinea(tok.beginLine);    //si no obtiene la posicion exacta intentar con e2.next.beginLine
+            retorno.AddHijos(e1);
+            retorno.AddHijos(e3);
+            retorno.setEtiqueta("DECARRAY");
+        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        case ENTERO:
+        case DECIMAL:
+        case CADENA:
+        case CARACTER:
+        case FALSE:
+        case TRUE:
+        case IGUAL:
+        case IDENTIFICADOR:
+        case 53:
+          if (jj_2_13(2)) {
+            jj_consume_token(IGUAL);
+            jj_consume_token(50);
+            e3 = ValArreglo();
+            jj_consume_token(51);
+            retorno.AddHijos(e3);
+            retorno.setEtiqueta("DECASIGA");
+          } else {
+            switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+            case IGUAL:
+              jj_consume_token(IGUAL);
+              e3 = llamadaFP();
+                                retorno.AddHijos(e3); retorno.setEtiqueta("DECASIGA");
+              break;
+            case ENTERO:
+            case DECIMAL:
+            case CADENA:
+            case CARACTER:
+            case FALSE:
+            case TRUE:
+            case IDENTIFICADOR:
+            case 53:
+              e3 = F();
+                   retorno.AddHijos(e3); retorno.setEtiqueta("DECASIGA");
+              break;
+            default:
+              jj_la1[14] = jj_gen;
+              jj_consume_token(-1);
+              throw new ParseException();
+            }
+          }
+          break;
+        default:
+          jj_la1[15] = jj_gen;
+          ;
+        }
+         retorno.setColumna(tok.beginColumn);//si no obtiene la posicion exacta intentar con e2.next.beginColumn
+         retorno.setLinea(tok.beginLine);
+         {if (true) return retorno;}
+        break;
+      default:
+        jj_la1[16] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
-      break;
-    default:
-      jj_la1[14] = jj_gen;
-      ;
     }
-         {if (true) return retorno;}
     throw new Error("Missing return statement in function");
   }
 
@@ -414,54 +561,57 @@ public class Analizador_Lienzo implements Analizador_LienzoConstants {
     case DECIMAL:
     case CADENA:
     case CARACTER:
+    case FALSE:
+    case TRUE:
     case IDENTIFICADOR:
-    case 47:
+    case 53:
+    case 72:
       e1 = EL1();
                retorno.AddHijos(e1);
       label_4:
       while (true) {
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case 46:
+        case 52:
           ;
           break;
         default:
-          jj_la1[15] = jj_gen;
+          jj_la1[17] = jj_gen;
           break label_4;
         }
-        jj_consume_token(46);
+        jj_consume_token(52);
         e2 = EL1();
         retorno.AddHijos(e2);
       }
      {if (true) return retorno;}
       break;
-    case 44:
-      jj_consume_token(44);
+    case 50:
+      jj_consume_token(50);
       e1 = ValArreglo();
-      jj_consume_token(45);
+      jj_consume_token(51);
       label_5:
       while (true) {
-        jj_consume_token(46);
-        jj_consume_token(44);
+        jj_consume_token(52);
+        jj_consume_token(50);
         e2 = ValArreglo();
-        jj_consume_token(45);
+        jj_consume_token(51);
             nodo ret = new nodo();
             ret.setEtiqueta("VALORARREGLO");
             ret.AddHijos(e1);
             ret.AddHijos(e2);
             e1 = (nodo)ret;
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case 46:
+        case 52:
           ;
           break;
         default:
-          jj_la1[16] = jj_gen;
+          jj_la1[18] = jj_gen;
           break label_5;
         }
       }
      {if (true) return e1;}
       break;
     default:
-      jj_la1[17] = jj_gen;
+      jj_la1[19] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -497,7 +647,7 @@ public class Analizador_Lienzo implements Analizador_LienzoConstants {
         {if (true) return retorno;}
       break;
     default:
-      jj_la1[18] = jj_gen;
+      jj_la1[20] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -505,69 +655,132 @@ public class Analizador_Lienzo implements Analizador_LienzoConstants {
   }
 
   final public nodo Asig() throws ParseException {
-             nodo e1; Token tok;
+             nodo e1,e2 = null; nodo retorno; Token tok;
     tok = jj_consume_token(IDENTIFICADOR);
-    jj_consume_token(43);
-    e1 = EA1();
+    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case LLAVEA:
+      e2 = Dimensiones();
+      jj_consume_token(IGUAL);
+      e1 = EL1();
         nodo aux = new nodo();
         aux.setEtiqueta("ASIG");
-
         nodo aux2 = new nodo();
-        aux2.setEtiqueta("IDENTIFICADOR");
-        aux2.setValor(tok.image);
+        aux2.AddHijos("IDENTIFICADOR",tok.image);
+        aux2.setEtiqueta("POSARRAY");
+        if(e2!=null){aux2.AddHijos(e2); aux.setEtiqueta("ASIGARRAY");}
+        aux.setColumna(tok.beginColumn);//si no obtiene la posicion exacta intentar con e2.next.beginColumn
+        aux.setLinea(tok.beginLine);    //si no obtiene la posicion exacta intentar con e2.next.beginLine
+        aux2.setColumna(tok.beginColumn);//si no obtiene la posicion exacta intentar con e2.next.beginColumn
+        aux2.setLinea(tok.beginLine);    //si no obtiene la posicion exacta intentar con e2.next.beginLine
         aux.AddHijos(aux2);
         aux.AddHijos("=");
         aux.AddHijos(e1);
-
-        {if (true) return aux;}
+        retorno = aux;
+      break;
+    case IGUAL:
+      jj_consume_token(IGUAL);
+      e1 = EL1();
+        nodo auxx = new nodo();
+        auxx.setEtiqueta("ASIG");
+        nodo aux22 = new nodo();
+        aux22.setEtiqueta("IDENTIFICADOR");
+        aux22.setValor(tok.image);
+        auxx.AddHijos(aux22);
+        auxx.AddHijos("=");
+        auxx.AddHijos(e1);
+        retorno = auxx;
+      break;
+    default:
+      jj_la1[21] = jj_gen;
+      jj_consume_token(-1);
+      throw new ParseException();
+    }
+         {if (true) return retorno;}
     throw new Error("Missing return statement in function");
   }
 
   final public nodo F() throws ParseException {
-          nodo e1 = new nodo(); e1.setEtiqueta("F"); Token tok;
+          nodo e1 = new nodo(); nodo aux2; e1.setEtiqueta("F"); Token tok;
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case CADENA:
       tok = jj_consume_token(CADENA);
         String aux = tok.image;
         aux = aux.replaceAll("\u005c"","");
+        e1.setColumna(tok.beginColumn);//si no obtiene la posicion exacta intentar con e2.next.beginColumn
+        e1.setLinea(tok.beginLine);    //si no obtiene la posicion exacta intentar con e2.next.beginLine
         e1.AddHijos("CADENA",aux);
         {if (true) return e1;}
       break;
     case ENTERO:
       tok = jj_consume_token(ENTERO);
+        e1.setColumna(tok.beginColumn);//si no obtiene la posicion exacta intentar con e2.next.beginColumn
+        e1.setLinea(tok.beginLine);    //si no obtiene la posicion exacta intentar con e2.next.beginLine
         e1.AddHijos("ENTERO",tok.image);
         {if (true) return e1;}
       break;
     case DECIMAL:
       tok = jj_consume_token(DECIMAL);
-        e1.AddHijos("DECIMAL",tok.image);
+        e1.setColumna(tok.beginColumn);//si no obtiene la posicion exacta intentar con e2.next.beginColumn
+        e1.setLinea(tok.beginLine);    //si no obtiene la posicion exacta intentar con e2.next.beginLine
+        e1.AddHijos("DOBLE",tok.image);
         {if (true) return e1;}
       break;
     case CARACTER:
       tok = jj_consume_token(CARACTER);
+        e1.setColumna(tok.beginColumn);//si no obtiene la posicion exacta intentar con e2.next.beginColumn
+        e1.setLinea(tok.beginLine);    //si no obtiene la posicion exacta intentar con e2.next.beginLine
         e1.AddHijos("CARACTER",tok.image);
         {if (true) return e1;}
       break;
     default:
-      jj_la1[19] = jj_gen;
-      if (jj_2_7(2)) {
-        e1 = llamadaFP();
+      jj_la1[23] = jj_gen;
+      if (jj_2_15(2)) {
+        aux2 = llamadaFP();
+        e1.AddHijos(aux2);
         {if (true) return e1;}
       } else {
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case IDENTIFICADOR:
           tok = jj_consume_token(IDENTIFICADOR);
-        e1.AddHijos("IDENTIFICADOR",tok.image);
+        nodo f = new nodo();f.setEtiqueta("IDENTIFICADOR");f.setValor(tok.image);
+        e1.setColumna(tok.beginColumn);//si no obtiene la posicion exacta intentar con e2.next.beginColumn
+        e1.setLinea(tok.beginLine);    //si no obtiene la posicion exacta intentar con e2.next.beginLine
+
+          switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+          case LLAVEA:
+            aux2 = Dimensiones();
+        nodo r = (nodo)f;
+        f = new nodo();f.setEtiqueta("POSARRAY");
+        f.AddHijos(r); f.AddHijos(aux2);
+            break;
+          default:
+            jj_la1[22] = jj_gen;
+            ;
+          }
+        e1.AddHijos(f);{if (true) return e1;}
+          break;
+        case 53:
+          jj_consume_token(53);
+          e1 = EA1();
+          jj_consume_token(54);
         {if (true) return e1;}
           break;
-        case 47:
-          jj_consume_token(47);
-          e1 = EA1();
-          jj_consume_token(48);
+        case TRUE:
+          tok = jj_consume_token(TRUE);
+        e1.setColumna(tok.beginColumn);//si no obtiene la posicion exacta intentar con e2.next.beginColumn
+        e1.setLinea(tok.beginLine);    //si no obtiene la posicion exacta intentar con e2.next.beginLine
+        e1.AddHijos("BOOLEANO",tok.image);
+        {if (true) return e1;}
+          break;
+        case FALSE:
+          tok = jj_consume_token(FALSE);
+        e1.AddHijos("BOOLEANO",tok.image);
+        e1.setColumna(tok.beginColumn);//si no obtiene la posicion exacta intentar con e2.next.beginColumn
+        e1.setLinea(tok.beginLine);    //si no obtiene la posicion exacta intentar con e2.next.beginLine
         {if (true) return e1;}
           break;
         default:
-          jj_la1[20] = jj_gen;
+          jj_la1[24] = jj_gen;
           jj_consume_token(-1);
           throw new ParseException();
         }
@@ -607,7 +820,7 @@ public class Analizador_Lienzo implements Analizador_LienzoConstants {
         {if (true) return nodo3;}
       break;
     default:
-      jj_la1[21] = jj_gen;
+      jj_la1[25] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -617,21 +830,24 @@ public class Analizador_Lienzo implements Analizador_LienzoConstants {
   final public nodo ListaIds() throws ParseException {
                   Token tok; nodo n1 = new nodo(); n1.setEtiqueta("ListaIds"); Token tok2;
     tok2 = jj_consume_token(IDENTIFICADOR);
-                          nodo n2 = new nodo(); n2.setValor(tok2.image);n2.setEtiqueta("IDENTIFICADOR");n1.AddHijos(n2);
+                          nodo n2 = new nodo(); n2.setValor(tok2.image);n2.setEtiqueta("IDENTIFICADOR");n1.AddHijos(n2);n2.setColumna(tok2.beginColumn);
+        n2.setLinea(tok2.beginLine);
     label_6:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case 46:
+      case 52:
         ;
         break;
       default:
-        jj_la1[22] = jj_gen;
+        jj_la1[26] = jj_gen;
         break label_6;
       }
-      jj_consume_token(46);
+      jj_consume_token(52);
       tok = jj_consume_token(IDENTIFICADOR);
         nodo nuevo = new nodo();
         nuevo.setValor(tok.image);
+        nuevo.setColumna(tok2.beginColumn);
+        nuevo.setLinea(tok2.beginLine);
         nuevo.setEtiqueta("IDENTIFICADOR");
         n1.AddHijos(nuevo);
     }
@@ -646,17 +862,17 @@ public class Analizador_Lienzo implements Analizador_LienzoConstants {
     label_7:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case 49:
-      case 50:
+      case 55:
+      case 56:
         ;
         break;
       default:
-        jj_la1[23] = jj_gen;
+        jj_la1[27] = jj_gen;
         break label_7;
       }
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case 49:
-        jj_consume_token(49);
+      case 55:
+        jj_consume_token(55);
         e2 = EA2();
             nodo n1 = new nodo();
             n1.setEtiqueta("EA1");
@@ -667,8 +883,8 @@ public class Analizador_Lienzo implements Analizador_LienzoConstants {
             n1.AddHijos(der);
             e1= (nodo) n1;
         break;
-      case 50:
-        jj_consume_token(50);
+      case 56:
+        jj_consume_token(56);
         e2 = EA2();
             nodo n2 = new nodo();
             n2.setEtiqueta("EA1");
@@ -680,7 +896,7 @@ public class Analizador_Lienzo implements Analizador_LienzoConstants {
             e1= (nodo) n2;
         break;
       default:
-        jj_la1[24] = jj_gen;
+        jj_la1[28] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -695,14 +911,14 @@ public class Analizador_Lienzo implements Analizador_LienzoConstants {
     label_8:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case 51:
+      case 57:
         ;
         break;
       default:
-        jj_la1[25] = jj_gen;
+        jj_la1[29] = jj_gen;
         break label_8;
       }
-      jj_consume_token(51);
+      jj_consume_token(57);
       e2 = F();
         nodo n1 = new nodo();
         n1.setEtiqueta("EA3");
@@ -721,17 +937,17 @@ public class Analizador_Lienzo implements Analizador_LienzoConstants {
     label_9:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case 52:
-      case 53:
+      case 58:
+      case 59:
         ;
         break;
       default:
-        jj_la1[26] = jj_gen;
+        jj_la1[30] = jj_gen;
         break label_9;
       }
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case 52:
-        jj_consume_token(52);
+      case 58:
+        jj_consume_token(58);
         e2 = EA3();
             nodo n1 = new nodo();
             n1.setEtiqueta("EA2");
@@ -742,8 +958,8 @@ public class Analizador_Lienzo implements Analizador_LienzoConstants {
             n1.AddHijos(der);
             e1= (nodo) n1;
         break;
-      case 53:
-        jj_consume_token(53);
+      case 59:
+        jj_consume_token(59);
         e2 = EA3();
             nodo n2 = new nodo();
             n2.setEtiqueta("EA2");
@@ -755,7 +971,7 @@ public class Analizador_Lienzo implements Analizador_LienzoConstants {
             e1= (nodo) n2;
         break;
       default:
-        jj_la1[27] = jj_gen;
+        jj_la1[31] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -769,16 +985,16 @@ public class Analizador_Lienzo implements Analizador_LienzoConstants {
              nodo e1; nodo e2;
     e1 = EA1();
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-    case 54:
-    case 55:
-    case 56:
-    case 57:
-    case 58:
-    case 59:
     case 60:
+    case 61:
+    case 62:
+    case 63:
+    case 64:
+    case 65:
+    case 66:
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case 54:
-        jj_consume_token(54);
+      case 60:
+        jj_consume_token(60);
         e2 = EA1();
         nodo nuevo = new nodo();
         nuevo.setEtiqueta("ER1");
@@ -787,8 +1003,8 @@ public class Analizador_Lienzo implements Analizador_LienzoConstants {
         nuevo.AddHijos((nodo)e2);
         e1 = (nodo)nuevo;
         break;
-      case 55:
-        jj_consume_token(55);
+      case 61:
+        jj_consume_token(61);
         e2 = EA1();
         nodo nuevo2 = new nodo();
         nuevo2.setEtiqueta("ER1");
@@ -797,8 +1013,8 @@ public class Analizador_Lienzo implements Analizador_LienzoConstants {
         nuevo2.AddHijos((nodo)e2);
         e1 = (nodo)nuevo2;
         break;
-      case 56:
-        jj_consume_token(56);
+      case 62:
+        jj_consume_token(62);
         e2 = EA1();
         nodo nuevo3 = new nodo();
         nuevo3.setEtiqueta("ER1");
@@ -807,8 +1023,8 @@ public class Analizador_Lienzo implements Analizador_LienzoConstants {
         nuevo3.AddHijos((nodo)e2);
         e1 = (nodo)nuevo3;
         break;
-      case 57:
-        jj_consume_token(57);
+      case 63:
+        jj_consume_token(63);
         e2 = EA1();
         nodo nuevo4 = new nodo();
         nuevo4.setEtiqueta("ER1");
@@ -817,8 +1033,8 @@ public class Analizador_Lienzo implements Analizador_LienzoConstants {
         nuevo4.AddHijos((nodo)e2);
         e1 = (nodo)nuevo4;
         break;
-      case 58:
-        jj_consume_token(58);
+      case 64:
+        jj_consume_token(64);
         e2 = EA1();
         nodo nuevo5 = new nodo();
         nuevo5.setEtiqueta("ER1");
@@ -827,8 +1043,8 @@ public class Analizador_Lienzo implements Analizador_LienzoConstants {
         nuevo5.AddHijos((nodo)e2);
         e1 = (nodo)nuevo5;
         break;
-      case 59:
-        jj_consume_token(59);
+      case 65:
+        jj_consume_token(65);
         e2 = EA1();
         nodo nuevo6 = new nodo();
         nuevo6.setEtiqueta("ER1");
@@ -837,8 +1053,8 @@ public class Analizador_Lienzo implements Analizador_LienzoConstants {
         nuevo6.AddHijos((nodo)e2);
         e1 = (nodo)nuevo6;
         break;
-      case 60:
-        jj_consume_token(60);
+      case 66:
+        jj_consume_token(66);
         e2 = EA1();
         nodo nuevo7 = new nodo();
         nuevo7.setEtiqueta("ER1");
@@ -848,13 +1064,13 @@ public class Analizador_Lienzo implements Analizador_LienzoConstants {
         e1 = (nodo)nuevo7;
         break;
       default:
-        jj_la1[28] = jj_gen;
+        jj_la1[32] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
       break;
     default:
-      jj_la1[29] = jj_gen;
+      jj_la1[33] = jj_gen;
       ;
     }
      {if (true) return e1;}
@@ -868,18 +1084,18 @@ public class Analizador_Lienzo implements Analizador_LienzoConstants {
     label_10:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case 61:
-      case 62:
-      case 63:
+      case 67:
+      case 68:
+      case 69:
         ;
         break;
       default:
-        jj_la1[30] = jj_gen;
+        jj_la1[34] = jj_gen;
         break label_10;
       }
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case 61:
-        jj_consume_token(61);
+      case 67:
+        jj_consume_token(67);
         e2 = EL2();
         nodo nuevo = new nodo();
         nuevo.setEtiqueta("EL1");
@@ -888,8 +1104,8 @@ public class Analizador_Lienzo implements Analizador_LienzoConstants {
         nuevo.AddHijos((nodo)e2);
         e1 = (nodo)nuevo;
         break;
-      case 62:
-        jj_consume_token(62);
+      case 68:
+        jj_consume_token(68);
         e2 = EL2();
         nodo nuevo2 = new nodo();
         nuevo2.setEtiqueta("EL1");
@@ -898,8 +1114,8 @@ public class Analizador_Lienzo implements Analizador_LienzoConstants {
         nuevo2.AddHijos(e2);
         e1 = (nodo)nuevo2;
         break;
-      case 63:
-        jj_consume_token(63);
+      case 69:
+        jj_consume_token(69);
         e2 = EL2();
         nodo nuevo3 = new nodo();
         nuevo3.setEtiqueta("EL1");
@@ -909,7 +1125,7 @@ public class Analizador_Lienzo implements Analizador_LienzoConstants {
         e1 = (nodo)nuevo3;
         break;
       default:
-        jj_la1[31] = jj_gen;
+        jj_la1[35] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -920,22 +1136,22 @@ public class Analizador_Lienzo implements Analizador_LienzoConstants {
 
   final public nodo EL2() throws ParseException {
              nodo e1,e2;
-    e1 = ER1();
+    e1 = EL3();
     label_11:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case 64:
-      case 65:
+      case 70:
+      case 71:
         ;
         break;
       default:
-        jj_la1[32] = jj_gen;
+        jj_la1[36] = jj_gen;
         break label_11;
       }
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case 64:
-        jj_consume_token(64);
-        e2 = ER1();
+      case 70:
+        jj_consume_token(70);
+        e2 = EL3();
         nodo nuevo = new nodo();
         nuevo.setEtiqueta("EL2");
         nuevo.AddHijos(e1);
@@ -943,9 +1159,9 @@ public class Analizador_Lienzo implements Analizador_LienzoConstants {
         nuevo.AddHijos(e2);
         e1 = (nodo)nuevo;
         break;
-      case 65:
-        jj_consume_token(65);
-        e2 = ER1();
+      case 71:
+        jj_consume_token(71);
+        e2 = EL3();
         nodo nuevo1 = new nodo();
         nuevo1.setEtiqueta("EL2");
         nuevo1.AddHijos(e1);
@@ -954,12 +1170,57 @@ public class Analizador_Lienzo implements Analizador_LienzoConstants {
         e1 = (nodo)nuevo1;
         break;
       default:
-        jj_la1[33] = jj_gen;
+        jj_la1[37] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
     }
      {if (true) return e1;}
+    throw new Error("Missing return statement in function");
+  }
+
+  final public nodo EL3() throws ParseException {
+              nodo e1;
+    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case 72:
+      jj_consume_token(72);
+      e1 = ER1();
+        nodo nuevo = new nodo();
+        nuevo.setEtiqueta("EL3");
+        nuevo.AddHijos("!");
+        nuevo.AddHijos(e1);
+        {if (true) return nuevo;}
+      break;
+    default:
+      jj_la1[38] = jj_gen;
+      if (jj_2_16(3)) {
+        e1 = ER1();
+                             {if (true) return e1;}
+      } else if (jj_2_17(3)) {
+        jj_consume_token(53);
+        e1 = EL1();
+        jj_consume_token(54);
+                                      {if (true) return e1;}
+      } else {
+        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        case ENTERO:
+        case DECIMAL:
+        case CADENA:
+        case CARACTER:
+        case FALSE:
+        case TRUE:
+        case IDENTIFICADOR:
+        case 53:
+          e1 = EA1();
+                 {if (true) return e1;}
+          break;
+        default:
+          jj_la1[39] = jj_gen;
+          jj_consume_token(-1);
+          throw new ParseException();
+        }
+      }
+    }
     throw new Error("Missing return statement in function");
   }
 
@@ -972,7 +1233,7 @@ public class Analizador_Lienzo implements Analizador_LienzoConstants {
         e2 = Tipo();
     tok = jj_consume_token(IDENTIFICADOR);
                           e1.AddHijos(e2); nodo aux = new nodo(); aux.setValor(tok.image); aux.setEtiqueta("IDENTIFICADOR");e1.AddHijos(aux);
-    jj_consume_token(47);
+    jj_consume_token(53);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case TENTERO:
     case TCADENA:
@@ -983,10 +1244,10 @@ public class Analizador_Lienzo implements Analizador_LienzoConstants {
                           e1.AddHijos("(");e1.AddHijos(e2); e1.AddHijos(")");
       break;
     default:
-      jj_la1[34] = jj_gen;
+      jj_la1[40] = jj_gen;
       ;
     }
-    jj_consume_token(48);
+    jj_consume_token(54);
     tok = jj_consume_token(ABRE);
     e2 = ListaSentencias2();
     tok2 = jj_consume_token(CIERRE);
@@ -1002,7 +1263,7 @@ public class Analizador_Lienzo implements Analizador_LienzoConstants {
                   retorno.AddHijos(tok.image);
       break;
     default:
-      jj_la1[35] = jj_gen;
+      jj_la1[41] = jj_gen;
       ;
     }
     tok = jj_consume_token(IDENTIFICADOR);
@@ -1010,7 +1271,7 @@ public class Analizador_Lienzo implements Analizador_LienzoConstants {
         aux.setEtiqueta("IDENTIFICADOR");
         aux.setValor(tok.image);
         retorno.AddHijos(aux);
-    jj_consume_token(47);
+    jj_consume_token(53);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case TENTERO:
     case TCADENA:
@@ -1021,10 +1282,10 @@ public class Analizador_Lienzo implements Analizador_LienzoConstants {
                             retorno.AddHijos("(");retorno.AddHijos(e1); retorno.AddHijos(")");
       break;
     default:
-      jj_la1[36] = jj_gen;
+      jj_la1[42] = jj_gen;
       ;
     }
-    jj_consume_token(48);
+    jj_consume_token(54);
     tok = jj_consume_token(ABRE);
     e1 = ListaSentencias2();
     tok2 = jj_consume_token(CIERRE);
@@ -1050,14 +1311,14 @@ public class Analizador_Lienzo implements Analizador_LienzoConstants {
     label_12:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case 46:
+      case 52:
         ;
         break;
       default:
-        jj_la1[37] = jj_gen;
+        jj_la1[43] = jj_gen;
         break label_12;
       }
-      jj_consume_token(46);
+      jj_consume_token(52);
       e2 = Tipo();
       tok2 = jj_consume_token(IDENTIFICADOR);
         nodo aux3 = new nodo();
@@ -1077,11 +1338,11 @@ public class Analizador_Lienzo implements Analizador_LienzoConstants {
   final public nodo Si() throws ParseException {
              Token tok,tok1,tok2; nodo e1,e2;
     tok = jj_consume_token(SI);
-    jj_consume_token(47);
+    jj_consume_token(53);
     e1 = ER1();
-    jj_consume_token(48);
+    jj_consume_token(54);
     tok1 = jj_consume_token(ABRE);
-    e2 = ListaSentencias();
+    e2 = ListaSentencias2();
     tok2 = jj_consume_token(CIERRE);
         nodo retorno = new nodo();
         retorno.setEtiqueta("SI");
@@ -1089,6 +1350,8 @@ public class Analizador_Lienzo implements Analizador_LienzoConstants {
         retorno.AddHijos("(");
         retorno.AddHijos(e1);
         retorno.AddHijos(")");
+        retorno.setColumna(tok.beginColumn);//si no obtiene la posicion exacta intentar con e2.next.beginColumn
+        retorno.setLinea(tok.beginLine);    //si no obtiene la posicion exacta intentar con e2.next.beginLine
         retorno.AddHijos(tok1.image);
         retorno.AddHijos(e2);
         retorno.AddHijos(tok2.image);
@@ -1096,18 +1359,13 @@ public class Analizador_Lienzo implements Analizador_LienzoConstants {
     case SINO:
       tok = jj_consume_token(SINO);
       tok1 = jj_consume_token(ABRE);
-      e1 = ListaSentencias();
+      e1 = ListaSentencias2();
       tok2 = jj_consume_token(CIERRE);
-        nodo aux = new nodo();
-        aux.setEtiqueta("SINO");
-        aux.AddHijos(tok.image);
-        aux.AddHijos(tok1.image);
-        aux.AddHijos(e1);
-        aux.AddHijos(tok2.image);
-        retorno.AddHijos(aux);
+        retorno.setEtiqueta("SINO");
+        retorno.AddHijos(e1);
       break;
     default:
-      jj_la1[38] = jj_gen;
+      jj_la1[44] = jj_gen;
       ;
     }
         {if (true) return retorno;}
@@ -1116,18 +1374,18 @@ public class Analizador_Lienzo implements Analizador_LienzoConstants {
 
 //SENTENCIA COMPROBAR
   final public nodo Comprobar() throws ParseException {
-                  nodo e1,e2,e4,e3,def;e3 = new nodo();def = null;e3.setEtiqueta("LISTACASOS"); Token tok, tok1, tok2, tok3,tok4;
+                  nodo e1,e2,e4,e3,def,e; e3 = new nodo();def = null;e3.setEtiqueta("LISTACASOS"); Token tok, tok1, tok2, tok3,tok4;
     tok = jj_consume_token(COMPROBAR);
-    jj_consume_token(47);
-    tok1 = jj_consume_token(IDENTIFICADOR);
-    jj_consume_token(48);
+    jj_consume_token(53);
+    e = F();
+    jj_consume_token(54);
     tok2 = jj_consume_token(ABRE);
     label_13:
     while (true) {
       tok3 = jj_consume_token(CASO);
-      e1 = ER1();
-      jj_consume_token(66);
-      e2 = ListaSentencias();
+      e1 = EL1();
+      jj_consume_token(73);
+      e2 = ListaSentencias2();
         nodo nuevo = new nodo();
         nuevo.setEtiqueta("CASO");
         nuevo.AddHijos(tok3.image);
@@ -1136,11 +1394,11 @@ public class Analizador_Lienzo implements Analizador_LienzoConstants {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case SALIR:
         tok4 = jj_consume_token(SALIR);
-        jj_consume_token(40);
+        jj_consume_token(47);
         nuevo.AddHijos(tok4.image);
         break;
       default:
-        jj_la1[39] = jj_gen;
+        jj_la1[45] = jj_gen;
         ;
       }
         e3.AddHijos(nuevo);
@@ -1149,41 +1407,38 @@ public class Analizador_Lienzo implements Analizador_LienzoConstants {
         ;
         break;
       default:
-        jj_la1[40] = jj_gen;
+        jj_la1[46] = jj_gen;
         break label_13;
       }
     }
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case DEFECTO:
       jj_consume_token(DEFECTO);
-      jj_consume_token(66);
-      e4 = ListaSentencias();
+      jj_consume_token(73);
+      e4 = ListaSentencias2();
         def = new nodo();
         def.setEtiqueta("DEFAULT");
-        def.AddHijos("defecto");
         def.AddHijos(e4);
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case SALIR:
         jj_consume_token(SALIR);
-        jj_consume_token(40);
+        jj_consume_token(47);
+        def.AddHijos("salir");
         break;
       default:
-        jj_la1[41] = jj_gen;
+        jj_la1[47] = jj_gen;
         ;
       }
-        def.AddHijos("salir");
       break;
     default:
-      jj_la1[42] = jj_gen;
+      jj_la1[48] = jj_gen;
       ;
     }
     tok3 = jj_consume_token(CIERRE);
         nodo retorno = new nodo();
         retorno.setEtiqueta("COMPROBAR");
         retorno.AddHijos(tok.image);
-        retorno.AddHijos(")");
-        retorno.AddHijos("IDENTFICADOR", tok1.image);
-        retorno.AddHijos(")");
+        retorno.AddHijos(e);
         retorno.AddHijos(tok2.image);
         retorno.AddHijos(e3);
         if(def != null){retorno.AddHijos(def);}
@@ -1194,23 +1449,23 @@ public class Analizador_Lienzo implements Analizador_LienzoConstants {
 
 //INCREMENTO/DECREMENTO
   final public nodo inc_dec() throws ParseException {
-                nodo n2;Token tok;
-    tok = jj_consume_token(IDENTIFICADOR);
+                nodo n2,n1;Token tok;
+    n1 = F();
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-    case 67:
-      jj_consume_token(67);
+    case 74:
+      jj_consume_token(74);
         n2 = new nodo();
         n2.setEtiqueta("DECR");
-        n2.AddHijos("IDENTIFICADOR",tok.image);
+        n2.AddHijos(n1);
       break;
-    case 68:
-      jj_consume_token(68);
+    case 75:
+      jj_consume_token(75);
         n2 = new nodo();
         n2.setEtiqueta("INCR");
-        n2.AddHijos("IDENTIFICADOR",tok.image);
+        n2.AddHijos(n1);
       break;
     default:
-      jj_la1[43] = jj_gen;
+      jj_la1[49] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -1222,9 +1477,9 @@ public class Analizador_Lienzo implements Analizador_LienzoConstants {
   final public nodo mientras() throws ParseException {
                    nodo e1,e2; Token tok1,tok2,tok3;
     tok1 = jj_consume_token(MIENTRAS);
-    jj_consume_token(47);
+    jj_consume_token(53);
     e1 = EL1();
-    jj_consume_token(48);
+    jj_consume_token(54);
     tok2 = jj_consume_token(ABRE);
     e2 = ListaSentencias2();
     tok3 = jj_consume_token(CIERRE);
@@ -1232,6 +1487,8 @@ public class Analizador_Lienzo implements Analizador_LienzoConstants {
         retorno.setEtiqueta("MIENTRAS");
         retorno.AddHijos(tok1.image);
         retorno.AddHijos("(");
+        retorno.setColumna(tok1.beginColumn);//si no obtiene la posicion exacta intentar con e2.next.beginColumn
+        retorno.setLinea(tok1.beginLine);    //si no obtiene la posicion exacta intentar con e2.next.beginLine
         retorno.AddHijos(e1);
         retorno.AddHijos(")");
         retorno.AddHijos(tok2.image);
@@ -1242,22 +1499,24 @@ public class Analizador_Lienzo implements Analizador_LienzoConstants {
   }
 
   final public nodo hacer_mientras() throws ParseException {
-                         nodo e1,e2;
-    jj_consume_token(HACER);
+                         nodo e1,e2;Token tok;
+    tok = jj_consume_token(HACER);
     jj_consume_token(ABRE);
     e1 = ListaSentencias2();
     jj_consume_token(CIERRE);
     jj_consume_token(MIENTRAS);
-    jj_consume_token(47);
+    jj_consume_token(53);
     e2 = EL1();
-    jj_consume_token(48);
-    jj_consume_token(40);
+    jj_consume_token(54);
+    jj_consume_token(47);
         nodo retorno = new nodo();
         retorno.setEtiqueta("HACER_MIENTRAS");
         retorno.AddHijos("hacer");
         retorno.AddHijos("\u00bf");
         retorno.AddHijos(e1);
         retorno.AddHijos("?");
+        retorno.setColumna(tok.beginColumn);//si no obtiene la posicion exacta intentar con e2.next.beginColumn
+        retorno.setLinea(tok.beginLine);    //si no obtiene la posicion exacta intentar con e2.next.beginLine
         retorno.AddHijos("mientras");
         retorno.AddHijos("(");
         retorno.AddHijos(e2);
@@ -1268,9 +1527,9 @@ public class Analizador_Lienzo implements Analizador_LienzoConstants {
 
 //SENTENCIA PARA
   final public nodo para() throws ParseException {
-               nodo e1,e2,e3,e4;
-    jj_consume_token(PARA);
-    jj_consume_token(47);
+               nodo e1,e2,e3,e4; Token tok;
+    tok = jj_consume_token(PARA);
+    jj_consume_token(53);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case VAR:
       e1 = DecAsig();
@@ -1279,32 +1538,43 @@ public class Analizador_Lienzo implements Analizador_LienzoConstants {
       e1 = Asig();
       break;
     default:
-      jj_la1[44] = jj_gen;
+      jj_la1[50] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
-    jj_consume_token(69);
+    jj_consume_token(76);
     e3 = EL1();
-    jj_consume_token(69);
-    if (jj_2_8(2)) {
+    jj_consume_token(76);
+    if (jj_2_18(2)) {
       e2 = inc_dec();
+    } else if (jj_2_19(2)) {
+      e2 = Asig();
     } else {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case ENTERO:
+      case DECIMAL:
+      case CADENA:
+      case CARACTER:
+      case FALSE:
+      case TRUE:
       case IDENTIFICADOR:
-        e2 = Asig();
+      case 53:
+        e2 = menos_mas();
         break;
       default:
-        jj_la1[45] = jj_gen;
+        jj_la1[51] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
     }
-    jj_consume_token(48);
+    jj_consume_token(54);
     jj_consume_token(ABRE);
     e4 = ListaSentencias2();
     jj_consume_token(CIERRE);
         nodo retorno = new nodo();
         retorno.setEtiqueta("PARA");
+        retorno.setColumna(tok.beginColumn);//si no obtiene la posicion exacta intentar con e2.next.beginColumn
+        retorno.setLinea(tok.beginLine);    //si no obtiene la posicion exacta intentar con e2.next.beginLine
         retorno.AddHijos(e1);
         retorno.AddHijos(e3);
         retorno.AddHijos(e2);
@@ -1317,25 +1587,30 @@ public class Analizador_Lienzo implements Analizador_LienzoConstants {
   final public nodo llamadaFP() throws ParseException {
                   nodo e2 = null; Token tok;
     tok = jj_consume_token(IDENTIFICADOR);
-    jj_consume_token(47);
+    jj_consume_token(53);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case ENTERO:
     case DECIMAL:
     case CADENA:
     case CARACTER:
+    case FALSE:
+    case TRUE:
     case IDENTIFICADOR:
-    case 47:
+    case 53:
+    case 72:
       e2 = LP();
       break;
     default:
-      jj_la1[46] = jj_gen;
+      jj_la1[52] = jj_gen;
       ;
     }
-    jj_consume_token(48);
+    jj_consume_token(54);
         nodo retorno = new nodo();
         retorno.setEtiqueta("LLAMADO");
         retorno.AddHijos("IDENTIFICADOR",tok.image);
         if(e2 != null){retorno.AddHijos(e2);}
+        retorno.setColumna(tok.beginColumn);//si no obtiene la posicion exacta intentar con e2.next.beginColumn
+        retorno.setLinea(tok.beginLine);    //si no obtiene la posicion exacta intentar con e2.next.beginLine
         {if (true) return retorno;}
     throw new Error("Missing return statement in function");
   }
@@ -1347,14 +1622,14 @@ public class Analizador_Lienzo implements Analizador_LienzoConstants {
     label_14:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case 46:
+      case 52:
         ;
         break;
       default:
-        jj_la1[47] = jj_gen;
+        jj_la1[53] = jj_gen;
         break label_14;
       }
-      jj_consume_token(46);
+      jj_consume_token(52);
       e1 = EL1();
         retorno.AddHijos(e1);
     }
@@ -1364,38 +1639,45 @@ public class Analizador_Lienzo implements Analizador_LienzoConstants {
 
 //FUNCION PINTAR CADENA
   final public nodo PS() throws ParseException {
-           nodo e1,e2,e3;
-    jj_consume_token(PINTARS);
-    jj_consume_token(47);
+           nodo e1,e2,e3,e4; Token tok;
+    tok = jj_consume_token(PINTARS);
+    jj_consume_token(53);
     e1 = EL1();
-    jj_consume_token(46);
+    jj_consume_token(52);
     e2 = EL1();
-    jj_consume_token(46);
+    jj_consume_token(52);
     e3 = EL1();
-    jj_consume_token(48);
+    jj_consume_token(52);
+    e4 = EL1();
+    jj_consume_token(54);
         nodo retorno = new nodo();
         retorno.setEtiqueta("PS");
         retorno.AddHijos(e1);
+        retorno.setColumna(tok.beginColumn);//si no obtiene la posicion exacta intentar con e2.next.beginColumn
+        retorno.setLinea(tok.beginLine);    //si no obtiene la posicion exacta intentar con e2.next.beginLine
         retorno.AddHijos(e2);
         retorno.AddHijos(e3);
+        retorno.AddHijos(e4);
         {if (true) return retorno;}
     throw new Error("Missing return statement in function");
   }
 
 //PINTAR PUNTO
   final public nodo PP() throws ParseException {
-           nodo e1,e2,e3,e4;
-    jj_consume_token(PINTAR_P);
-    jj_consume_token(47);
+           nodo e1,e2,e3,e4; Token tok;
+    tok = jj_consume_token(PINTAR_P);
+    jj_consume_token(53);
     e1 = EL1();
-    jj_consume_token(46);
+    jj_consume_token(52);
     e2 = EL1();
-    jj_consume_token(46);
+    jj_consume_token(52);
     e3 = EL1();
-    jj_consume_token(46);
+    jj_consume_token(52);
     e4 = EL1();
-    jj_consume_token(48);
+    jj_consume_token(54);
         nodo retorno = new nodo();
+        retorno.setColumna(tok.beginColumn);//si no obtiene la posicion exacta intentar con e2.next.beginColumn
+        retorno.setLinea(tok.beginLine);    //si no obtiene la posicion exacta intentar con e2.next.beginLine
         retorno.setEtiqueta("PP");
         retorno.AddHijos(e1);
         retorno.AddHijos(e2);
@@ -1407,23 +1689,25 @@ public class Analizador_Lienzo implements Analizador_LienzoConstants {
 
 //PINTAR OVALO/RECTANGULO
   final public nodo POR() throws ParseException {
-            nodo e1,e2,e3,e4,e5,e6;
-    jj_consume_token(PINTAR_OR);
-    jj_consume_token(47);
+            nodo e1,e2,e3,e4,e5,e6; Token tok;
+    tok = jj_consume_token(PINTAR_OR);
+    jj_consume_token(53);
     e1 = EL1();
-    jj_consume_token(46);
+    jj_consume_token(52);
     e2 = EL1();
-    jj_consume_token(46);
+    jj_consume_token(52);
     e3 = EL1();
-    jj_consume_token(46);
+    jj_consume_token(52);
     e4 = EL1();
-    jj_consume_token(46);
+    jj_consume_token(52);
     e5 = EL1();
-    jj_consume_token(46);
+    jj_consume_token(52);
     e6 = EL1();
-    jj_consume_token(48);
+    jj_consume_token(54);
         nodo retorno = new nodo();
         retorno.setEtiqueta("POR");
+        retorno.setColumna(tok.beginColumn);//si no obtiene la posicion exacta intentar con e2.next.beginColumn
+        retorno.setLinea(tok.beginLine);    //si no obtiene la posicion exacta intentar con e2.next.beginLine
         retorno.AddHijos(e1);
         retorno.AddHijos(e2);
         retorno.AddHijos(e3);
@@ -1438,8 +1722,8 @@ public class Analizador_Lienzo implements Analizador_LienzoConstants {
   final public nodo MAIN() throws ParseException {
              nodo e1;
     jj_consume_token(PRINCIPAL);
-    jj_consume_token(47);
-    jj_consume_token(48);
+    jj_consume_token(53);
+    jj_consume_token(54);
     jj_consume_token(ABRE);
     e1 = ListaSentencias2();
     jj_consume_token(CIERRE);
@@ -1506,128 +1790,159 @@ public class Analizador_Lienzo implements Analizador_LienzoConstants {
     finally { jj_save(7, xla); }
   }
 
-  private boolean jj_3R_33() {
-    if (jj_scan_token(TDOBLE)) return true;
-    return false;
+  private boolean jj_2_9(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_9(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(8, xla); }
   }
 
-  private boolean jj_3_7() {
-    if (jj_3R_23()) return true;
-    return false;
+  private boolean jj_2_10(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_10(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(9, xla); }
   }
 
-  private boolean jj_3R_22() {
-    if (jj_scan_token(VAR)) return true;
-    if (jj_3R_28()) return true;
-    return false;
+  private boolean jj_2_11(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_11(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(10, xla); }
   }
 
-  private boolean jj_3R_16() {
-    if (jj_3R_22()) return true;
-    return false;
+  private boolean jj_2_12(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_12(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(11, xla); }
   }
 
-  private boolean jj_3_1() {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_15()) jj_scanpos = xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_16()) {
-    jj_scanpos = xsp;
-    if (jj_3R_17()) {
-    jj_scanpos = xsp;
-    if (jj_3R_18()) return true;
-    }
-    }
-    return false;
+  private boolean jj_2_13(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_13(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(12, xla); }
   }
 
-  private boolean jj_3R_32() {
-    if (jj_scan_token(TBOOLEAN)) return true;
-    return false;
+  private boolean jj_2_14(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_14(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(13, xla); }
   }
 
-  private boolean jj_3R_27() {
-    if (jj_scan_token(68)) return true;
-    return false;
+  private boolean jj_2_15(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_15(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(14, xla); }
   }
 
-  private boolean jj_3R_31() {
-    if (jj_scan_token(TCADENA)) return true;
-    return false;
+  private boolean jj_2_16(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_16(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(15, xla); }
   }
 
-  private boolean jj_3R_30() {
-    if (jj_scan_token(TENTERO)) return true;
-    return false;
+  private boolean jj_2_17(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_17(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(16, xla); }
+  }
+
+  private boolean jj_2_18(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_18(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(17, xla); }
+  }
+
+  private boolean jj_2_19(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_19(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(18, xla); }
   }
 
   private boolean jj_3R_28() {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_30()) {
-    jj_scanpos = xsp;
-    if (jj_3R_31()) {
-    jj_scanpos = xsp;
-    if (jj_3R_32()) {
-    jj_scanpos = xsp;
-    if (jj_3R_33()) {
-    jj_scanpos = xsp;
-    if (jj_3R_34()) return true;
-    }
-    }
-    }
-    }
+    if (jj_scan_token(IDENTIFICADOR)) return true;
     return false;
   }
 
-  private boolean jj_3R_20() {
-    if (jj_scan_token(IDENTIFICADOR)) return true;
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_26()) {
-    jj_scanpos = xsp;
-    if (jj_3R_27()) return true;
-    }
+  private boolean jj_3_4() {
+    if (jj_3R_21()) return true;
+    if (jj_scan_token(49)) return true;
+    return false;
+  }
+
+  private boolean jj_3R_85() {
+    if (jj_scan_token(71)) return true;
+    return false;
+  }
+
+  private boolean jj_3R_59() {
+    if (jj_scan_token(PROTEGIDO)) return true;
     return false;
   }
 
   private boolean jj_3_3() {
-    if (jj_3R_20()) return true;
+    if (jj_3R_21()) return true;
+    if (jj_scan_token(48)) return true;
     return false;
   }
 
-  private boolean jj_3_6() {
-    if (jj_3R_20()) return true;
-    return false;
-  }
-
-  private boolean jj_3R_29() {
-    if (jj_scan_token(VOID)) return true;
-    return false;
-  }
-
-  private boolean jj_3R_21() {
-    if (jj_scan_token(CONSERVAR)) return true;
-    return false;
-  }
-
-  private boolean jj_3R_25() {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_29()) jj_scanpos = xsp;
-    if (jj_scan_token(IDENTIFICADOR)) return true;
-    if (jj_scan_token(47)) return true;
+  private boolean jj_3_13() {
+    if (jj_scan_token(IGUAL)) return true;
+    if (jj_scan_token(50)) return true;
     return false;
   }
 
   private boolean jj_3_2() {
-    if (jj_3R_19()) return true;
+    if (jj_3R_20()) return true;
     return false;
   }
 
-  private boolean jj_3_5() {
-    if (jj_3R_19()) return true;
+  private boolean jj_3R_84() {
+    if (jj_scan_token(70)) return true;
+    return false;
+  }
+
+  private boolean jj_3R_74() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_84()) {
+    jj_scanpos = xsp;
+    if (jj_3R_85()) return true;
+    }
+    return false;
+  }
+
+  private boolean jj_3R_55() {
+    if (jj_3R_73()) return true;
+    Token xsp;
+    while (true) {
+      xsp = jj_scanpos;
+      if (jj_3R_74()) { jj_scanpos = xsp; break; }
+    }
+    return false;
+  }
+
+  private boolean jj_3R_58() {
+    if (jj_scan_token(PRIVADO)) return true;
+    return false;
+  }
+
+  private boolean jj_3R_47() {
+    if (jj_scan_token(VAR)) return true;
+    if (jj_3R_27()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_19() {
+    if (jj_3R_33()) return true;
     return false;
   }
 
@@ -1636,14 +1951,382 @@ public class Analizador_Lienzo implements Analizador_LienzoConstants {
     return false;
   }
 
-  private boolean jj_3R_19() {
+  private boolean jj_3R_31() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_57()) {
+    jj_scanpos = xsp;
+    if (jj_3R_58()) {
+    jj_scanpos = xsp;
+    if (jj_3R_59()) return true;
+    }
+    }
+    return false;
+  }
+
+  private boolean jj_3R_57() {
+    if (jj_scan_token(PUBLICO)) return true;
+    return false;
+  }
+
+  private boolean jj_3R_77() {
+    if (jj_scan_token(69)) return true;
+    return false;
+  }
+
+  private boolean jj_3R_18() {
+    if (jj_3R_32()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_25() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3_14()) {
+    jj_scanpos = xsp;
+    if (jj_3R_47()) return true;
+    }
+    return false;
+  }
+
+  private boolean jj_3_14() {
+    if (jj_scan_token(VAR)) return true;
+    if (jj_3R_27()) return true;
+    if (jj_3R_28()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_76() {
+    if (jj_scan_token(68)) return true;
+    return false;
+  }
+
+  private boolean jj_3R_17() {
+    if (jj_3R_25()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_43() {
+    if (jj_scan_token(FALSE)) return true;
+    return false;
+  }
+
+  private boolean jj_3R_16() {
+    if (jj_3R_31()) return true;
+    return false;
+  }
+
+  private boolean jj_3_1() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_15()) jj_scanpos = xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_16()) jj_scanpos = xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_17()) {
+    jj_scanpos = xsp;
+    if (jj_3R_18()) {
+    jj_scanpos = xsp;
+    if (jj_3R_19()) return true;
+    }
+    }
+    return false;
+  }
+
+  private boolean jj_3R_44() {
+    if (jj_scan_token(74)) return true;
+    return false;
+  }
+
+  private boolean jj_3R_42() {
+    if (jj_scan_token(TRUE)) return true;
+    return false;
+  }
+
+  private boolean jj_3R_45() {
+    if (jj_scan_token(75)) return true;
+    return false;
+  }
+
+  private boolean jj_3R_75() {
+    if (jj_scan_token(67)) return true;
+    return false;
+  }
+
+  private boolean jj_3R_41() {
+    if (jj_scan_token(53)) return true;
+    if (jj_3R_53()) return true;
+    if (jj_scan_token(54)) return true;
+    return false;
+  }
+
+  private boolean jj_3R_56() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_75()) {
+    jj_scanpos = xsp;
+    if (jj_3R_76()) {
+    jj_scanpos = xsp;
+    if (jj_3R_77()) return true;
+    }
+    }
+    return false;
+  }
+
+  private boolean jj_3R_30() {
+    if (jj_3R_55()) return true;
+    Token xsp;
+    while (true) {
+      xsp = jj_scanpos;
+      if (jj_3R_56()) { jj_scanpos = xsp; break; }
+    }
+    return false;
+  }
+
+  private boolean jj_3R_22() {
+    if (jj_3R_21()) return true;
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_44()) {
+    jj_scanpos = xsp;
+    if (jj_3R_45()) return true;
+    }
+    return false;
+  }
+
+  private boolean jj_3R_62() {
+    if (jj_3R_61()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_40() {
     if (jj_scan_token(IDENTIFICADOR)) return true;
-    if (jj_scan_token(43)) return true;
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_62()) jj_scanpos = xsp;
+    return false;
+  }
+
+  private boolean jj_3R_61() {
+    if (jj_scan_token(LLAVEA)) return true;
+    if (jj_3R_53()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_72() {
+    if (jj_scan_token(66)) return true;
+    if (jj_3R_53()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_71() {
+    if (jj_scan_token(65)) return true;
+    if (jj_3R_53()) return true;
+    return false;
+  }
+
+  private boolean jj_3_15() {
+    if (jj_3R_23()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_70() {
+    if (jj_scan_token(64)) return true;
+    if (jj_3R_53()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_39() {
+    if (jj_scan_token(CARACTER)) return true;
+    return false;
+  }
+
+  private boolean jj_3_12() {
+    if (jj_3R_21()) return true;
+    if (jj_scan_token(49)) return true;
+    return false;
+  }
+
+  private boolean jj_3R_69() {
+    if (jj_scan_token(63)) return true;
+    if (jj_3R_53()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_38() {
+    if (jj_scan_token(DECIMAL)) return true;
     return false;
   }
 
   private boolean jj_3R_26() {
-    if (jj_scan_token(67)) return true;
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3_11()) {
+    jj_scanpos = xsp;
+    if (jj_3_12()) return true;
+    }
+    return false;
+  }
+
+  private boolean jj_3_11() {
+    if (jj_3R_21()) return true;
+    if (jj_scan_token(48)) return true;
+    return false;
+  }
+
+  private boolean jj_3R_37() {
+    if (jj_scan_token(ENTERO)) return true;
+    return false;
+  }
+
+  private boolean jj_3R_68() {
+    if (jj_scan_token(62)) return true;
+    if (jj_3R_53()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_67() {
+    if (jj_scan_token(61)) return true;
+    if (jj_3R_53()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_21() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_36()) {
+    jj_scanpos = xsp;
+    if (jj_3R_37()) {
+    jj_scanpos = xsp;
+    if (jj_3R_38()) {
+    jj_scanpos = xsp;
+    if (jj_3R_39()) {
+    jj_scanpos = xsp;
+    if (jj_3_15()) {
+    jj_scanpos = xsp;
+    if (jj_3R_40()) {
+    jj_scanpos = xsp;
+    if (jj_3R_41()) {
+    jj_scanpos = xsp;
+    if (jj_3R_42()) {
+    jj_scanpos = xsp;
+    if (jj_3R_43()) return true;
+    }
+    }
+    }
+    }
+    }
+    }
+    }
+    }
+    return false;
+  }
+
+  private boolean jj_3R_36() {
+    if (jj_scan_token(CADENA)) return true;
+    return false;
+  }
+
+  private boolean jj_3R_54() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_66()) {
+    jj_scanpos = xsp;
+    if (jj_3R_67()) {
+    jj_scanpos = xsp;
+    if (jj_3R_68()) {
+    jj_scanpos = xsp;
+    if (jj_3R_69()) {
+    jj_scanpos = xsp;
+    if (jj_3R_70()) {
+    jj_scanpos = xsp;
+    if (jj_3R_71()) {
+    jj_scanpos = xsp;
+    if (jj_3R_72()) return true;
+    }
+    }
+    }
+    }
+    }
+    }
+    return false;
+  }
+
+  private boolean jj_3R_66() {
+    if (jj_scan_token(60)) return true;
+    if (jj_3R_53()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_29() {
+    if (jj_3R_53()) return true;
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_54()) jj_scanpos = xsp;
+    return false;
+  }
+
+  private boolean jj_3R_87() {
+    if (jj_scan_token(58)) return true;
+    if (jj_3R_78()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_79() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_87()) {
+    jj_scanpos = xsp;
+    if (jj_3R_88()) return true;
+    }
+    return false;
+  }
+
+  private boolean jj_3R_88() {
+    if (jj_scan_token(59)) return true;
+    if (jj_3R_78()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_35() {
+    if (jj_scan_token(IGUAL)) return true;
+    if (jj_3R_30()) return true;
+    return false;
+  }
+
+  private boolean jj_3_10() {
+    if (jj_3R_22()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_64() {
+    if (jj_3R_78()) return true;
+    Token xsp;
+    while (true) {
+      xsp = jj_scanpos;
+      if (jj_3R_79()) { jj_scanpos = xsp; break; }
+    }
+    return false;
+  }
+
+  private boolean jj_3R_24() {
+    if (jj_scan_token(CONSERVAR)) return true;
+    return false;
+  }
+
+  private boolean jj_3R_46() {
+    if (jj_3R_63()) return true;
+    return false;
+  }
+
+  private boolean jj_3_9() {
+    if (jj_3R_26()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_86() {
+    if (jj_scan_token(57)) return true;
+    if (jj_3R_21()) return true;
     return false;
   }
 
@@ -1652,38 +2335,207 @@ public class Analizador_Lienzo implements Analizador_LienzoConstants {
     return false;
   }
 
-  private boolean jj_3R_24() {
-    if (jj_3R_28()) return true;
+  private boolean jj_3R_34() {
+    if (jj_3R_61()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_20() {
+    if (jj_scan_token(IDENTIFICADOR)) return true;
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_34()) {
+    jj_scanpos = xsp;
+    if (jj_3R_35()) return true;
+    }
+    return false;
+  }
+
+  private boolean jj_3R_78() {
+    if (jj_3R_21()) return true;
+    Token xsp;
+    while (true) {
+      xsp = jj_scanpos;
+      if (jj_3R_86()) { jj_scanpos = xsp; break; }
+    }
+    return false;
+  }
+
+  private boolean jj_3_7() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_24()) jj_scanpos = xsp;
+    if (jj_3R_25()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_63() {
+    if (jj_3R_30()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_60() {
+    if (jj_scan_token(VOID)) return true;
+    return false;
+  }
+
+  private boolean jj_3_6() {
+    if (jj_3R_23()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_33() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_60()) jj_scanpos = xsp;
+    if (jj_scan_token(IDENTIFICADOR)) return true;
+    if (jj_scan_token(53)) return true;
+    return false;
+  }
+
+  private boolean jj_3R_81() {
+    if (jj_scan_token(56)) return true;
+    if (jj_3R_64()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_52() {
+    if (jj_scan_token(TCARACTER)) return true;
+    return false;
+  }
+
+  private boolean jj_3R_51() {
+    if (jj_scan_token(TDOBLE)) return true;
+    return false;
+  }
+
+  private boolean jj_3R_32() {
+    if (jj_3R_27()) return true;
     if (jj_scan_token(IDENTIFICADOR)) return true;
     return false;
   }
 
   private boolean jj_3R_23() {
     if (jj_scan_token(IDENTIFICADOR)) return true;
-    if (jj_scan_token(47)) return true;
-    return false;
-  }
-
-  private boolean jj_3R_18() {
-    if (jj_3R_25()) return true;
-    return false;
-  }
-
-  private boolean jj_3R_34() {
-    if (jj_scan_token(TCARACTER)) return true;
-    return false;
-  }
-
-  private boolean jj_3_4() {
+    if (jj_scan_token(53)) return true;
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_21()) jj_scanpos = xsp;
+    if (jj_3R_46()) jj_scanpos = xsp;
+    if (jj_scan_token(54)) return true;
+    return false;
+  }
+
+  private boolean jj_3R_80() {
+    if (jj_scan_token(55)) return true;
+    if (jj_3R_64()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_65() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_80()) {
+    jj_scanpos = xsp;
+    if (jj_3R_81()) return true;
+    }
+    return false;
+  }
+
+  private boolean jj_3_19() {
+    if (jj_3R_20()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_50() {
+    if (jj_scan_token(TBOOLEAN)) return true;
+    return false;
+  }
+
+  private boolean jj_3_18() {
     if (jj_3R_22()) return true;
     return false;
   }
 
-  private boolean jj_3R_17() {
-    if (jj_3R_24()) return true;
+  private boolean jj_3R_49() {
+    if (jj_scan_token(TCADENA)) return true;
+    return false;
+  }
+
+  private boolean jj_3R_83() {
+    if (jj_3R_53()) return true;
+    return false;
+  }
+
+  private boolean jj_3_17() {
+    if (jj_scan_token(53)) return true;
+    if (jj_3R_30()) return true;
+    if (jj_scan_token(54)) return true;
+    return false;
+  }
+
+  private boolean jj_3R_53() {
+    if (jj_3R_64()) return true;
+    Token xsp;
+    while (true) {
+      xsp = jj_scanpos;
+      if (jj_3R_65()) { jj_scanpos = xsp; break; }
+    }
+    return false;
+  }
+
+  private boolean jj_3_16() {
+    if (jj_3R_29()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_27() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_48()) {
+    jj_scanpos = xsp;
+    if (jj_3R_49()) {
+    jj_scanpos = xsp;
+    if (jj_3R_50()) {
+    jj_scanpos = xsp;
+    if (jj_3R_51()) {
+    jj_scanpos = xsp;
+    if (jj_3R_52()) return true;
+    }
+    }
+    }
+    }
+    return false;
+  }
+
+  private boolean jj_3R_48() {
+    if (jj_scan_token(TENTERO)) return true;
+    return false;
+  }
+
+  private boolean jj_3_5() {
+    if (jj_3R_22()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_82() {
+    if (jj_scan_token(72)) return true;
+    if (jj_3R_29()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_73() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_82()) {
+    jj_scanpos = xsp;
+    if (jj_3_16()) {
+    jj_scanpos = xsp;
+    if (jj_3_17()) {
+    jj_scanpos = xsp;
+    if (jj_3R_83()) return true;
+    }
+    }
+    }
     return false;
   }
 
@@ -1698,7 +2550,7 @@ public class Analizador_Lienzo implements Analizador_LienzoConstants {
   private Token jj_scanpos, jj_lastpos;
   private int jj_la;
   private int jj_gen;
-  final private int[] jj_la1 = new int[48];
+  final private int[] jj_la1 = new int[54];
   static private int[] jj_la1_0;
   static private int[] jj_la1_1;
   static private int[] jj_la1_2;
@@ -1708,15 +2560,15 @@ public class Analizador_Lienzo implements Analizador_LienzoConstants {
       jj_la1_init_2();
    }
    private static void jj_la1_init_0() {
-      jj_la1_0 = new int[] {0xe40000,0x1100000,0xfe031400,0x80000000,0x7e000000,0x1400,0x30000,0x80000000,0x1400,0x30000,0x82031400,0x0,0x0,0x0,0x0,0x0,0x0,0x3c0,0x7c000000,0x3c0,0x0,0xe00000,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x7c000000,0x0,0x7c000000,0x0,0x800,0x4000,0x2000,0x4000,0x8000,0x0,0x2000000,0x0,0x3c0,0x0,};
+      jj_la1_0 = new int[] {0x3900000,0x4400000,0xfb8c5fc0,0x0,0x3800000,0xf8000000,0x5000,0xc0000,0x0,0x5000,0xc0000,0x80c5fc0,0x0,0x0,0xfc0,0xfc0,0x8000000,0x0,0x0,0xfc0,0xf0000000,0x0,0x0,0x3c0,0xc00,0x3800000,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0xfc0,0xf0000000,0x0,0xf0000000,0x0,0x2000,0x10000,0x8000,0x10000,0x20000,0x0,0x8000000,0xfc0,0xfc0,0x0,};
    }
    private static void jj_la1_init_1() {
-      jj_la1_1 = new int[] {0x0,0x0,0x8b,0x0,0x81,0x0,0xa,0x0,0x0,0xf6,0xf6,0x200,0x800,0xa00,0xa00,0x4000,0x4000,0x9080,0x0,0x0,0x8080,0x0,0x4000,0x60000,0x60000,0x80000,0x300000,0x300000,0x1fc00000,0x1fc00000,0xe0000000,0xe0000000,0x0,0x0,0x0,0x1,0x0,0x4000,0x0,0x0,0x0,0x0,0x0,0x0,0x80,0x80,0x8080,0x4000,};
+      jj_la1_1 = new int[] {0x0,0x0,0x20402f,0x2,0x0,0x4005,0x0,0x28,0x2,0x0,0x5d8,0x2045da,0x1000,0x800,0x204800,0x204800,0x0,0x100000,0x100000,0x244000,0x1,0x1800,0x1000,0x0,0x204000,0x0,0x100000,0x1800000,0x1800000,0x2000000,0xc000000,0xc000000,0xf0000000,0xf0000000,0x0,0x0,0x0,0x0,0x0,0x204000,0x1,0x4,0x1,0x100000,0x0,0x0,0x0,0x0,0x0,0x0,0x4000,0x204000,0x204000,0x100000,};
    }
    private static void jj_la1_init_2() {
-      jj_la1_2 = new int[] {0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x3,0x3,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x18,0x0,0x0,0x0,0x0,};
+      jj_la1_2 = new int[] {0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x100,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x7,0x7,0x38,0x38,0xc0,0xc0,0x100,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0xc00,0x0,0x0,0x100,0x0,};
    }
-  final private JJCalls[] jj_2_rtns = new JJCalls[8];
+  final private JJCalls[] jj_2_rtns = new JJCalls[19];
   private boolean jj_rescan = false;
   private int jj_gc = 0;
 
@@ -1731,7 +2583,7 @@ public class Analizador_Lienzo implements Analizador_LienzoConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 48; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 54; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -1746,7 +2598,7 @@ public class Analizador_Lienzo implements Analizador_LienzoConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 48; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 54; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -1757,7 +2609,7 @@ public class Analizador_Lienzo implements Analizador_LienzoConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 48; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 54; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -1768,7 +2620,7 @@ public class Analizador_Lienzo implements Analizador_LienzoConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 48; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 54; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -1778,7 +2630,7 @@ public class Analizador_Lienzo implements Analizador_LienzoConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 48; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 54; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -1788,7 +2640,7 @@ public class Analizador_Lienzo implements Analizador_LienzoConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 48; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 54; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -1903,12 +2755,12 @@ public class Analizador_Lienzo implements Analizador_LienzoConstants {
   /** Generate ParseException. */
   public ParseException generateParseException() {
     jj_expentries.clear();
-    boolean[] la1tokens = new boolean[70];
+    boolean[] la1tokens = new boolean[77];
     if (jj_kind >= 0) {
       la1tokens[jj_kind] = true;
       jj_kind = -1;
     }
-    for (int i = 0; i < 48; i++) {
+    for (int i = 0; i < 54; i++) {
       if (jj_la1[i] == jj_gen) {
         for (int j = 0; j < 32; j++) {
           if ((jj_la1_0[i] & (1<<j)) != 0) {
@@ -1923,7 +2775,7 @@ public class Analizador_Lienzo implements Analizador_LienzoConstants {
         }
       }
     }
-    for (int i = 0; i < 70; i++) {
+    for (int i = 0; i < 77; i++) {
       if (la1tokens[i]) {
         jj_expentry = new int[1];
         jj_expentry[0] = i;
@@ -1950,7 +2802,7 @@ public class Analizador_Lienzo implements Analizador_LienzoConstants {
 
   private void jj_rescan_token() {
     jj_rescan = true;
-    for (int i = 0; i < 8; i++) {
+    for (int i = 0; i < 19; i++) {
     try {
       JJCalls p = jj_2_rtns[i];
       do {
@@ -1965,6 +2817,17 @@ public class Analizador_Lienzo implements Analizador_LienzoConstants {
             case 5: jj_3_6(); break;
             case 6: jj_3_7(); break;
             case 7: jj_3_8(); break;
+            case 8: jj_3_9(); break;
+            case 9: jj_3_10(); break;
+            case 10: jj_3_11(); break;
+            case 11: jj_3_12(); break;
+            case 12: jj_3_13(); break;
+            case 13: jj_3_14(); break;
+            case 14: jj_3_15(); break;
+            case 15: jj_3_16(); break;
+            case 16: jj_3_17(); break;
+            case 17: jj_3_18(); break;
+            case 18: jj_3_19(); break;
           }
         }
         p = p.next;

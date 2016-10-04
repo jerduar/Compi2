@@ -1,9 +1,5 @@
 package proyecto_lienzo;
 
-import AnalizadorCC.ParseException;
-import AnalizadorCC.Analizador_Lienzo;
-import AnalizadorCC.TokenMgrError;
-import AnalizadorCC.nodo;
 import java.awt.Image;
 import java.io.BufferedReader;
 import java.io.File;
@@ -11,8 +7,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringReader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.Icon;
@@ -25,6 +19,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 //IMPORTANDO EL LIENZO
 import Lienzo.Lienzo;
+import java.awt.Desktop;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -40,8 +35,8 @@ public class LienzoEdit extends javax.swing.JFrame {
     /**
      * Creates new form LienzoEdit
      */
-    
     Lienzo lienzo;
+
     public LienzoEdit() {
         initComponents();
         setearIconoBotones();
@@ -50,7 +45,7 @@ public class LienzoEdit extends javax.swing.JFrame {
         jFileChooser1 = new JFileChooser();
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Archivos LZ", "lz");
         jFileChooser1.setFileFilter(filter);
-        
+
         //INICIALIZANDO EL LIENZO
         lienzo = new Lienzo();
         lienzo.setVisible(true);
@@ -119,8 +114,6 @@ public class LienzoEdit extends javax.swing.JFrame {
 
         bt_error.setContentAreaFilled(false);
         bt_error.setSelected(true);
-
-        jSlider2.setValue(0);
 
         jLabel1.setText("Ejecutar");
 
@@ -235,9 +228,19 @@ public class LienzoEdit extends javax.swing.JFrame {
         jMenu2.add(jMenuItem6);
 
         jMenuItem8.setText("Debugger");
+        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem8ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem8);
 
         jMenuItem9.setText("Tabla de Símbolos");
+        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem9ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem9);
 
         jMenuBar1.add(jMenu2);
@@ -245,6 +248,11 @@ public class LienzoEdit extends javax.swing.JFrame {
         jMenu3.setText("Errores");
 
         jMenuItem7.setText("Mostrar Errores");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem7);
 
         jMenuBar1.add(jMenu3);
@@ -284,38 +292,34 @@ public class LienzoEdit extends javax.swing.JFrame {
     }//GEN-LAST:event_Salir_menuItemActionPerformed
 
     private void bt_playActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_playActionPerformed
-        try {
-            TextEdit t = (TextEdit) panel_tab.getSelectedComponent();
+        TextEdit t = (TextEdit) panel_tab.getSelectedComponent();
+        if (t != null) {
             JTextArea text = t.getNueva();
-            
-            if (text != null) {
-                Analizador_Lienzo analizador = new Analizador_Lienzo(new StringReader(text.getText()));
-                nodo raiz = analizador.INICIO();
-                Graficar(recorrido(raiz,0),"MiAST"); //Es necesario tener instalado graphviz para llamar al metodo
-                
-                raiz = raiz.hijos.get(0).hijos.get(1);
-                
-                if(raiz.hijos.size() == 5){
-                    raiz = raiz.hijos.get(3);
-                }else{
-                    raiz = raiz.hijos.get(1);
-                }
-                Ejecutar eje = new Ejecutar();
-                raiz = eje.Busqueda_main(raiz);
-                
-                if(raiz != null){
-                    //eje.Recorrido(principal);
-                    //System.out.println(raiz.getEtiqueta());
-                }
-                //System.out.println("El resultado es:" + Resulta.toString());
+            Ejecutar e = new Ejecutar(0);
+            try {
+                e.Compilar(text.getText(), lienzo);
+            } catch (IOException ex) {
+                Logger.getLogger(LienzoEdit.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(LienzoEdit.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } catch (ParseException | TokenMgrError ex) {
-            System.err.println(ex.getMessage());
         }
     }//GEN-LAST:event_bt_playActionPerformed
 
     private void bt_debbugActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_debbugActionPerformed
-
+        TextEdit t = (TextEdit) panel_tab.getSelectedComponent();
+        if (t != null) {
+            int retardo = 20 * jSlider2.getValue();
+            JTextArea text = t.getNueva();
+            Ejecutar e = new Ejecutar(retardo);
+            try {
+                e.Compilar(text.getText(), lienzo);
+            } catch (IOException ex) {
+                Logger.getLogger(LienzoEdit.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(LienzoEdit.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }//GEN-LAST:event_bt_debbugActionPerformed
 
     private void nueva_pestaña_menuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nueva_pestaña_menuItemActionPerformed
@@ -348,6 +352,37 @@ public class LienzoEdit extends javax.swing.JFrame {
             Logger.getLogger(LienzoEdit.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_guardar_menuItemActionPerformed
+
+    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+        TextEdit t = (TextEdit) panel_tab.getSelectedComponent();
+        if (t != null) {
+            JTextArea text = t.getNueva();
+            Ejecutar e = new Ejecutar(0);
+            try {
+                e.Compilar(text.getText(), lienzo);
+            } catch (IOException ex) {
+                Logger.getLogger(LienzoEdit.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(LienzoEdit.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_jMenuItem8ActionPerformed
+
+    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
+        try {
+            File path = new File("tabla_simbolo.html");
+            Desktop.getDesktop().open(path);
+        } catch (IOException ex) {
+        }
+    }//GEN-LAST:event_jMenuItem9ActionPerformed
+
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        try {
+            File path = new File("Reporte_errores.html");
+            Desktop.getDesktop().open(path);
+        } catch (IOException ex) {
+        }
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     //MÉTODO PARA ABRIR ARCHIVO
     private void AbrirArchivo() throws FileNotFoundException, IOException {
@@ -416,59 +451,6 @@ public class LienzoEdit extends javax.swing.JFrame {
         this.repaint();
     }
 
-    //METODO PARA CONTADOR DE LINEAS
-    private void LineNumberTest(JTextArea textarea) {
-        /*LineNumberComponent lineNumberComponent;
-        
-        JScrollPane scroller = new JScrollPane(textarea);
-        scroller.setRowHeader(rowHeader);*/
-    }
-    
-    int aux = 1;
-    int incremento()
-    {
-        return aux++;
-    }
-    
-    String recorrido(nodo raiz,int id){//recorrido para graficar el arbol
-            int var;
-            String cuerpo="";
-            
-            for (nodo hijos : raiz.hijos) { 
-                var = incremento();
-                if(hijos.getEtiqueta().equals("numero")){
-                    cuerpo += "\""+id+"_" + raiz.getEtiqueta() + "\"->\""+var+"_"+hijos.getEtiqueta()+"="+hijos.getValor()+"\"";
-                }else{
-                    cuerpo += "\""+id+"_" + raiz.getEtiqueta() + "_" + raiz.getValor() + "\"->\""+var+"_"+hijos.getEtiqueta() + "_" + hijos.getValor() +"\"";
-                }
-                cuerpo += recorrido(hijos, var);
-            }
-          return cuerpo; 
-    }
-    
-    public void Graficar(String cadena,String cad){
-        FileWriter fichero = null;
-        PrintWriter pw = null;
-        String nombre=cad;
-        String archivo=nombre+".dot";
-        try {
-            fichero = new FileWriter(archivo);
-            pw = new PrintWriter(fichero);
-            pw.println("digraph G {node[shape=box, style=filled, color=Gray95]; edge[color=blue];rankdir=UD \n");
-            pw.println(cadena);
-            pw.println("\n}");
-            fichero.close();
-        } catch (Exception e) {
-            System.out.println(e);
-        } 
-        try {
-            String cmd = "dot -Tpng "+nombre+".dot -o AST.png"; //Comando de apagado en linux
-            Runtime.getRuntime().exec(cmd); 
-        } catch (IOException ioe) {
-                System.out.println (ioe);
-        }
-    }
-
     //MÉTODO PARA LA POSICIÓN DEL CURSOR
     private void PosicionCursor(JTextArea textarea) {
         textarea.addCaretListener(new CaretListener() {
@@ -512,7 +494,7 @@ public class LienzoEdit extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(LienzoEdit.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        
+
         //</editor-fold>
 
         /* Create and display the form */

@@ -1,0 +1,382 @@
+Prioridades:
+-Aplicación web(diseño y conexión)
+-Dibugger
+-Errores Sintacticos
+-Terminar de pulir arreglos(retorno,funciones y declaración)
+
+return("Se encontro: " +
+          (EOFSeen ? "<EOF> " : ("\"" + addEscapes(String.valueOf(curChar)) + "\"") + " (" + (int)curChar + "), ") +
+          "despues de : \"" + addEscapes(errorAfter) + "\";;;;2;;;;" + errorLine + ";;;;"+ errorColumn);
+
+String eol = System.getProperty("line.separator", "\n");
+    StringBuffer expected = new StringBuffer();
+    int maxSize = 0;
+    for (int i = 0; i < expectedTokenSequences.length; i++) {
+      if (maxSize < expectedTokenSequences[i].length) {
+        maxSize = expectedTokenSequences[i].length;
+      }
+      for (int j = 0; j < expectedTokenSequences[i].length; j++) {
+        expected.append(tokenImage[expectedTokenSequences[i][j]]).append(' ');
+      }
+      if (expectedTokenSequences[i][expectedTokenSequences[i].length - 1] != 0) {
+        expected.append("...");
+      }
+      expected.append(eol).append("    ");
+    }
+    String retval = "Se encontro \"";
+    Token tok = currentToken.next;
+    for (int i = 0; i < maxSize; i++) {
+      if (i != 0) retval += " ";
+      if (tok.kind == 0) {
+        retval += tokenImage[0];
+        break;
+      }
+      retval += " " + tokenImage[tok.kind];
+      retval += " \"";
+      retval += add_escapes(tok.image);
+      retval += " \"";
+      tok = tok.next;
+    }
+    retval += "." + eol;
+    if (expectedTokenSequences.length == 1) {
+      retval += "Se esperaba:" + eol + "    ";
+    } else {
+      retval += "Se esperaba: " + eol + "    ";
+    }
+    retval += expected.toString();
+return retval + ";;;;1;;;;"+currentToken.next.beginLine+";;;;"+currentToken.next.beginColumn;
+
+
+
+Lienzo nuevo extiende herencia ¿ 
+	conservar var cadena cuando = "como"$
+	conservar var entero i, yy$
+	yy = 8$
+
+
+	Principal()¿
+Pintar_P(100,100, "#000000", 50)$
+		si(yy == 8)¿yy = 0$?
+	conservar var entero arreglo juan[2][5]$
+		juan[0][1] = 4$
+		para(var entero y = 0; y < 10; y = y+1)¿yy = yy + 9$?
+		hacer¿yy = yy + 2$?mientras(yy <  10)$
+
+		comprobar(yy)¿
+			caso 8: yy = 4$salir$
+			caso 4: yy  = 0$salir$
+			defecto : yy = 19$
+		?
+	?
+
+	conservar publico void funcion(cadena hola)¿
+		yy = 0$
+	?
+?
+
+e1.AddHijos("IDENTIFICADOR",tok.image);
+        return e1;
+
+publico Lienzo Flor extiende PetalosVerdes, PetalosAmarillos, Tronco¿
+    privado var entero Limite_LienzoY=700$
+    Principal()¿
+       var entero scala=40$
+       var entero arreglo vect[2]=Hojas(350, 350, scala)$
+       DibujarTronco(vect[0],vect[1])$
+       petalos(vect[0],vect[1], scala)$
+       DibujarCentro(vect[0],vect[1],50,"rojo")$
+
+    ?
+    privado DibujarCentro(entero x,entero y, entero radio, cadena color)¿
+        comprobar (color) ¿
+            caso "rojo":
+                 Pintar_P(x, y, "FF0000", radio*2)$
+                 salir$
+            caso "naranja":
+                Pintar_P(x, y, "99FF00", radio*2)$
+                salir$
+            defecto :
+                Pintar_P(x, y, "FF00FF", radio*2)$
+                salir$
+        ?
+    ?
+?
+
+publico Lienzo PetalosVerdes ¿
+    conservar publico entero[] Hojas(entero x,entero y,entero diametro) ¿
+        var entero arreglo a[2] = {x,y}$
+        para(x=350;x<500;x+=1)¿
+            diametro++$
+            Pintar_P(x, y-=1, "#00CC00", diametro-50)$
+        ?   
+        y=500$
+        para(x=200;x<350;x+=1)¿
+            diametro--$
+            Pintar_P(x, y-=1, "#00CC00", diametro-50)$
+        ?
+        para(y=350;y<500;y+=1)¿
+            diametro++$
+            Pintar_P(x+=1, y, "#00CC00", diametro-50)$
+        ?   
+        x=200$
+        para(y=200;y<350;y+=1)¿
+            diametro--$
+            Pintar_P(x+=1, y, "#00CC00", diametro-50)$       
+        ?
+     return a$
+    ?
+?
+
+publico Lienzo PetalosVerdes ¿
+    conservar publico entero Hojas(entero x,entero y,entero diametro) ¿
+        var entero arreglo a[2] = {x,y}$
+        para(x=350;x<500;x=1)¿
+            diametro++$
+            Pintar_P(x, y, "#00CC00", diametro-50)$
+        ?   
+        y=500$
+        para(x=200;x<350;x=1)¿
+            diametro--$
+            Pintar_P(x, y, "#00CC00", diametro-50)$
+        ?
+        para(y=350;y<500;y=1)¿
+            diametro++$
+            Pintar_P(1, y, "#00CC00", diametro-50)$
+        ?   
+        x=200$
+        para(y=200;y<350;y=1)¿
+            diametro--$
+            Pintar_P(1, y, "#00CC00", diametro-50)$       
+        ?
+     return a$
+    ?
+?
+
+                    //MÉTODO SOLO CON IDENTIFICADOR
+                    /*if (aux.hijos.size() == 4) {
+                        Simbolo proce = new Simbolo();
+                        proce.ambito = ambito;
+                        proce.Nodo = (nodo) aux;
+                        proce.id = aux.hijos.get(0).getValor();
+                        proce.tipo = 2;
+                        proce.Param = null;
+                        proce.Sentencias = aux.hijos.get(2);
+
+                        if (tb.Insertar(proce.id, proce) != null) {
+                            System.out.println("ya existe");
+                        }
+
+                    }//MÉTODO CON AMBITO, VOID Y PARÁMETROS
+                    else if (aux.hijos.size() == 9 && "AMBITO".equals(aux.hijos.get(0).getEtiqueta())) {
+                        Simbolo proce = new Simbolo();
+                        proce.Nodo = (nodo) aux;
+                        proce.ambito = ambito;
+                        proce.id = aux.hijos.get(2).getValor();
+                        proce.tipo = 2;
+                        proce.Param = aux.hijos.get(4);
+                        proce.Sentencias = aux.hijos.get(7);
+                        proce.visibilidad = visibilidad(aux.hijos.get(0).getValor());
+
+                        String tipo_param = "";
+                        for (int y = 0; y < proce.Param.hijos.size(); y++) {
+                            tipo_param += proce.Param.hijos.get(y).hijos.get(0).getValor();
+                        }
+
+                        if (tb.Insertar(proce.id + tipo_param, proce) != null) {
+                            System.out.println("ya existe");
+                        }
+                    } //METODO CON CONSERVAR, AMBITO Y LISTA DE PARAMETROS
+                    else if (aux.hijos.size() == 9 && "CONSERVAR".equals(aux.hijos.get(0).getEtiqueta()) && Buscar_nodo("void", aux) == null) {
+                        Simbolo proce = new Simbolo();
+                        proce.Nodo = (nodo) aux;
+                        proce.ambito = ambito;
+                        proce.id = aux.hijos.get(2).getValor();
+                        proce.tipo = 2;
+                        proce.Param = aux.hijos.get(4);
+                        proce.Sentencias = aux.hijos.get(7);
+                        proce.conservar = true;
+
+                        String tipo_param = "";
+                        for (int y = 0; y < proce.Param.hijos.size(); y++) {
+                            tipo_param += proce.Param.hijos.get(y).hijos.get(0).getValor();
+                        }
+
+                        if (tb.Insertar(proce.id + tipo_param, proce) != null) {
+                            System.out.println("ya existe");//ERROR
+                        }
+
+                    }//METODO CON CONSERVAR Y VOID, SIN PARÁMETROS
+                    else if ("CONSERVAR".equals(aux.hijos.get(0).getEtiqueta()) && "void".equals(aux.hijos.get(1).getEtiqueta()) && Buscar_nodo("LISTAPARAM", aux) == null) {
+                        Simbolo proce = new Simbolo();
+                        proce.Nodo = (nodo) aux;
+                        proce.ambito = ambito;
+                        proce.id = aux.hijos.get(2).getValor();
+                        proce.tipo = 2;
+                        proce.Param = null;
+                        proce.Sentencias = aux.hijos.get(4);
+                        proce.conservar = true;
+
+                        if (tb.Insertar(proce.id, proce) != null) {
+                            System.out.println("ya existe");
+                        }
+
+                    }//MÉTODO SOLO CON VOID E IDENTIFICADOR
+                    else if ("void".equals(aux.hijos.get(0).getEtiqueta()) && Buscar_nodo("LISTAPARAM", aux) == null) {
+                        Simbolo proce = new Simbolo();
+                        proce.Nodo = (nodo) aux;
+                        proce.ambito = ambito;
+                        proce.id = aux.hijos.get(1).getValor();
+                        proce.tipo = 2;
+                        proce.Param = null;
+                        proce.Sentencias = aux.hijos.get(4);
+
+                        if (tb.Insertar(proce.id, proce) != null) {
+                            System.out.println("ya existe");
+                        }
+
+                    }//METODO SOLO CON IDENTIFICADOR Y PARAMETROS
+                    else if ("IDENTIFICADOR".equals(aux.hijos.get(0).getEtiqueta()) && Buscar_nodo("LISTAPARAM", aux) != null) {
+                        Simbolo proce = new Simbolo();
+                        proce.Nodo = (nodo) aux;
+                        proce.ambito = ambito;
+                        proce.id = aux.hijos.get(0).getValor();
+                        proce.tipo = 2;
+                        proce.Param = aux.hijos.get(2);
+                        proce.Sentencias = aux.hijos.get(5);
+
+                        String tipo_param = "";
+                        for (int y = 0; y < proce.Param.hijos.size(); y++) {
+                            tipo_param += proce.Param.hijos.get(y).hijos.get(0).getValor();
+                        }
+
+                        if (tb.Insertar(proce.id + tipo_param, proce) != null) {
+                            System.out.println("Ya existe");
+                        }
+
+                    }//MÉTODO CON CONSERVAR SIN PARÁMETROS
+                    else if ("CONSERVAR".equals(aux.hijos.get(0).getEtiqueta()) && "IDENTIFICADOR".equals(aux.hijos.get(1).getEtiqueta()) && Buscar_nodo("LISTAPARAM", aux) == null) {
+                        Simbolo proce = new Simbolo();
+                        proce.Nodo = (nodo) aux;
+                        proce.ambito = ambito;
+                        proce.id = aux.hijos.get(1).getValor();
+                        proce.tipo = 2;
+                        proce.Param = null;
+                        proce.Sentencias = aux.hijos.get(3);
+
+                        if (tb.Insertar(proce.id, proce) != null) {
+                            System.out.println("ya existe");
+                        }
+                    }//MÉTODO CON CONSERVAR, VOID, AMBITO Y PARAMETROS
+                    else if ("CONSERVAR".equals(aux.hijos.get(0).getEtiqueta()) && Buscar_nodo("void", aux) != null && Buscar_nodo("AMBITO", aux) != null && Buscar_nodo("LISTAPARAM", aux) != null) {
+                        Simbolo proce = new Simbolo();
+                        proce.Nodo = (nodo) aux;
+                        proce.ambito = ambito;
+                        proce.id = aux.hijos.get(3).getValor();
+                        proce.tipo = 2;
+                        proce.Param = aux.hijos.get(5);
+                        proce.Sentencias = aux.hijos.get(3);
+                        proce.conservar = true;
+                        proce.visibilidad = visibilidad(aux.hijos.get(2).getValor());
+
+                        String tipo_param = "";
+                        for (int y = 0; y < proce.Param.hijos.size(); y++) {
+                            tipo_param += proce.Param.hijos.get(y).hijos.get(0).getValor();
+                        }
+
+                        if (tb.Insertar(proce.id + tipo_param, proce) != null) {
+                            System.out.println("ya existe");
+                        }
+
+                    }//MÉTODO CON CONSERVAR, VOID Y PARAMETROS SIN AMBITO
+                    else if (Buscar_nodo("CONSERVAR", aux) != null && Buscar_nodo("void", aux) != null && Buscar_nodo("LISTAPARAM", aux) != null && Buscar_nodo("AMBITO", aux) == null) {
+                        Simbolo proce = new Simbolo();
+                        proce.Nodo = (nodo) aux;
+                        proce.ambito = ambito;
+                        proce.id = aux.hijos.get(2).getValor();
+                        proce.tipo = 2;
+                        proce.Param = aux.hijos.get(4);
+                        proce.Sentencias = aux.hijos.get(7);
+                        proce.conservar = true;
+
+                        String tipo_param = "";
+                        for (int y = 0; y < proce.Param.hijos.size(); y++) {
+                            tipo_param += proce.Param.hijos.get(y).hijos.get(0).getValor();
+                        }
+
+                        if (tb.Insertar(proce.id + tipo_param, proce) != null) {
+                            System.out.println("ya existe");
+                        }
+                    }//CONSERVAR, AMBITO SIN PARAMETROS
+                    else if (Buscar_nodo("CONSERVAR", aux) != null && Buscar_nodo("void", aux) == null && Buscar_nodo("LISTAPARAM", aux) == null && Buscar_nodo("AMBITO", aux) != null) {
+                        Simbolo proce = new Simbolo();
+                        proce.Nodo = (nodo) aux;
+                        proce.ambito = ambito;
+                        proce.id = aux.hijos.get(2).getValor();
+                        proce.tipo = 2;
+                        proce.Sentencias = aux.hijos.get(4);
+                        proce.conservar = true;
+                        proce.visibilidad = visibilidad(aux.hijos.get(1).getValor());
+
+                        if (tb.Insertar(proce.id, proce) != null) {
+                            System.out.println("ya existe");
+                        }
+
+                    }//SOLO VOID Y PARAMETROS
+                    else if (Buscar_nodo("CONSERVAR", aux) == null && Buscar_nodo("void", aux) != null && Buscar_nodo("LISTAPARAM", aux) != null && Buscar_nodo("AMBITO", aux) == null) {
+                        Simbolo proce = new Simbolo();
+                        proce.Nodo = (nodo) aux;
+                        proce.ambito = ambito;
+                        proce.id = aux.hijos.get(1).getValor();
+                        proce.tipo = 2;
+                        proce.Param = aux.hijos.get(3);
+                        proce.Sentencias = aux.hijos.get(6);
+
+                        String tipo_param = "";
+                        for (int y = 0; y < proce.Param.hijos.size(); y++) {
+                            tipo_param += proce.Param.hijos.get(y).hijos.get(0).getValor();
+                        }
+
+                        if (tb.Insertar(proce.id + tipo_param, proce) != null) {
+                            System.out.println("ya existe");
+                        }
+                    }//SOLO AMBITO Y PARÁMETROS
+                    else if (Buscar_nodo("CONSERVAR", aux) == null && Buscar_nodo("void", aux) == null && Buscar_nodo("LISTAPARAM", aux) != null && Buscar_nodo("AMBITO", aux) != null) {
+                        Simbolo proce = new Simbolo();
+                        proce.Nodo = (nodo) aux;
+                        proce.ambito = ambito;
+                        proce.id = aux.hijos.get(1).getValor();
+                        proce.tipo = 2;
+                        proce.Sentencias = aux.hijos.get(3);
+                        proce.visibilidad = visibilidad(aux.hijos.get(0).getValor());
+
+                        String tipo_param = "";
+                        for (int y = 0; y < proce.Param.hijos.size(); y++) {
+                            tipo_param += proce.Param.hijos.get(y).hijos.get(0).getValor();
+                        }
+
+                        if (tb.Insertar(proce.id + tipo_param, proce) != null) {
+                            System.out.println("ya existe");
+                        }
+                    }//AMBITO, VOID SIN PARAMETROS
+                    else if (Buscar_nodo("CONSERVAR", aux) == null && Buscar_nodo("void", aux) != null && Buscar_nodo("LISTAPARAM", aux) == null && Buscar_nodo("AMBITO", aux) != null) {
+
+                    } //MÉTODO CON CONSERVAR Y PARÁMETROS
+                    else if (Buscar_nodo("CONSERVAR", aux) != null && Buscar_nodo("void", aux) == null && Buscar_nodo("LISTAPARAM", aux) != null && Buscar_nodo("AMBITO", aux) == null) {
+                        Simbolo proce = new Simbolo();
+                        proce.Nodo = (nodo) aux;
+                        proce.ambito = ambito;
+                        proce.id = aux.hijos.get(1).getValor();
+                        proce.tipo = 2;
+                        proce.Param = aux.hijos.get(3);
+                        proce.Sentencias = aux.hijos.get(6);
+
+                        String tipo_param = "";
+                        for (int y = 0; y < proce.Param.hijos.size(); y++) {
+                            tipo_param += proce.Param.hijos.get(y).hijos.get(0).getValor();
+                        }
+
+                        if (tb.Insertar(proce.id + tipo_param, proce) != null) {
+                            System.out.println("Ya existe");
+                        }
+                    }*/
+

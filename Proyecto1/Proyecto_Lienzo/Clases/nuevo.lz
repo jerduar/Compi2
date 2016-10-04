@@ -1,0 +1,35 @@
+Lienzo nuevo extiende herencia¿ 
+	conservar var cadena cuando = "como"$
+	conservar var entero i, yy$
+	yy = 8$
+
+
+	Principal()¿
+		Pintar_P(100,100, "#000000", 50)$
+		si(yy == 8)¿yy = 0$?
+		conservar var entero arreglo juan[2][5]$
+		juan[0][1] = 4$
+		para(var entero y = 0; y < 10; y = y+1)¿yy = yy + 9$?
+		hacer¿yy = yy + 2$?mientras(yy <  10)$
+
+		comprobar(yy)¿
+			caso 8: yy = 4$salir$
+			caso 4: yy  = 0$salir$
+			defecto : yy = 19$
+		?
+	?
+?
+
+Lienzo nuevo¿ 
+	conservar var cadena cuando = "como"$
+	conservar var entero i, yy$
+	yy = 8$
+
+
+	Principal()¿
+		conservar var entero arreglo juan[2][5]$
+		var entero yuya = 4$
+		juan[0][1] = 4 * 5$
+		var entero f = juan[0][1]$
+	?
+?

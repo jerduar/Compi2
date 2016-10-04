@@ -1,0 +1,9 @@
+Lienzo herencia ¿ 
+	conservar var cadena cuando = "como"$
+	conservar var entero i, yy$
+	yy = 8$
+
+	conservar privado entero funcion()¿
+		return 7$
+	?
+?
